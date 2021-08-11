@@ -1,7 +1,7 @@
 {
   "name": "react-native-paper-select",
   "version": "0.1.0",
-  "description": "Material Design Dropdown Component using React Native Paper",
+  "description": "Material Design Select Dropdown Component using React Native Paper",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -34,7 +34,12 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "select",
+    "multi-select",
+    "react-native-paper",
+    "dropdown",
+    "material"
   ],
   "repository": "https://github.com/srivastavaanurag79/react-native-paper-select",
   "author": "Anurag Srivastava <srivastavaanurag79@gmail.com> (https://github.com/srivastavaanurag79)",
@@ -69,7 +74,12 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-paper": "*",
+    "react-native-vector-icons": "*",
+    "@types/react": "*",
+    "@types/react-native": "*",
+    "typescript": "*"
   },
   "jest": {
     "preset": "react-native",

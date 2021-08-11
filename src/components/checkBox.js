@@ -1,17 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { memo } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 
-export interface _types {
-  _isChecked: boolean;
-  label: string;
-}
-const CheckboxInput = ({ ..._types }) => (
+const CheckboxInput = ({ _isChecked, label }) => (
   <View style={styles.container}>
-    <Checkbox.Android
-      status={_types.isChecked === true ? 'checked' : 'unchecked'}
-    />
-    <Text style={{ fontWeight: 'bold' }}> {_types.label} </Text>
+    <Checkbox.Android status={_isChecked === true ? 'checked' : 'unchecked'} />
+    <Text style={{ fontWeight: 'bold' }}> {label} </Text>
   </View>
 );
 

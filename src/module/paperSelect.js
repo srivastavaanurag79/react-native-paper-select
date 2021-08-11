@@ -16,16 +16,6 @@ import {
 } from 'react-native-paper';
 import CheckboxInput from '../components/checkBox';
 
-export interface _type {
-  label: string;
-  arrayList: Array<{ _id: string; value: any }>;
-  selectedArrayList: Array<{ _id: string; value: any }>;
-  multiEnable: boolean;
-  errorText: string;
-  value: string;
-  onSelection: Function;
-}
-
 const PaperSelect = ({
   label,
   arrayList,
@@ -44,7 +34,7 @@ const PaperSelect = ({
 
   const [selectedList, setSelectedList] = useState([...selectedArrayList]);
 
-  const selectInputRef: any = useRef();
+  const selectInputRef = useRef();
   const [visible, setVisible] = useState(false);
 
   const showDialog = () => setVisible(true);
@@ -52,7 +42,7 @@ const PaperSelect = ({
   const _hideDialog = () => {
     var data = [...list];
     var selectedData = [...selectedList];
-    let selected: Array<any> = [];
+    let selected = [];
     selectedData.forEach((val) => {
       data.forEach((el) => {
         if (val._id === el._id) {
@@ -76,7 +66,7 @@ const PaperSelect = ({
     showDialog();
   };
 
-  const _onChecked = (item: any) => {
+  const _onChecked = (item) => {
     const selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
     const indexSelected = selectedData.indexOf(item);
@@ -88,7 +78,7 @@ const PaperSelect = ({
     setSelectedList(selectedData);
   };
 
-  const _onCheckedSingle = (item: any) => {
+  const _onCheckedSingle = (item) => {
     var selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
     const indexSelected = selectedData.indexOf(item);
@@ -102,7 +92,7 @@ const PaperSelect = ({
     setSelectedList(selectedData);
   };
 
-  const _exists = (item: any) => {
+  const _exists = (item) => {
     return selectedList.indexOf(item) > -1 ? true : false;
   };
 
@@ -156,7 +146,7 @@ const PaperSelect = ({
     });
   };
 
-  const _filterFunction = (text: string) => {
+  const _filterFunction = (text) => {
     setSearchKey(text);
     const newData = arrayHolder.filter((item) =>
       item.value.toLowerCase().includes(text.toLowerCase())
@@ -191,7 +181,7 @@ const PaperSelect = ({
                 <Searchbar
                   value={searchKey}
                   placeholder="Search"
-                  onChangeText={(text: string) => _filterFunction(text)}
+                  onChangeText={(text) => _filterFunction(text)}
                   style={{ marginBottom: 15 }}
                 />
                 {multiEnable === true && (

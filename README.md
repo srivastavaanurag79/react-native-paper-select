@@ -205,9 +205,9 @@ const styles = StyleSheet.create({
 
 ## Demo
 
-![SCREENSHOT 1](screenshot_1.png)
-![SCREENSHOT 2](screenshot_2.png)
-![SCREENSHOT 3](screenshot_3.png)
+![SCREENSHOT 1](Screenshot_1.png)
+![SCREENSHOT 2](Screenshot_2.png)
+![SCREENSHOT 3](Screenshot_3.png)
 ![GIF](gif_react_native_paper_select.gif)
 
 ## Contributing

@@ -3,7 +3,7 @@
 Material Design Select Dropdown Component using React Native Paper.
 Please refer to Example provided below. Multi Select works perfectly please do not judge on the basis of GIF as screen couldn't be recorded properly.
 
-![ React Native Paper Select ](https://www.npmjs.com/package/react-native-paper-select)
+[ React Native Paper Select ](https://www.npmjs.com/package/react-native-paper-select)
 
 ## Dependencies
 

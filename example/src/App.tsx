@@ -32,6 +32,10 @@ export default function App() {
       { _id: '2', value: 'RED' },
       { _id: '3', value: 'GREEN' },
       { _id: '4', value: 'YELLOW' },
+      { _id: '5', value: 'BROWN' },
+      { _id: '6', value: 'BLACK' },
+      { _id: '7', value: 'WHITE' },
+      { _id: '8', value: 'CYAN' },
     ],
     selectedList: [],
     error: '',
@@ -53,9 +57,13 @@ export default function App() {
         }}
         arrayList={[...gender.list]}
         selectedArrayList={gender.selectedList}
-        error={!!gender.error}
         errorText={gender.error}
         multiEnable={false}
+        dialogTitleStyle={{color: 'red'}}
+        checkboxColor='yellow'
+        checkboxLabelStyle={{color: 'red', fontWeight: '700'}}
+        textInputBackgroundColor='yellow'
+        textInputColor='red'
       />
       <PaperSelect
         label="Select Colors"
@@ -70,9 +78,10 @@ export default function App() {
         }}
         arrayList={[...colors.list]}
         selectedArrayList={colors.selectedList}
-        error={!!colors.error}
         errorText={colors.error}
         multiEnable={true}
+        textInputMode='flat'
+        searchStyle={{iconColor: 'red'}}
       />
       <PaperButton
         style={styles.button}

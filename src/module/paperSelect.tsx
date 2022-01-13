@@ -4,17 +4,18 @@ import {
   View,
   StyleSheet,
   Text,
-  ScrollView,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {
-  TextInput as Input,
+  TextInput,
   Button,
   Dialog,
   Portal,
   Searchbar,
 } from 'react-native-paper';
 import CheckboxInput from '../components/checkBox';
+import type { paperSelect } from '../interface/paperSelect.interface';
 
 const PaperSelect = ({
   label,
@@ -24,8 +25,23 @@ const PaperSelect = ({
   errorText,
   value,
   onSelection,
-  ...props
-}) => {
+  dialogStyle,
+  dialogTitleStyle,
+  searchStyle,
+  checkboxColor,
+  checkboxLabelStyle,
+  checkboxUncheckedColor,
+  errorStyle,
+  textInputMode,
+  underlineColor,
+  activeUnderlineColor,
+  activeOutlineColor,
+  outlineColor,
+  textInputBackgroundColor,
+  textInputColor,
+  textInputHeight,
+  dialogButtonLabelStyle,
+}: paperSelect) => {
   const [selectText, setSelectText] = useState(value);
   const [searchKey, setSearchKey] = useState('');
   const [arrayHolder, setArrayHolder] = useState([...arrayList]);
@@ -34,7 +50,7 @@ const PaperSelect = ({
 
   const [selectedList, setSelectedList] = useState([...selectedArrayList]);
 
-  const selectInputRef = useRef();
+  const selectInputRef = useRef<any>(null);
   const [visible, setVisible] = useState(false);
 
   const showDialog = () => setVisible(true);
@@ -42,7 +58,7 @@ const PaperSelect = ({
   const _hideDialog = () => {
     var data = [...list];
     var selectedData = [...selectedList];
-    let selected = [];
+    let selected: Array<any> = [];
     selectedData.forEach((val) => {
       data.forEach((el) => {
         if (val._id === el._id) {
@@ -57,7 +73,9 @@ const PaperSelect = ({
       selectedList: selectedData,
     });
     setVisible(false);
-    selectInputRef.current.blur();
+    if (selectInputRef && selectInputRef.current) {
+      selectInputRef.current.blur();
+    }
   };
 
   const _onFocus = () => {
@@ -66,7 +84,7 @@ const PaperSelect = ({
     showDialog();
   };
 
-  const _onChecked = (item) => {
+  const _onChecked = (item: any) => {
     const selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
     const indexSelected = selectedData.indexOf(item);
@@ -78,7 +96,7 @@ const PaperSelect = ({
     setSelectedList(selectedData);
   };
 
-  const _onCheckedSingle = (item) => {
+  const _onCheckedSingle = (item: any) => {
     var selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
     const indexSelected = selectedData.indexOf(item);
@@ -92,7 +110,7 @@ const PaperSelect = ({
     setSelectedList(selectedData);
   };
 
-  const _exists = (item) => {
+  const _exists = (item: any) => {
     return selectedList.indexOf(item) > -1 ? true : false;
   };
 
@@ -124,7 +142,13 @@ const PaperSelect = ({
             _onChecked(item);
           }}
         >
-          <CheckboxInput isChecked={_exists(item)} label={item.value} />
+          <CheckboxInput
+            isChecked={_exists(item)}
+            label={item.value}
+            checkboxLabelStyle={checkboxLabelStyle}
+            checkboxColor={checkboxColor}
+            checkboxUncheckedColor={checkboxUncheckedColor}
+          />
         </TouchableOpacity>
       );
     });
@@ -140,13 +164,19 @@ const PaperSelect = ({
             _onCheckedSingle(item);
           }}
         >
-          <CheckboxInput isChecked={_exists(item)} label={item.value} />
+          <CheckboxInput
+            isChecked={_exists(item)}
+            label={item.value}
+            checkboxLabelStyle={checkboxLabelStyle}
+            checkboxColor={checkboxColor}
+            checkboxUncheckedColor={checkboxUncheckedColor}
+          />
         </TouchableOpacity>
       );
     });
   };
 
-  const _filterFunction = (text) => {
+  const _filterFunction = (text: string) => {
     setSearchKey(text);
     const newData = arrayHolder.filter((item) =>
       item.value.toLowerCase().includes(text.toLowerCase())
@@ -157,32 +187,80 @@ const PaperSelect = ({
   return (
     <>
       <View style={styles.container}>
-        <Input
+        <TextInput
           ref={selectInputRef}
-          style={styles.input}
+          style={{
+            backgroundColor: textInputBackgroundColor || '#fff',
+            color: textInputColor || '#000',
+            height: textInputHeight,
+          }}
           label={label}
-          underlineColor="transparent"
-          mode="outlined"
+          underlineColor={underlineColor || 'black'}
+          activeUnderlineColor={activeUnderlineColor || 'black'}
+          activeOutlineColor={activeOutlineColor || 'black'}
+          outlineColor={outlineColor || 'black'}
+          mode={textInputMode || 'outlined'}
           onFocus={_onFocus}
           showSoftInputOnFocus={false}
           value={selectText}
-          right={<Input.Icon name="chevron-down" />}
-          {...props}
+          right={
+            <TextInput.Icon
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                alignSelf: 'center',
+                alignContent: 'center',
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+              }}
+              size={15}
+              name="chevron-down"
+            />
+          }
         />
-        {errorText ? <Text style={styles.error}>{errorText}</Text> : null}
+        {errorText ? (
+          <Text style={{ ...errorStyle, color: errorStyle?.color || 'red' }}>
+            {errorText}
+          </Text>
+        ) : null}
       </View>
 
       <View>
         <Portal>
-          <Dialog visible={visible} dismissable={false}>
-            <Dialog.Title>{label}</Dialog.Title>
+          <Dialog
+            style={{
+              backgroundColor: dialogStyle?.backgroundColor || 'white',
+              borderRadius: dialogStyle?.borderRadius || 5,
+            }}
+            visible={visible}
+            dismissable={false}
+          >
+            <Dialog.Title style={dialogTitleStyle}>{label}</Dialog.Title>
             <Dialog.Content>
-              <Dialog.ScrollArea style={{ height: 300, paddingVertical: 10 }}>
+              <Dialog.ScrollArea
+                style={{
+                  height: 300,
+                  paddingVertical: 10,
+                  paddingHorizontal: 0,
+                }}
+              >
                 <Searchbar
                   value={searchKey}
                   placeholder="Search"
-                  onChangeText={(text) => _filterFunction(text)}
-                  style={{ marginBottom: 15 }}
+                  onChangeText={(text: string) => _filterFunction(text)}
+                  iconColor={searchStyle?.iconColor || 'black'}
+                  style={{
+                    borderRadius: searchStyle?.borderRadius || 5,
+                    borderColor: searchStyle?.borderColor || '#e5e5e5',
+                    backgroundColor: searchStyle?.backgroundColor || '#e5e5e5',
+                    borderWidth: 0.5,
+                    marginBottom: 10,
+                    marginHorizontal: 8,
+                    color: searchStyle?.textColor || '#000',
+                  }}
                 />
                 {multiEnable === true && (
                   <TouchableOpacity
@@ -194,18 +272,27 @@ const PaperSelect = ({
                     <CheckboxInput
                       isChecked={_isCheckedAll()}
                       label="Select All"
+                      checkboxLabelStyle={checkboxLabelStyle}
+                      checkboxColor={checkboxColor}
+                      checkboxUncheckedColor={checkboxUncheckedColor}
                     />
                   </TouchableOpacity>
                 )}
-                <ScrollView>
+                <ScrollView
+                  style={{ width: '100%' }}
+                  persistentScrollbar={true}
+                  showsVerticalScrollIndicator={true}
+                >
                   {multiEnable === true
                     ? _renderListForMulti()
                     : _renderListForSingle()}
                 </ScrollView>
               </Dialog.ScrollArea>
             </Dialog.Content>
-            <Dialog.Actions>
-              <Button onPress={_hideDialog}>Done</Button>
+            <Dialog.Actions style={{ marginTop: -20 }}>
+              <Button labelStyle={dialogButtonLabelStyle} onPress={_hideDialog}>
+                Done
+              </Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
@@ -218,15 +305,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginBottom: 10,
-  },
-  input: {
-    backgroundColor: 'white',
-  },
-  error: {
-    fontSize: 14,
-    color: 'red',
-    paddingHorizontal: 4,
-    paddingTop: 4,
   },
 });
 

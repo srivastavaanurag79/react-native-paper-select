@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Alert, StyleSheet, View } from 'react-native';
 import { Button as PaperButton, Headline } from 'react-native-paper';
@@ -8,14 +9,14 @@ import { PaperSelect } from 'react-native-paper-select';
 
 export const selectValidator = (value: any) => {
   if (!value || value.length <= 0) {
-    return "Please select a value.";
+    return 'Please select a value.';
   }
 
-  return "";
+  return '';
 };
 
 export default function App() {
-  const [gender, setGender] = useState({
+  const [gender, setGender] = useState<any>({
     value: '',
     list: [
       { _id: '1', value: 'MALE' },
@@ -25,7 +26,8 @@ export default function App() {
     selectedList: [],
     error: '',
   });
-  const [colors, setColors] = useState({
+
+  const [colors, setColors] = useState<any>({
     value: '',
     list: [
       { _id: '1', value: 'BLUE' },
@@ -41,9 +43,38 @@ export default function App() {
     error: '',
   });
 
+  useEffect(() => {
+    let isMounted = true;
+    let _getData = async () => {
+      if (isMounted) {
+        setGender({
+          ...gender,
+          value: 'OTHERS',
+          selectedList: [{ _id: '3', value: 'OTHERS' }],
+        });
+
+        setColors({
+          ...colors,
+          value: 'BLUE,RED',
+          selectedList: [
+            { _id: '1', value: 'BLUE' },
+            { _id: '2', value: 'RED' },
+          ],
+        });
+      }
+    };
+
+    _getData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Headline style={{ marginBottom: 10 }}>React Native Paper Select</Headline>
+      <Headline style={{ marginBottom: 10 }}>
+        React Native Paper Select
+      </Headline>
       <PaperSelect
         label="Select Gender"
         value={gender.value}
@@ -56,14 +87,14 @@ export default function App() {
           });
         }}
         arrayList={[...gender.list]}
-        selectedArrayList={gender.selectedList}
+        selectedArrayList={[...gender.selectedList]}
         errorText={gender.error}
         multiEnable={false}
-        dialogTitleStyle={{color: 'red'}}
-        checkboxColor='yellow'
-        checkboxLabelStyle={{color: 'red', fontWeight: '700'}}
-        textInputBackgroundColor='yellow'
-        textInputColor='red'
+        dialogTitleStyle={{ color: 'red' }}
+        checkboxColor="yellow"
+        checkboxLabelStyle={{ color: 'red', fontWeight: '700' }}
+        textInputBackgroundColor="yellow"
+        textInputColor="red"
       />
       <PaperSelect
         label="Select Colors"
@@ -77,11 +108,20 @@ export default function App() {
           });
         }}
         arrayList={[...colors.list]}
-        selectedArrayList={colors.selectedList}
+        selectedArrayList={[...colors.selectedList]}
         errorText={colors.error}
         multiEnable={true}
-        textInputMode='flat'
-        searchStyle={{iconColor: 'red'}}
+        textInputMode="flat"
+        searchStyle={{ iconColor: 'red' }}
+        dialogButtonLabelStyle={{
+          color: 'red',
+          backgroundColor: 'yellow',
+          padding: 10,
+          borderRadius: 5,
+        }}
+        searchPlaceholder="Procurar"
+        modalCloseButtonText="fechar"
+        modalDoneButtonText="terminado"
       />
       <PaperButton
         style={styles.button}

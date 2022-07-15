@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useRef, useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -41,24 +44,27 @@ const PaperSelect = ({
   textInputColor,
   textInputHeight,
   dialogButtonLabelStyle,
+  searchPlaceholder,
+  modalCloseButtonText,
+  modalDoneButtonText,
 }: paperSelect) => {
-  const [selectText, setSelectText] = useState(value);
-  const [searchKey, setSearchKey] = useState('');
-  const [arrayHolder, setArrayHolder] = useState([...arrayList]);
+  const [searchKey, setSearchKey] = useState<string>('');
 
-  const [list, setList] = useState([...arrayList]);
-
-  const [selectedList, setSelectedList] = useState([...selectedArrayList]);
+  const [arrayHolder, setArrayHolder] = useState<Array<any>>([...arrayList]);
+  const [list, setList] = useState<Array<any>>([...arrayList]);
+  const [selectedList, setSelectedList] = useState<Array<any>>([...selectedArrayList]);
 
   const selectInputRef = useRef<any>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const showDialog = () => setVisible(true);
 
   const _hideDialog = () => {
     var data = [...list];
     var selectedData = [...selectedList];
+    console.log(selectedData);
     let selected: Array<any> = [];
+
     selectedData.forEach((val) => {
       data.forEach((el) => {
         if (val._id === el._id) {
@@ -66,12 +72,20 @@ const PaperSelect = ({
         }
       });
     });
-    value = selected.join();
-    setSelectText(selected.join());
+    // value = selected.join();
     onSelection({
       text: selected.join(),
       selectedList: selectedData,
     });
+
+
+    setVisible(false);
+    if (selectInputRef && selectInputRef.current) {
+      selectInputRef.current.blur();
+    }
+  };
+
+  const _closeDialog = () => {
     setVisible(false);
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
@@ -79,27 +93,28 @@ const PaperSelect = ({
   };
 
   const _onFocus = () => {
-    setArrayHolder(arrayList);
-    setList(arrayList);
+    setArrayHolder([...arrayList]);
+    setList([...arrayList]);
+    setSelectedList([...selectedArrayList]);
     showDialog();
   };
 
   const _onChecked = (item: any) => {
-    const selectedData = [...selectedList];
+    var selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
-    const indexSelected = selectedData.indexOf(item);
+    const indexSelected = selectedData.findIndex((val) => val._id === item._id);
     if (indexSelected > -1) {
       selectedData.splice(indexSelected, 1);
     } else {
       selectedData.push(item);
     }
-    setSelectedList(selectedData);
+    setSelectedList([...selectedData]);
   };
 
   const _onCheckedSingle = (item: any) => {
     var selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
-    const indexSelected = selectedData.indexOf(item);
+    const indexSelected = selectedData.findIndex((val) => val._id === item._id);
     if (indexSelected > -1) {
       // selectedData.splice(indexSelected, 1);
       selectedData = [];
@@ -107,11 +122,14 @@ const PaperSelect = ({
       selectedData = [];
       selectedData.push(item);
     }
-    setSelectedList(selectedData);
+    console.log(selectedData);
+    setSelectedList([...selectedData]);
   };
 
   const _exists = (item: any) => {
-    return selectedList.indexOf(item) > -1 ? true : false;
+    // console.log(selectedList);
+    let _temp = [...selectedList]
+    return _temp.find((val: any) => val._id === item._id) ? true : false;
   };
 
   const _isCheckedAll = () => {
@@ -129,7 +147,7 @@ const PaperSelect = ({
       selectedData = data.slice(0);
     }
 
-    setSelectedList(selectedData);
+    setSelectedList([...selectedData]);
   };
 
   const _renderListForMulti = () => {
@@ -202,7 +220,7 @@ const PaperSelect = ({
           mode={textInputMode || 'outlined'}
           onFocus={_onFocus}
           showSoftInputOnFocus={false}
-          value={selectText}
+          value={value}
           right={
             <TextInput.Icon
               style={{
@@ -249,7 +267,7 @@ const PaperSelect = ({
               >
                 <Searchbar
                   value={searchKey}
-                  placeholder="Search"
+                  placeholder={searchPlaceholder || "Search"}
                   onChangeText={(text: string) => _filterFunction(text)}
                   iconColor={searchStyle?.iconColor || 'black'}
                   style={{
@@ -290,8 +308,11 @@ const PaperSelect = ({
               </Dialog.ScrollArea>
             </Dialog.Content>
             <Dialog.Actions style={{ marginTop: -20 }}>
+              <Button labelStyle={dialogButtonLabelStyle} onPress={_closeDialog}>
+                {modalCloseButtonText || "Close"}
+              </Button>
               <Button labelStyle={dialogButtonLabelStyle} onPress={_hideDialog}>
-                Done
+                {modalDoneButtonText || "Done"}
               </Button>
             </Dialog.Actions>
           </Dialog>

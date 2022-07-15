@@ -29,6 +29,7 @@
   <img style="border: 1px solid; margin: 10px"  src="demo1.png" alt="React Native Paper Select" width="150" />
   <img style="border: 1px solid; margin: 10px"  src="demo2.png" alt="React Native Paper Select" width="150" />
   <img style="border: 1px solid; margin: 10px"  src="demo3.png" alt="React Native Paper Select" width="150" />
+  <img style="border: 1px solid; margin: 10px"  src="demo4.png" alt="React Native Paper Select" width="150" />
 </p>
 
 ## Dependencies
@@ -149,6 +150,9 @@ import { PaperSelect } from 'react-native-paper-select';
 |   textInputColor           | string                                                                                                                                                                     | text input text color                                                                                                | black                                                                              | no       |
 |   textInputHeight          | number                                                                                                                                                                     | text input height                                                                                                    | default react native paper style                                                   | no       |
 |   dialogButtonLabelStyle   | TextStyle                                                                                                                                                                  | dialog button style                                                                                                  | default react native paper style                                                   | no       |
+|   searchPlaceholder        | string                                                                                                                                                                     | search placeholder                                                                                                   | Search                                                                             | no       |
+|   modalCloseButtonText     | string                                                                                                                                                                     | Close button text in modal                                                                                           | Close                                                                              | no       |
+|   modalDoneButtonText      | string                                                                                                                                                                     | Done button text in modal                                                                                            | Done                                                                               | no       |
 
 ### Callback Methods
 
@@ -253,6 +257,9 @@ export default function App() {
         multiEnable={true}
         textInputMode="flat"
         searchStyle={{ iconColor: 'red' }}
+        searchPlaceholder="Procurar"
+        modalCloseButtonText="fechar"
+        modalDoneButtonText="terminado"
       />
       <PaperButton
         style={styles.button}

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, { memo, useRef, useState, useEffect } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,

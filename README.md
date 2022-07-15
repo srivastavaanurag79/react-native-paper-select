@@ -14,7 +14,7 @@
 - Type-safe
 
 **Give us a GitHub star 🌟, if you found this package useful.**
-[![GitHub stars](https://img.shields.io/github/stars/Blump-Tech-Pvt-Ltd/native-base-select.svg?style=social&label=Star&maxAge=2592000)](https://github.com/srivastavaanurag79/react-native-paper-select)
+[![GitHub stars](https://img.shields.io/github/stars/srivastavaanurag79/react-native-paper-select.svg?style=social&label=Star&maxAge=2592000)](https://github.com/srivastavaanurag79/react-native-paper-select)
 
 [React Native Paper Select (NPM Link)](https://www.npmjs.com/package/react-native-paper-select)
 
@@ -320,7 +320,7 @@ You can run the example module by performing these steps:
 
 ```
 git clone https://github.com/srivastavaanurag79/react-native-paper-select.git
-cd native-base-select && cd example
+cd react-native-paper-select && cd example
 npm install
 cd ios && pod install && cd ..
 react-native run-ios

@@ -6,4 +6,5 @@ export interface checkbox {
   checkboxColor?: string;
   checkboxLabelStyle?: TextStyle;
   checkboxUncheckedColor?: string;
+  theme?: ReactNativePaper.Theme;
 }

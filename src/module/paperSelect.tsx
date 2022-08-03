@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { memo, useRef, useState } from 'react';
 import {
@@ -31,28 +30,34 @@ const PaperSelect = ({
   dialogStyle,
   dialogTitleStyle,
   searchStyle,
+  searchIconColor,
   checkboxColor,
   checkboxLabelStyle,
   checkboxUncheckedColor,
   errorStyle,
+  error,
   textInputMode,
   underlineColor,
   activeUnderlineColor,
   activeOutlineColor,
   outlineColor,
   textInputBackgroundColor,
-  textInputColor,
   textInputHeight,
+  textInputStyle,
+  dropdownIconColor,
   dialogButtonLabelStyle,
   searchPlaceholder,
   modalCloseButtonText,
   modalDoneButtonText,
+  theme,
 }: paperSelect) => {
   const [searchKey, setSearchKey] = useState<string>('');
 
   const [arrayHolder, setArrayHolder] = useState<Array<any>>([...arrayList]);
   const [list, setList] = useState<Array<any>>([...arrayList]);
-  const [selectedList, setSelectedList] = useState<Array<any>>([...selectedArrayList]);
+  const [selectedList, setSelectedList] = useState<Array<any>>([
+    ...selectedArrayList,
+  ]);
 
   const selectInputRef = useRef<any>(null);
   const [visible, setVisible] = useState<boolean>(false);
@@ -77,7 +82,6 @@ const PaperSelect = ({
       text: selected.join(),
       selectedList: selectedData,
     });
-
 
     setVisible(false);
     if (selectInputRef && selectInputRef.current) {
@@ -128,7 +132,7 @@ const PaperSelect = ({
 
   const _exists = (item: any) => {
     // console.log(selectedList);
-    let _temp = [...selectedList]
+    let _temp = [...selectedList];
     return _temp.find((val: any) => val._id === item._id) ? true : false;
   };
 
@@ -161,6 +165,7 @@ const PaperSelect = ({
           }}
         >
           <CheckboxInput
+            theme={theme}
             isChecked={_exists(item)}
             label={item.value}
             checkboxLabelStyle={checkboxLabelStyle}
@@ -183,6 +188,7 @@ const PaperSelect = ({
           }}
         >
           <CheckboxInput
+            theme={theme}
             isChecked={_exists(item)}
             label={item.value}
             checkboxLabelStyle={checkboxLabelStyle}
@@ -207,18 +213,22 @@ const PaperSelect = ({
       <View style={styles.container}>
         <TextInput
           ref={selectInputRef}
-          style={{
-            backgroundColor: textInputBackgroundColor || '#fff',
-            color: textInputColor || '#000',
-            height: textInputHeight,
-          }}
+          style={[
+            {
+              backgroundColor: textInputBackgroundColor,
+              height: textInputHeight,
+            },
+            textInputStyle,
+          ]}
+          theme={theme}
           label={label}
-          underlineColor={underlineColor || 'black'}
-          activeUnderlineColor={activeUnderlineColor || 'black'}
-          activeOutlineColor={activeOutlineColor || 'black'}
-          outlineColor={outlineColor || 'black'}
+          underlineColor={underlineColor}
+          activeUnderlineColor={activeUnderlineColor}
+          activeOutlineColor={activeOutlineColor}
+          outlineColor={outlineColor}
           mode={textInputMode || 'outlined'}
           onFocus={_onFocus}
+          error={error}
           showSoftInputOnFocus={false}
           value={value}
           right={
@@ -236,11 +246,18 @@ const PaperSelect = ({
               }}
               size={15}
               name="chevron-down"
+              color={dropdownIconColor}
+              theme={theme}
             />
           }
         />
         {errorText ? (
-          <Text style={{ ...errorStyle, color: errorStyle?.color || 'red' }}>
+          <Text
+            style={{
+              ...errorStyle,
+              color: errorStyle?.color || theme?.colors?.error,
+            }}
+          >
             {errorText}
           </Text>
         ) : null}
@@ -249,14 +266,14 @@ const PaperSelect = ({
       <View>
         <Portal>
           <Dialog
-            style={{
-              backgroundColor: dialogStyle?.backgroundColor || 'white',
-              borderRadius: dialogStyle?.borderRadius || 5,
-            }}
+            style={[dialogStyle]}
+            theme={theme}
             visible={visible}
             dismissable={false}
           >
-            <Dialog.Title style={dialogTitleStyle}>{label}</Dialog.Title>
+            <Dialog.Title theme={theme} style={dialogTitleStyle}>
+              {label}
+            </Dialog.Title>
             <Dialog.Content>
               <Dialog.ScrollArea
                 style={{
@@ -267,18 +284,18 @@ const PaperSelect = ({
               >
                 <Searchbar
                   value={searchKey}
-                  placeholder={searchPlaceholder || "Search"}
+                  placeholder={searchPlaceholder || 'Search'}
                   onChangeText={(text: string) => _filterFunction(text)}
-                  iconColor={searchStyle?.iconColor || 'black'}
-                  style={{
-                    borderRadius: searchStyle?.borderRadius || 5,
-                    borderColor: searchStyle?.borderColor || '#e5e5e5',
-                    backgroundColor: searchStyle?.backgroundColor || '#e5e5e5',
-                    borderWidth: 0.5,
-                    marginBottom: 10,
-                    marginHorizontal: 8,
-                    color: searchStyle?.textColor || '#000',
-                  }}
+                  iconColor={searchIconColor}
+                  theme={theme}
+                  style={[
+                    {
+                      borderRadius: 5,
+                      marginBottom: 10,
+                      marginHorizontal: 8,
+                    },
+                    searchStyle,
+                  ]}
                 />
                 {multiEnable === true && (
                   <TouchableOpacity
@@ -288,6 +305,7 @@ const PaperSelect = ({
                     }}
                   >
                     <CheckboxInput
+                      theme={theme}
                       isChecked={_isCheckedAll()}
                       label="Select All"
                       checkboxLabelStyle={checkboxLabelStyle}
@@ -308,11 +326,14 @@ const PaperSelect = ({
               </Dialog.ScrollArea>
             </Dialog.Content>
             <Dialog.Actions style={{ marginTop: -20 }}>
-              <Button labelStyle={dialogButtonLabelStyle} onPress={_closeDialog}>
-                {modalCloseButtonText || "Close"}
+              <Button
+                labelStyle={dialogButtonLabelStyle}
+                onPress={_closeDialog}
+              >
+                {modalCloseButtonText || 'Close'}
               </Button>
               <Button labelStyle={dialogButtonLabelStyle} onPress={_hideDialog}>
-                {modalDoneButtonText || "Done"}
+                {modalDoneButtonText || 'Done'}
               </Button>
             </Dialog.Actions>
           </Dialog>

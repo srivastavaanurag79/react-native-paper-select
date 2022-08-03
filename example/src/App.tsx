@@ -112,7 +112,7 @@ export default function App() {
         errorText={colors.error}
         multiEnable={true}
         textInputMode="flat"
-        searchStyle={{ iconColor: 'red' }}
+        searchIconColor="red"
         dialogButtonLabelStyle={{
           color: 'red',
           backgroundColor: 'yellow',

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import type { ViewStyle, TextStyle } from 'react-native';
 
 export interface list {
@@ -11,20 +12,13 @@ export interface paperSelect {
   selectedArrayList: Array<list>;
   multiEnable: boolean;
   errorText: string;
+  error?: boolean;
   value: string;
   onSelection: (item: any) => void;
-  dialogStyle?: {
-    backgroundColor?: ViewStyle['backgroundColor'];
-    borderRadius?: ViewStyle['borderRadius'];
-  };
+  dialogStyle?: ViewStyle;
   dialogTitleStyle?: TextStyle;
-  searchStyle?: {
-    backgroundColor?: ViewStyle['backgroundColor'];
-    textColor?: TextStyle['color'];
-    borderRadius?: number;
-    borderColor?: ViewStyle['borderColor'];
-    iconColor?: string;
-  };
+  searchStyle?: ViewStyle;
+  searchIconColor?: string;
   checkboxUncheckedColor?: string;
   checkboxColor?: string;
   checkboxLabelStyle?: TextStyle;
@@ -37,8 +31,11 @@ export interface paperSelect {
   textInputBackgroundColor?: string;
   textInputColor?: string;
   textInputHeight?: number;
+  textInputStyle?: ViewStyle;
+  dropdownIconColor?: string;
   dialogButtonLabelStyle?: TextStyle;
   searchPlaceholder?: string;
   modalCloseButtonText?: string;
   modalDoneButtonText?: string;
+  theme?: ReactNativePaper.Theme
 }

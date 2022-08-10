@@ -300,6 +300,7 @@ const PaperSelect = ({
                   style={{ width: '100%' }}
                   persistentScrollbar={true}
                   showsVerticalScrollIndicator={true}
+                  keyboardShouldPersistTaps="handled"
                 >
                   {multiEnable === true
                     ? _renderListForMulti()

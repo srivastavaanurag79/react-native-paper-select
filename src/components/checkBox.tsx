@@ -10,11 +10,13 @@ const CheckboxInput = ({
   checkboxColor,
   checkboxLabelStyle,
   checkboxUncheckedColor,
+  theme,
 }: checkbox) => (
   <View style={styles.container}>
     <Checkbox.Android
-      uncheckedColor={checkboxUncheckedColor || '#000007'}
-      color={checkboxColor || 'blue'}
+      theme={theme}
+      uncheckedColor={checkboxUncheckedColor}
+      color={checkboxColor}
       status={isChecked === true ? 'checked' : 'unchecked'}
     />
     <Text style={checkboxLabelStyle}> {label} </Text>

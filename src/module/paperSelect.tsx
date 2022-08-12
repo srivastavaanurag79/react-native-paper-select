@@ -62,7 +62,7 @@ const PaperSelect = ({
   const _hideDialog = () => {
     var data = [...list];
     var selectedData = [...selectedList];
-    console.log(selectedData);
+    // console.log(selectedData);
     let selected: Array<any> = [];
 
     selectedData.forEach((val) => {
@@ -122,7 +122,7 @@ const PaperSelect = ({
       selectedData = [];
       selectedData.push(item);
     }
-    console.log(selectedData);
+    // console.log(selectedData);
     setSelectedList([...selectedData]);
   };
 

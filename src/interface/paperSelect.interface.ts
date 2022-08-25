@@ -17,6 +17,7 @@ export interface paperSelect {
     backgroundColor?: ViewStyle['backgroundColor'];
     borderRadius?: ViewStyle['borderRadius'];
   };
+  dialogTitle?: string;
   dialogTitleStyle?: TextStyle;
   searchStyle?: {
     backgroundColor?: ViewStyle['backgroundColor'];

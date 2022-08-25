@@ -29,6 +29,7 @@ const PaperSelect = ({
   value,
   onSelection,
   dialogStyle,
+  dialogTitle,
   dialogTitleStyle,
   searchStyle,
   checkboxColor,
@@ -256,7 +257,7 @@ const PaperSelect = ({
             visible={visible}
             dismissable={false}
           >
-            <Dialog.Title style={dialogTitleStyle}>{label}</Dialog.Title>
+            <Dialog.Title style={dialogTitleStyle}>{dialogTitle ?? label}</Dialog.Title>
             <Dialog.Content>
               <Dialog.ScrollArea
                 style={{

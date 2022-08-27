@@ -18,10 +18,6 @@
 
 [React Native Paper Select (NPM Link)](https://www.npmjs.com/package/react-native-paper-select)
 
-## Would you like to support me?
-
-<a href="https://www.buymeacoffee.com/pixmita"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a tea&emoji=🍵&slug=pixmita&button_colour=5F7FFF&font_colour=ffffff&font_family=Poppins&outline_colour=000000&coffee_colour=FFDD00"></a>
-
 ## Demo/Screenshots
 
 <p float="left">
@@ -328,10 +324,14 @@ react-native run-ios
 react-native run-android
 ```
 
-## Authors
+## Author
 
 - Anurag Srivastava [(@srivastavaanurag79)](https://github.com/srivastavaanurag79)
-- Harshit Singhal [(@Harshit31)](https://github.com/Harshit31)
+
+## Contributors
+
+- ahmed [(@Bo7mid3)](https://github.com/Bo7mid3)
+- Thom van den Akker [(@Thodor12)](https://github.com/Thodor12)
 
 ## Contributing
 

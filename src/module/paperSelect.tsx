@@ -32,6 +32,7 @@ const PaperSelect = ({
   dialogTitle,
   dialogTitleStyle,
   searchStyle,
+  disabled = false,
   checkboxColor,
   checkboxLabelStyle,
   checkboxUncheckedColor,
@@ -208,6 +209,7 @@ const PaperSelect = ({
       <View style={styles.container}>
         <TextInput
           ref={selectInputRef}
+          disabled={disabled}
           style={{
             backgroundColor: textInputBackgroundColor || '#fff',
             color: textInputColor || '#000',
@@ -219,7 +221,7 @@ const PaperSelect = ({
           activeOutlineColor={activeOutlineColor || 'black'}
           outlineColor={outlineColor || 'black'}
           mode={textInputMode || 'outlined'}
-          onFocus={_onFocus}
+          onFocus={disabled ? _onFocus : undefined}
           showSoftInputOnFocus={false}
           value={value}
           right={

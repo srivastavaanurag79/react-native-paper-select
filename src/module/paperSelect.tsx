@@ -45,6 +45,7 @@ const PaperSelect = ({
   textInputBackgroundColor,
   textInputColor,
   textInputHeight,
+  textInputStyle,
   dialogButtonLabelStyle,
   searchPlaceholder,
   modalCloseButtonText,
@@ -211,6 +212,7 @@ const PaperSelect = ({
           ref={selectInputRef}
           disabled={disabled}
           style={{
+            ...textInputStyle,
             backgroundColor: textInputBackgroundColor || '#fff',
             color: textInputColor || '#000',
             height: textInputHeight,

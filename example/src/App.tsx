@@ -72,7 +72,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Headline style={{ marginBottom: 10 }}>
+      <Headline style={{ marginBottom: 20, color: 'black', fontWeight: 'bold' }}>
         React Native Paper Select
       </Headline>
       <PaperSelect
@@ -90,11 +90,10 @@ export default function App() {
         selectedArrayList={[...gender.selectedList]}
         errorText={gender.error}
         multiEnable={false}
-        dialogTitleStyle={{ color: 'red' }}
-        checkboxColor="yellow"
-        checkboxLabelStyle={{ color: 'red', fontWeight: '700' }}
-        textInputBackgroundColor="yellow"
-        textInputColor="red"
+        dialogTitleStyle={{ color: 'black' }}
+        checkboxColor="blue"
+        checkboxLabelStyle={{ color: 'black', fontWeight: '700' }}
+        textInputStyle={{fontWeight: '700'}}
       />
       <PaperSelect
         label="Select Colors"
@@ -153,6 +152,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 12,
+    backgroundColor: '#f5f5f5',
   },
   box: {
     width: 60,

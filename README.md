@@ -7,11 +7,13 @@
 [![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
 
-- This module includes a customizable multi-select and a single select component for **React Native Paper**.
+- This module includes a [customizable](#customization-options) multi-select and a single select component for **React Native Paper**.
 - The package is both **Android** and **iOS** compatible.
 - The package is well-typed and supports **TypeScript**.
 - Smooth and fast.
 - Type-safe
+
+[Go to Customizable Properties](#customization-options)
 
 **Give us a GitHub star 🌟, if you found this package useful.**
 [![GitHub stars](https://img.shields.io/github/stars/srivastavaanurag79/react-native-paper-select.svg?style=social&label=Star&maxAge=2592000)](https://github.com/srivastavaanurag79/react-native-paper-select)
@@ -21,6 +23,7 @@
 ## Demo/Screenshots
 
 <p float="left">
+<img style="border: 1px solid; margin: 10px" src="demo1.gif" alt="React Native Paper Select" width="135" />
 <img style="border: 1px solid; margin: 10px" src="demo.gif" alt="React Native Paper Select" width="175" />
   <img style="border: 1px solid; margin: 10px"  src="demo1.png" alt="React Native Paper Select" width="150" />
   <img style="border: 1px solid; margin: 10px"  src="demo2.png" alt="React Native Paper Select" width="150" />
@@ -120,7 +123,9 @@ import { PaperSelect } from 'react-native-paper-select';
 />;
 ```
 
-### Props
+## Customization Options
+
+The table consists of 5 columns. Please go through the table properly.
 
 | props                      | type                                                                                                                                                                       | description                                                                                                          | default value                                                                      | required |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | -------- |
@@ -147,6 +152,7 @@ import { PaperSelect } from 'react-native-paper-select';
 |   textInputBackgroundColor | string                                                                                                                                                                     | text input background color                                                                                          | white                                                                              | no       |
 |   textInputColor           | string                                                                                                                                                                     | text input text color                                                                                                | black                                                                              | no       |
 |   textInputHeight          | number                                                                                                                                                                     | text input height                                                                                                    | default react native paper style                                                   | no       |
+|   textInputStyle          | TextStyle                                                                                                                                                                     | text input text style                                                                                                    | default react native paper style                                                   | no       |
 |   dialogButtonLabelStyle   | TextStyle                                                                                                                                                                  | dialog button style                                                                                                  | default react native paper style                                                   | no       |
 |   searchPlaceholder        | string                                                                                                                                                                     | search placeholder                                                                                                   | Search                                                                             | no       |
 |   modalCloseButtonText     | string                                                                                                                                                                     | Close button text in modal                                                                                           | Close                                                                              | no       |

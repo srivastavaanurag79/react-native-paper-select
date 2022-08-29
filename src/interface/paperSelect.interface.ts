@@ -26,6 +26,7 @@ export interface paperSelect {
     borderColor?: ViewStyle['borderColor'];
     iconColor?: string;
   };
+  disabled?: boolean;
   checkboxUncheckedColor?: string;
   checkboxColor?: string;
   checkboxLabelStyle?: TextStyle;

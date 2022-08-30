@@ -47,6 +47,7 @@ const PaperSelect = ({
   textInputHeight,
   textInputStyle,
   dialogButtonLabelStyle,
+  hideSearchBox,
   searchPlaceholder,
   modalCloseButtonText,
   modalDoneButtonText,
@@ -270,7 +271,7 @@ const PaperSelect = ({
                   paddingHorizontal: 0,
                 }}
               >
-                <Searchbar
+                {hideSearchBox ? <Text style={{ margin: 0, height: 0 }} /> : <Searchbar
                   value={searchKey}
                   placeholder={searchPlaceholder || "Search"}
                   onChangeText={(text: string) => _filterFunction(text)}
@@ -284,7 +285,7 @@ const PaperSelect = ({
                     marginHorizontal: 8,
                     color: searchStyle?.textColor || '#000',
                   }}
-                />
+                />}
                 {multiEnable === true && (
                   <TouchableOpacity
                     style={{ flexDirection: 'row', alignItems: 'center' }}

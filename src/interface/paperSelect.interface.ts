@@ -41,6 +41,7 @@ export interface paperSelect {
   textInputHeight?: number;
   textInputStyle?: TextStyle;
   dialogButtonLabelStyle?: TextStyle;
+  hideSearchBox?: boolean;
   searchPlaceholder?: string;
   modalCloseButtonText?: string;
   modalDoneButtonText?: string;

@@ -94,6 +94,7 @@ export default function App() {
         checkboxColor="blue"
         checkboxLabelStyle={{ color: 'black', fontWeight: '700' }}
         textInputStyle={{fontWeight: '700'}}
+        hideSearchBox={true}
       />
       <PaperSelect
         label="Select Colors"

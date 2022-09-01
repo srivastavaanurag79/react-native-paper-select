@@ -13,6 +13,7 @@ export interface paperSelect {
   errorText: string;
   value: string;
   onSelection: (item: any) => void;
+  containerStyle?: ViewStyle;
   dialogStyle?: {
     backgroundColor?: ViewStyle['backgroundColor'];
     borderRadius?: ViewStyle['borderRadius'];

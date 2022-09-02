@@ -28,6 +28,7 @@ const PaperSelect = ({
   errorText,
   value,
   onSelection,
+  containerStyle,
   dialogStyle,
   dialogTitle,
   dialogTitleStyle,
@@ -208,7 +209,7 @@ const PaperSelect = ({
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyle]}>
         <TextInput
           ref={selectInputRef}
           disabled={disabled}

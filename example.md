@@ -14,8 +14,7 @@
 
 #### Code
 
-{% code title="App.tsx" lineNumbers="true" %}
-```typescript
+```javascript
 import React, { useState } from 'react';
 
 import { Alert, StyleSheet, View } from 'react-native';
@@ -154,4 +153,3 @@ const styles = StyleSheet.create({
   },
 });
 ```
-{% endcode %}

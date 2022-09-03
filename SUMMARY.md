@@ -7,12 +7,8 @@
 
 ## Guides
 
-* [Basic Usage](guides/basic-usage/README.md)
-  * [Single Select](guides/basic-usage/single-select.md)
-  * [Multi Select](guides/basic-usage/multi-select.md)
-* [Advanced Usage](guides/advanced-usage/README.md)
-  * [Single Select](guides/advanced-usage/single-select.md)
-  * [Multi Select](guides/advanced-usage/multi-select.md)
+* [Basic Usage](guides/basic-usage.md)
+* [Advanced Usage](guides/advanced-usage.md)
 * [Customizations](guides/customizations.md)
 * [Callback](guides/callback.md)
 

@@ -1,5 +1,6 @@
 # React Native Paper Select 🔽
 
+[![Featured on Openbase](https://badges.openbase.com/js/featured/react-native-paper-select.svg?style=openbase&token=XVbYxZZ+O+XVG6Ne8bSk6hb8cQqTQDoN1CwahbofICs=)](https://openbase.com/js/react-native-paper-select?utm_source=embedded&amp;utm_medium=badge&amp;utm_campaign=rate-badge)
 [![Version](https://img.shields.io/npm/v/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
 [![Dependency Status](https://img.shields.io/npm/dt/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
 [![License](https://img.shields.io/npm/l/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)

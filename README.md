@@ -17,6 +17,8 @@
 **Give us a GitHub star 🌟, if you found this package useful.**
 [![GitHub stars](https://img.shields.io/github/stars/srivastavaanurag79/react-native-paper-select.svg?style=social&label=Star&maxAge=2592000)](https://github.com/srivastavaanurag79/react-native-paper-select)
 
+Enjoying react-native-paper-select? [Please leave a short review on Openbase](https://openbase.com/js/react-native-paper-select#rate)
+
 Check out the new [Documentation](https://anurag-srivastava.gitbook.io/react-native-paper-select).
 
 [Go to Customizable Properties](https://anurag-srivastava.gitbook.io/react-native-paper-select/guides/customizations)

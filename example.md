@@ -14,7 +14,8 @@
 
 #### Code
 
-```javascript
+{% code title="App.tsx" lineNumbers="true" %}
+```typescript
 import React, { useState } from 'react';
 
 import { Alert, StyleSheet, View } from 'react-native';
@@ -81,6 +82,12 @@ export default function App() {
         checkboxLabelStyle={{ color: 'red', fontWeight: '700' }}
         textInputBackgroundColor="yellow"
         textInputColor="red"
+        outlineColor="black"
+        theme={{
+          colors: {
+            placeholder: 'black'
+          }
+        }}
       />
       <PaperSelect
         label="Select Colors"
@@ -153,3 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 ```
+{% endcode %}

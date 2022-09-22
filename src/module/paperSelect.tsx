@@ -52,6 +52,7 @@ const PaperSelect = ({
   searchPlaceholder,
   modalCloseButtonText,
   modalDoneButtonText,
+  theme
 }: paperSelect) => {
   const [searchKey, setSearchKey] = useState<string>('');
 
@@ -245,6 +246,7 @@ const PaperSelect = ({
               name="chevron-down"
             />
           }
+          theme={theme}
         />
         {errorText ? (
           <Text style={{ ...errorStyle, color: errorStyle?.color || 'red' }}>

@@ -5,6 +5,7 @@
 [![Version](https://img.shields.io/npm/v/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
 [![Dependency Status](https://img.shields.io/npm/dt/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
 [![License](https://img.shields.io/npm/l/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
+[![Package Quality](https://packagequality.com/shield/react-native-paper-select.svg)](https://packagequality.com/#?package=react-native-paper-select)
 [![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/srivastavaanurag79/react-native-paper-select)
 [![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
@@ -34,7 +35,6 @@ Check out the [Example](https://anurag-srivastava.gitbook.io/react-native-paper-
 <img style="border: 1px solid; margin: 10px" src="demo1.gif" alt="React Native Paper Select" width="135" />
 <img style="border: 1px solid; margin: 10px" src="demo.gif" alt="React Native Paper Select" width="175" />
   <img style="border: 1px solid; margin: 10px"  src="demo1.png" alt="React Native Paper Select" width="150" />
-  <img style="border: 1px solid; margin: 10px"  src="demo2.png" alt="React Native Paper Select" width="150" />
   <img style="border: 1px solid; margin: 10px"  src="demo3.png" alt="React Native Paper Select" width="150" />
   <img style="border: 1px solid; margin: 10px"  src="demo4.png" alt="React Native Paper Select" width="150" />
 </p>
@@ -94,6 +94,7 @@ The table consists of 5 columns. Please go through the table properly.
 |   searchPlaceholder        | string                                                                                                                                                                     | search placeholder                                                                                                   | Search                                                                             | no       |
 |   modalCloseButtonText     | string                                                                                                                                                                     | Close button text in modal                                                                                           | Close                                                                              | no       |
 |   modalDoneButtonText      | string                                                                                                                                                                     | Done button text in modal                                                                                            | Done                                                                               | no       |
+|   theme     | {colors: {placeholder: string}}                                                                                                                                                                     | Change color of placeholder/label (ref: [Issue#9](https://github.com/srivastavaanurag79/react-native-paper-select/issues/9))                                                                                        | React Native Paper Default                                                                              | no       |
 
 ## Try it out
 

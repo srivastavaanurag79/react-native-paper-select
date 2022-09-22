@@ -1,4 +1,5 @@
 import type { ViewStyle, TextStyle } from 'react-native';
+import type { Fonts } from 'react-native-paper/lib/typescript/types';
 
 export interface list {
   _id: string;
@@ -46,4 +47,26 @@ export interface paperSelect {
   searchPlaceholder?: string;
   modalCloseButtonText?: string;
   modalDoneButtonText?: string;
+  theme?: {
+    dark?: boolean;
+    mode?: 'adaptive' | 'exact';
+    roundness?: number;
+    colors?: {
+      primary?: string;
+      background?: string;
+      surface?: string;
+      accent?: string;
+      error?: string;
+      text?: string;
+      onSurface?: string;
+      disabled?: string;
+      placeholder?: string;
+      backdrop?: string;
+      notification?: string;
+    };
+    fonts?: Fonts;
+    animation?: {
+      scale: number;
+    };
+  };
 }

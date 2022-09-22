@@ -93,8 +93,14 @@ export default function App() {
         dialogTitleStyle={{ color: 'black' }}
         checkboxColor="blue"
         checkboxLabelStyle={{ color: 'black', fontWeight: '700' }}
-        textInputStyle={{fontWeight: '700'}}
+        textInputStyle={{ fontWeight: '700' }}
         hideSearchBox={true}
+        outlineColor="black"
+        theme={{
+          colors: {
+            placeholder: 'black'
+          }
+        }}
       />
       <PaperSelect
         label="Select Colors"

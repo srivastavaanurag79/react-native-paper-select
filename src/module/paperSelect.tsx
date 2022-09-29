@@ -70,18 +70,17 @@ const PaperSelect = ({
     var data = [...arrayHolder];
     var selectedData = [...selectedList];
     // console.log(selectedData);
-    let selected: Array<any> = [];
-
-    selectedData.forEach((val) => {
+    let finalText: string = "";
+    selectedData.forEach((val, index) => {
       data.forEach((el) => {
         if (val._id === el._id) {
-          selected.push(el.value);
+          finalText += (index !== selectedData.length - 1) ? `${el.value}, ` : `${el.value}`;
         }
       });
     });
-    // value = selected.join();
+
     onSelection({
-      text: selected.join(),
+      text: finalText,
       selectedList: selectedData,
     });
 

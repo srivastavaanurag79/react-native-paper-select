@@ -66,7 +66,8 @@ const PaperSelect = ({
   const showDialog = () => setVisible(true);
 
   const _hideDialog = () => {
-    var data = [...list];
+    setSearchKey("");
+    var data = [...arrayHolder];
     var selectedData = [...selectedList];
     // console.log(selectedData);
     let selected: Array<any> = [];
@@ -86,6 +87,7 @@ const PaperSelect = ({
 
 
     setVisible(false);
+
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
     }
@@ -93,6 +95,7 @@ const PaperSelect = ({
 
   const _closeDialog = () => {
     setVisible(false);
+    setSearchKey("");
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
     }

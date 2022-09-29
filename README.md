@@ -6,9 +6,6 @@
 [![Dependency Status](https://img.shields.io/npm/dt/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
 [![License](https://img.shields.io/npm/l/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
 [![Package Quality](https://packagequality.com/shield/react-native-paper-select.svg)](https://packagequality.com/#?package=react-native-paper-select)
-[![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/srivastavaanurag79/react-native-paper-select)
-[![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
 
 - This module includes a [customizable](#customization-options) multi-select and a single select component for **React Native Paper**.
 - The package is both **Android** and **iOS** compatible.

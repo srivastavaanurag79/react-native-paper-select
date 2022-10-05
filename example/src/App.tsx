@@ -22,6 +22,7 @@ export default function App() {
       { _id: '1', value: 'MALE' },
       { _id: '2', value: 'FEMALE' },
       { _id: '3', value: 'OTHERS' },
+      { _id: '4', value: '   TESTING VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG NAME  ' },
     ],
     selectedList: [],
     error: '',

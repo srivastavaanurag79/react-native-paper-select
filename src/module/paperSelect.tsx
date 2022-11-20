@@ -28,6 +28,7 @@ const PaperSelect = ({
   errorText,
   value,
   onSelection,
+  selectAllEnable = true,
   selectAllText = "Select All",
   containerStyle,
   dialogStyle,
@@ -292,7 +293,7 @@ const PaperSelect = ({
                     color: searchStyle?.textColor || '#000',
                   }}
                 />}
-                {multiEnable === true && (
+                {(multiEnable === true && selectAllEnable === true) && (
                   <TouchableOpacity
                     style={{ flexDirection: 'row', alignItems: 'center' }}
                     onPress={() => {

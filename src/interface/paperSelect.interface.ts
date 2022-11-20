@@ -14,6 +14,7 @@ export interface paperSelect {
   errorText: string;
   value: string;
   onSelection: (item: any) => void;
+  selectAllEnable?: boolean;
   selectAllText?: string;
   containerStyle?: ViewStyle;
   dialogStyle?: {

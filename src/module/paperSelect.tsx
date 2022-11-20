@@ -28,7 +28,7 @@ const PaperSelect = ({
   errorText,
   value,
   onSelection,
-  selectAllText,
+  selectAllText = "Select All",
   containerStyle,
   dialogStyle,
   dialogTitle,
@@ -301,7 +301,7 @@ const PaperSelect = ({
                   >
                     <CheckboxInput
                       isChecked={_isCheckedAll()}
-                      label={selectAllText ?? "Select All"}
+                      label={selectAllText}
                       checkboxLabelStyle={checkboxLabelStyle}
                       checkboxColor={checkboxColor}
                       checkboxUncheckedColor={checkboxUncheckedColor}

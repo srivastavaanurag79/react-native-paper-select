@@ -106,7 +106,7 @@ export default function App() {
       <PaperSelect
         label="Select Colors"
         value={colors.value}
-        onSelection={(value: any) => {
+        onSelection={(value) => {
           setColors({
             ...colors,
             value: value.text,

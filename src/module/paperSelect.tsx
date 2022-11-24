@@ -18,7 +18,7 @@ import {
   Searchbar,
 } from 'react-native-paper';
 import CheckboxInput from '../components/checkBox';
-import type { paperSelect } from '../interface/paperSelect.interface';
+import type { list, paperSelect } from '../interface/paperSelect.interface';
 
 const PaperSelect = ({
   label,
@@ -58,9 +58,9 @@ const PaperSelect = ({
 }: paperSelect) => {
   const [searchKey, setSearchKey] = useState<string>('');
 
-  const [arrayHolder, setArrayHolder] = useState<Array<any>>([...arrayList]);
-  const [list, setList] = useState<Array<any>>([...arrayList]);
-  const [selectedList, setSelectedList] = useState<Array<any>>([...selectedArrayList]);
+  const [arrayHolder, setArrayHolder] = useState<Array<list>>([...arrayList]);
+  const [list, setList] = useState<Array<list>>([...arrayList]);
+  const [selectedList, setSelectedList] = useState<Array<list>>([...selectedArrayList]);
 
   const selectInputRef = useRef<any>(null);
   const [visible, setVisible] = useState<boolean>(false);
@@ -69,8 +69,9 @@ const PaperSelect = ({
 
   const _hideDialog = () => {
     setSearchKey("");
-    var data = [...arrayHolder];
-    var selectedData = [...selectedList];
+    var data: Array<list> = [...arrayHolder];
+    // console.log(selectedList);
+    var selectedData: Array<list> = [...selectedList];
     // console.log(selectedData);
     let finalText: string = "";
     selectedData.forEach((val, index) => {

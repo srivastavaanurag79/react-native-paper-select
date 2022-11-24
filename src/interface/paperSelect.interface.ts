@@ -6,6 +6,11 @@ export interface list {
   value: string;
 }
 
+export interface SelectedItem {
+  text: string;
+  selectedList: Array<list>;
+}
+
 export interface paperSelect {
   label: string;
   arrayList: Array<list>;
@@ -13,7 +18,7 @@ export interface paperSelect {
   multiEnable: boolean;
   errorText: string;
   value: string;
-  onSelection: (item: any) => void;
+  onSelection: (item: SelectedItem) => void;
   selectAllEnable?: boolean;
   selectAllText?: string;
   containerStyle?: ViewStyle;

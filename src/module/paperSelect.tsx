@@ -28,6 +28,8 @@ const PaperSelect = ({
   errorText,
   value,
   onSelection,
+  selectAllEnable = true,
+  selectAllText = "Select All",
   containerStyle,
   dialogStyle,
   dialogTitle,
@@ -291,7 +293,7 @@ const PaperSelect = ({
                     color: searchStyle?.textColor || '#000',
                   }}
                 />}
-                {multiEnable === true && (
+                {(multiEnable === true && selectAllEnable === true) && (
                   <TouchableOpacity
                     style={{ flexDirection: 'row', alignItems: 'center' }}
                     onPress={() => {
@@ -300,7 +302,7 @@ const PaperSelect = ({
                   >
                     <CheckboxInput
                       isChecked={_isCheckedAll()}
-                      label="Select All"
+                      label={selectAllText}
                       checkboxLabelStyle={checkboxLabelStyle}
                       checkboxColor={checkboxColor}
                       checkboxUncheckedColor={checkboxUncheckedColor}

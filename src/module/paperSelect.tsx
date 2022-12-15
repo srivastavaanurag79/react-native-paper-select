@@ -21,6 +21,7 @@ import CheckboxInput from '../components/checkBox';
 import type { list, paperSelect } from '../interface/paperSelect.interface';
 
 const PaperSelect = ({
+  inputRef,
   label,
   arrayList,
   selectedArrayList,
@@ -62,7 +63,9 @@ const PaperSelect = ({
   const [list, setList] = useState<Array<list>>([...arrayList]);
   const [selectedList, setSelectedList] = useState<Array<list>>([...selectedArrayList]);
 
-  const selectInputRef = useRef<any>(null);
+  const selfInputRef = useRef<any>(null);
+  const selectInputRef = inputRef ?? selfInputRef;
+
   const [visible, setVisible] = useState<boolean>(false);
 
   const showDialog = () => setVisible(true);

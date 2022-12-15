@@ -1,3 +1,4 @@
+import type { MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
 import type { Fonts } from 'react-native-paper/lib/typescript/types';
 
@@ -12,6 +13,7 @@ export interface SelectedItem {
 }
 
 export interface paperSelect {
+  inputRef?: MutableRefObject<any>;
   label: string;
   arrayList: Array<list>;
   selectedArrayList: Array<list>;

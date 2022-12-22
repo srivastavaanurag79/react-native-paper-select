@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import { Alert, StyleSheet, View } from 'react-native';
 import { Button as PaperButton, Headline } from 'react-native-paper';
@@ -16,6 +16,8 @@ export const selectValidator = (value: any) => {
 };
 
 export default function App() {
+
+  const singleSelectRef = useRef<any>();
   const [gender, setGender] = useState<any>({
     value: '',
     list: [
@@ -77,6 +79,7 @@ export default function App() {
         React Native Paper Select
       </Headline>
       <PaperSelect
+        inputRef={singleSelectRef}
         label="Select Gender"
         value={gender.value}
         onSelection={(value: any) => {
@@ -150,6 +153,9 @@ export default function App() {
       >
         Submit
       </PaperButton>
+      <PaperButton onPress={() => {
+        singleSelectRef.current.focus()
+      }}>Open</PaperButton>
     </View>
   );
 }

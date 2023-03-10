@@ -252,6 +252,7 @@ const PaperSelect = ({
               }}
               size={15}
               name="chevron-down"
+              icon="chevron-down"
             />
           }
           theme={theme}

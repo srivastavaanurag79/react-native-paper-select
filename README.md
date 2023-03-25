@@ -45,6 +45,8 @@ react-native-vector-icons
 
 ## Installation
 
+If you are using <b>React Native Paper v5.x</b> please install the versions above 0.4.1 or above, since <TextInput.Icon> attributes are changed in v5.x else version 0.4.0 would work fine.
+
 ```bash
 npm install react-native-paper-select
 ```

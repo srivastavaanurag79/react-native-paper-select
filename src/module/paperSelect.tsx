@@ -244,14 +244,9 @@ const PaperSelect = ({
                 alignItems: 'center',
                 alignSelf: 'center',
                 alignContent: 'center',
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
               }}
-              size={15}
-              name="chevron-down"
+              size={20}
+              // name="chevron-down"
               icon="chevron-down"
             />
           }

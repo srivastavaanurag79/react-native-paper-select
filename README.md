@@ -118,6 +118,7 @@ react-native run-android
 - ahmed [(@Bo7mid3)](https://github.com/Bo7mid3)
 - Thom van den Akker [(@Thodor12)](https://github.com/Thodor12)
 - Carlos Loureiro [(@CarlosSLoureiro)](https://github.com/CarlosSLoureiro)
+- b. avianto [(@avianto)](https://github.com/avianto)
 
 ## Contributing
 

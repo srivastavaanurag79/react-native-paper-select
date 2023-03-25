@@ -1,6 +1,6 @@
 import type { MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
-import type { Fonts } from 'react-native-paper/lib/typescript/types';
+import type { Fonts } from 'react-native-paper/lib/typescript/src/types';
 
 export interface list {
   _id: string;

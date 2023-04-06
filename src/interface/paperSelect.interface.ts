@@ -1,18 +1,29 @@
+import type { MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
+import type { Fonts } from 'react-native-paper/lib/typescript/src/types';
 
 export interface list {
   _id: string;
   value: string;
 }
 
+export interface SelectedItem {
+  text: string;
+  selectedList: Array<list>;
+}
+
 export interface paperSelect {
+  inputRef?: MutableRefObject<any>;
   label: string;
   arrayList: Array<list>;
   selectedArrayList: Array<list>;
   multiEnable: boolean;
   errorText: string;
   value: string;
-  onSelection: (item: any) => void;
+  onSelection: (item: SelectedItem) => void;
+  selectAllEnable?: boolean;
+  selectAllText?: string;
+  containerStyle?: ViewStyle;
   dialogStyle?: {
     backgroundColor?: ViewStyle['backgroundColor'];
     borderRadius?: ViewStyle['borderRadius'];
@@ -46,4 +57,26 @@ export interface paperSelect {
   dialogDoneButtonText?: string;
   dialogCloseButtonStyle?: TextStyle;
   dialogDoneButtonStyle?: TextStyle;
+  theme?: {
+    dark?: boolean;
+    mode?: 'adaptive' | 'exact';
+    roundness?: number;
+    colors?: {
+      primary?: string;
+      background?: string;
+      surface?: string;
+      accent?: string;
+      error?: string;
+      text?: string;
+      onSurface?: string;
+      disabled?: string;
+      placeholder?: string;
+      backdrop?: string;
+      notification?: string;
+    };
+    fonts?: Fonts;
+    animation?: {
+      scale: number;
+    };
+  };
 }

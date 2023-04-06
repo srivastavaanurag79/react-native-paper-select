@@ -18,9 +18,10 @@ import {
   Searchbar,
 } from 'react-native-paper';
 import CheckboxInput from '../components/checkBox';
-import type { paperSelect } from '../interface/paperSelect.interface';
+import type { list, paperSelect } from '../interface/paperSelect.interface';
 
 const PaperSelect = ({
+  inputRef,
   label,
   arrayList,
   selectedArrayList,
@@ -28,6 +29,9 @@ const PaperSelect = ({
   errorText,
   value,
   onSelection,
+  selectAllEnable = true,
+  selectAllText = 'Select All',
+  containerStyle,
   dialogStyle,
   dialogTitle,
   dialogTitleStyle,
@@ -48,43 +52,50 @@ const PaperSelect = ({
   textInputStyle,
   hideSearchBox,
   searchPlaceholder,
-  dialogCloseButtonText = "Close",
-  dialogDoneButtonText = "Done",
+  dialogCloseButtonText = 'Close',
+  dialogDoneButtonText = 'Done',
   dialogCloseButtonStyle,
   dialogDoneButtonStyle,
+  theme,
 }: paperSelect) => {
   const [searchKey, setSearchKey] = useState<string>('');
 
-  const [arrayHolder, setArrayHolder] = useState<Array<any>>([...arrayList]);
-  const [list, setList] = useState<Array<any>>([...arrayList]);
-  const [selectedList, setSelectedList] = useState<Array<any>>([...selectedArrayList]);
+  const [arrayHolder, setArrayHolder] = useState<Array<list>>([...arrayList]);
+  const [list, setList] = useState<Array<list>>([...arrayList]);
+  const [selectedList, setSelectedList] = useState<Array<list>>([
+    ...selectedArrayList,
+  ]);
 
-  const selectInputRef = useRef<any>(null);
+  const selfInputRef = useRef<any>(null);
+  const selectInputRef = inputRef ?? selfInputRef;
+
   const [visible, setVisible] = useState<boolean>(false);
 
   const showDialog = () => setVisible(true);
 
   const _hideDialog = () => {
-    var data = [...list];
-    var selectedData = [...selectedList];
+    setSearchKey('');
+    var data: Array<list> = [...arrayHolder];
+    // console.log(selectedList);
+    var selectedData: Array<list> = [...selectedList];
     // console.log(selectedData);
-    let selected: Array<any> = [];
-
-    selectedData.forEach((val) => {
+    let finalText: string = '';
+    selectedData.forEach((val, index) => {
       data.forEach((el) => {
         if (val._id === el._id) {
-          selected.push(el.value);
+          finalText +=
+            index !== selectedData.length - 1 ? `${el.value}, ` : `${el.value}`;
         }
       });
     });
-    // value = selected.join();
+
     onSelection({
-      text: selected.join(),
+      text: finalText,
       selectedList: selectedData,
     });
 
-
     setVisible(false);
+
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
     }
@@ -92,6 +103,7 @@ const PaperSelect = ({
 
   const _closeDialog = () => {
     setVisible(false);
+    setSearchKey('');
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
     }
@@ -133,7 +145,7 @@ const PaperSelect = ({
 
   const _exists = (item: any) => {
     // console.log(selectedList);
-    let _temp = [...selectedList]
+    let _temp = [...selectedList];
     return _temp.find((val: any) => val._id === item._id) ? true : false;
   };
 
@@ -209,7 +221,7 @@ const PaperSelect = ({
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyle]}>
         <TextInput
           ref={selectInputRef}
           disabled={disabled}
@@ -235,16 +247,13 @@ const PaperSelect = ({
                 alignItems: 'center',
                 alignSelf: 'center',
                 alignContent: 'center',
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
               }}
-              size={15}
-              name="chevron-down"
+              size={20}
+              // name="chevron-down"
+              icon="chevron-down"
             />
           }
+          theme={theme}
         />
         {errorText ? (
           <Text style={{ ...errorStyle, color: errorStyle?.color || 'red' }}>
@@ -263,7 +272,9 @@ const PaperSelect = ({
             visible={visible}
             dismissable={false}
           >
-            <Dialog.Title style={dialogTitleStyle}>{dialogTitle ?? label}</Dialog.Title>
+            <Dialog.Title style={dialogTitleStyle}>
+              {dialogTitle ?? label}
+            </Dialog.Title>
             <Dialog.Content>
               <Dialog.ScrollArea
                 style={{
@@ -272,22 +283,27 @@ const PaperSelect = ({
                   paddingHorizontal: 0,
                 }}
               >
-                {hideSearchBox ? <Text style={{ margin: 0, height: 0 }} /> : <Searchbar
-                  value={searchKey}
-                  placeholder={searchPlaceholder || "Search"}
-                  onChangeText={(text: string) => _filterFunction(text)}
-                  iconColor={searchStyle?.iconColor || 'black'}
-                  style={{
-                    borderRadius: searchStyle?.borderRadius || 5,
-                    borderColor: searchStyle?.borderColor || '#e5e5e5',
-                    backgroundColor: searchStyle?.backgroundColor || '#e5e5e5',
-                    borderWidth: 0.5,
-                    marginBottom: 10,
-                    marginHorizontal: 8,
-                    color: searchStyle?.textColor || '#000',
-                  }}
-                />}
-                {multiEnable === true && (
+                {hideSearchBox ? (
+                  <Text style={{ margin: 0, height: 0 }} />
+                ) : (
+                  <Searchbar
+                    value={searchKey}
+                    placeholder={searchPlaceholder || 'Search'}
+                    onChangeText={(text: string) => _filterFunction(text)}
+                    iconColor={searchStyle?.iconColor || 'black'}
+                    style={{
+                      borderRadius: searchStyle?.borderRadius || 5,
+                      borderColor: searchStyle?.borderColor || '#e5e5e5',
+                      backgroundColor:
+                        searchStyle?.backgroundColor || '#e5e5e5',
+                      borderWidth: 0.5,
+                      marginBottom: 10,
+                      marginHorizontal: 8,
+                      color: searchStyle?.textColor || '#000',
+                    }}
+                  />
+                )}
+                {multiEnable === true && selectAllEnable === true && (
                   <TouchableOpacity
                     style={{ flexDirection: 'row', alignItems: 'center' }}
                     onPress={() => {
@@ -296,7 +312,7 @@ const PaperSelect = ({
                   >
                     <CheckboxInput
                       isChecked={_isCheckedAll()}
-                      label="Select All"
+                      label={selectAllText}
                       checkboxLabelStyle={checkboxLabelStyle}
                       checkboxColor={checkboxColor}
                       checkboxUncheckedColor={checkboxUncheckedColor}
@@ -316,7 +332,10 @@ const PaperSelect = ({
               </Dialog.ScrollArea>
             </Dialog.Content>
             <Dialog.Actions style={{ marginTop: -20 }}>
-              <Button labelStyle={dialogCloseButtonStyle} onPress={_closeDialog}>
+              <Button
+                labelStyle={dialogCloseButtonStyle}
+                onPress={_closeDialog}
+              >
                 {dialogCloseButtonText}
               </Button>
               <Button labelStyle={dialogDoneButtonStyle} onPress={_hideDialog}>

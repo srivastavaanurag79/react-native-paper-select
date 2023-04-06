@@ -1,7 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
-import React, { useState, useEffect, useRef } from 'react';
+# Example
+
+#### Screenshot
+
+<div>
+
+<figure><img src="demo1.png" alt=""><figcaption></figcaption></figure>
+
+ 
+
+<figure><img src="demo4.png" alt=""><figcaption></figcaption></figure>
+
+</div>
+
+#### Code
+
+{% code title="App.tsx" lineNumbers="true" %}
+```typescript
+import React, { useState } from 'react';
 
 import { Alert, StyleSheet, View } from 'react-native';
 import { Button as PaperButton, Headline } from 'react-native-paper';
@@ -16,21 +31,17 @@ export const selectValidator = (value: any) => {
 };
 
 export default function App() {
-
-  const singleSelectRef = useRef<any>();
-  const [gender, setGender] = useState<any>({
+  const [gender, setGender] = useState({
     value: '',
     list: [
       { _id: '1', value: 'MALE' },
       { _id: '2', value: 'FEMALE' },
       { _id: '3', value: 'OTHERS' },
-      { _id: '4', value: '   TESTING VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG NAME  ' },
     ],
     selectedList: [],
     error: '',
   });
-
-  const [colors, setColors] = useState<any>({
+  const [colors, setColors] = useState({
     value: '',
     list: [
       { _id: '1', value: 'BLUE' },
@@ -46,40 +57,12 @@ export default function App() {
     error: '',
   });
 
-  useEffect(() => {
-    let isMounted = true;
-    let _getData = async () => {
-      if (isMounted) {
-        setGender({
-          ...gender,
-          value: 'OTHERS',
-          selectedList: [{ _id: '3', value: 'OTHERS' }],
-        });
-
-        setColors({
-          ...colors,
-          value: 'BLUE,RED',
-          selectedList: [
-            { _id: '1', value: 'BLUE' },
-            { _id: '2', value: 'RED' },
-          ],
-        });
-      }
-    };
-
-    _getData();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
   return (
     <View style={styles.container}>
-      <Headline style={{ marginBottom: 20, color: 'black', fontWeight: 'bold' }}>
+      <Headline style={{ marginBottom: 10 }}>
         React Native Paper Select
       </Headline>
       <PaperSelect
-        inputRef={singleSelectRef}
         label="Select Gender"
         value={gender.value}
         onSelection={(value: any) => {
@@ -91,14 +74,14 @@ export default function App() {
           });
         }}
         arrayList={[...gender.list]}
-        selectedArrayList={[...gender.selectedList]}
+        selectedArrayList={gender.selectedList}
         errorText={gender.error}
         multiEnable={false}
-        dialogTitleStyle={{ color: 'black' }}
-        checkboxColor="blue"
-        checkboxLabelStyle={{ color: 'black', fontWeight: '700' }}
-        textInputStyle={{ fontWeight: '700' }}
-        hideSearchBox={true}
+        dialogTitleStyle={{ color: 'red' }}
+        checkboxColor="yellow"
+        checkboxLabelStyle={{ color: 'red', fontWeight: '700' }}
+        textInputBackgroundColor="yellow"
+        textInputColor="red"
         outlineColor="black"
         theme={{
           colors: {
@@ -109,7 +92,7 @@ export default function App() {
       <PaperSelect
         label="Select Colors"
         value={colors.value}
-        onSelection={(value) => {
+        onSelection={(value: any) => {
           setColors({
             ...colors,
             value: value.text,
@@ -118,17 +101,11 @@ export default function App() {
           });
         }}
         arrayList={[...colors.list]}
-        selectedArrayList={[...colors.selectedList]}
+        selectedArrayList={colors.selectedList}
         errorText={colors.error}
         multiEnable={true}
         textInputMode="flat"
         searchStyle={{ iconColor: 'red' }}
-        dialogButtonLabelStyle={{
-          color: 'red',
-          backgroundColor: 'yellow',
-          padding: 10,
-          borderRadius: 5,
-        }}
         searchPlaceholder="Procurar"
         modalCloseButtonText="fechar"
         modalDoneButtonText="terminado"
@@ -153,9 +130,6 @@ export default function App() {
       >
         Submit
       </PaperButton>
-      <PaperButton onPress={() => {
-        singleSelectRef.current.focus()
-      }}>Open</PaperButton>
     </View>
   );
 }
@@ -166,7 +140,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 12,
-    backgroundColor: '#f5f5f5',
   },
   box: {
     width: 60,
@@ -186,3 +159,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+```
+{% endcode %}

@@ -16,8 +16,17 @@ const CheckboxInput = ({
       uncheckedColor={checkboxUncheckedColor || '#000007'}
       color={checkboxColor || 'blue'}
       status={isChecked === true ? 'checked' : 'unchecked'}
+      style={{ flex: 1 }}
     />
-    <Text style={checkboxLabelStyle}> {label} </Text>
+    <Text
+      style={{
+        ...checkboxLabelStyle,
+        flexDirection: 'row',
+        flexShrink: 1,
+      }}
+    >
+      {label.trim()}
+    </Text>
   </View>
 );
 
@@ -25,6 +34,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
+    marginBottom: 1.5,
   },
 });
 

@@ -1,8 +1,12 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { memo } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Checkbox } from 'react-native-paper';
-import type { checkbox } from 'src/interface/checkbox.interface';
+import type { CheckboxProps } from 'src/interface/checkbox.interface';
+
+interface CheckboxPropsFull extends CheckboxProps {
+  isChecked: boolean;
+  label: string;
+}
 
 const CheckboxInput = ({
   isChecked,
@@ -10,23 +14,14 @@ const CheckboxInput = ({
   checkboxColor,
   checkboxLabelStyle,
   checkboxUncheckedColor,
-}: checkbox) => (
+}: CheckboxPropsFull) => (
   <View style={styles.container}>
-    <Checkbox.Android
+    <Checkbox
       uncheckedColor={checkboxUncheckedColor || '#000007'}
       color={checkboxColor || 'blue'}
       status={isChecked === true ? 'checked' : 'unchecked'}
-      style={{ flex: 1 }}
     />
-    <Text
-      style={{
-        ...checkboxLabelStyle,
-        flexDirection: 'row',
-        flexShrink: 1,
-      }}
-    >
-      {label.trim()}
-    </Text>
+    <Text style={[styles.labelStyle, checkboxLabelStyle]}>{label.trim()}</Text>
   </View>
 );
 
@@ -36,6 +31,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginBottom: 1.5,
+  },
+  labelStyle: {
+    flexDirection: 'row',
+    flexShrink: 1,
   },
 });
 

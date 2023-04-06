@@ -1,81 +1,66 @@
 import type { MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
-import type { Fonts } from 'react-native-paper/lib/typescript/src/types';
+import type { SearchbarProps, TextInputProps } from 'react-native-paper';
+import type { ThemeProp } from 'react-native-paper/lib/typescript/src/types';
+import type { CheckboxProps } from './checkbox.interface';
 
-export interface list {
+export interface ListItem {
   _id: string;
   value: string;
 }
 
 export interface SelectedItem {
   text: string;
-  selectedList: Array<list>;
+  selectedList: Array<ListItem>;
 }
 
-export interface paperSelect {
-  inputRef?: MutableRefObject<any>;
+export type SelectionCallback = (item: SelectedItem) => void;
+
+export type PaperSelectTextInputProps = Pick<
+  TextInputProps,
+  | 'underlineColor'
+  | 'activeUnderlineColor'
+  | 'outlineColor'
+  | 'activeOutlineColor'
+>;
+
+export interface PaperSelectProps {
+  // Required props
   label: string;
-  arrayList: Array<list>;
-  selectedArrayList: Array<list>;
+  arrayList: ListItem[];
+  selectedArrayList: ListItem[];
   multiEnable: boolean;
-  errorText: string;
   value: string;
-  onSelection: (item: SelectedItem) => void;
-  selectAllEnable?: boolean;
-  selectAllText?: string;
-  containerStyle?: ViewStyle;
-  dialogStyle?: {
-    backgroundColor?: ViewStyle['backgroundColor'];
-    borderRadius?: ViewStyle['borderRadius'];
-  };
-  dialogTitle?: string;
-  dialogTitleStyle?: TextStyle;
-  searchStyle?: {
-    backgroundColor?: ViewStyle['backgroundColor'];
-    textColor?: TextStyle['color'];
-    borderRadius?: number;
-    borderColor?: ViewStyle['borderColor'];
-    iconColor?: string;
-  };
+  onSelection: SelectionCallback;
+
+  // Core props
   disabled?: boolean;
-  checkboxUncheckedColor?: string;
-  checkboxColor?: string;
-  checkboxLabelStyle?: TextStyle;
-  errorStyle?: TextStyle;
-  textInputMode?: 'flat' | 'outlined';
-  underlineColor?: string;
-  activeUnderlineColor?: string;
-  activeOutlineColor?: string;
-  outlineColor?: string;
-  textInputBackgroundColor?: string;
-  textInputColor?: string;
-  textInputHeight?: number;
-  textInputStyle?: TextStyle;
-  dialogButtonLabelStyle?: TextStyle;
   hideSearchBox?: boolean;
-  searchPlaceholder?: string;
+  selectAllEnable?: boolean;
+  textInputMode?: TextInputProps['mode'];
+  theme?: ThemeProp;
+  inputRef?: MutableRefObject<any>;
+
+  // Localization props
+  dialogTitle?: string;
+  selectAllText?: string;
+  searchText?: string;
   modalCloseButtonText?: string;
   modalDoneButtonText?: string;
-  theme?: {
-    dark?: boolean;
-    mode?: 'adaptive' | 'exact';
-    roundness?: number;
-    colors?: {
-      primary?: string;
-      background?: string;
-      surface?: string;
-      accent?: string;
-      error?: string;
-      text?: string;
-      onSurface?: string;
-      disabled?: string;
-      placeholder?: string;
-      backdrop?: string;
-      notification?: string;
-    };
-    fonts?: Fonts;
-    animation?: {
-      scale: number;
-    };
+  errorText?: string;
+
+  // Style props
+  containerStyle?: ViewStyle;
+  textInputStyle?: TextStyle;
+  dialogStyle?: ViewStyle;
+  dialogTitleStyle?: TextStyle;
+  searchStyle?: SearchbarProps['style'] & {
+    iconColor?: string;
   };
+  dialogButtonLabelStyle?: TextStyle;
+  errorStyle?: TextStyle;
+
+  // Component props
+  textInputProps?: PaperSelectTextInputProps;
+  checkboxProps?: CheckboxProps;
 }

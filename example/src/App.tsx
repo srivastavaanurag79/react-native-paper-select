@@ -16,7 +16,6 @@ export const selectValidator = (value: any) => {
 };
 
 export default function App() {
-
   const singleSelectRef = useRef<any>();
   const [gender, setGender] = useState<any>({
     value: '',
@@ -24,7 +23,11 @@ export default function App() {
       { _id: '1', value: 'MALE' },
       { _id: '2', value: 'FEMALE' },
       { _id: '3', value: 'OTHERS' },
-      { _id: '4', value: '   TESTING VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG NAME  ' },
+      {
+        _id: '4',
+        value:
+          '   TESTING VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY VERY LONG NAME  ',
+      },
     ],
     selectedList: [],
     error: '',
@@ -75,7 +78,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Headline style={{ marginBottom: 20, color: 'black', fontWeight: 'bold' }}>
+      <Headline
+        style={{ marginBottom: 20, color: 'black', fontWeight: 'bold' }}
+      >
         React Native Paper Select
       </Headline>
       <PaperSelect
@@ -102,8 +107,8 @@ export default function App() {
         outlineColor="black"
         theme={{
           colors: {
-            placeholder: 'black'
-          }
+            placeholder: 'black',
+          },
         }}
       />
       <PaperSelect
@@ -129,7 +134,7 @@ export default function App() {
           padding: 10,
           borderRadius: 5,
         }}
-        searchPlaceholder="Procurar"
+        searchText="Procurar"
         modalCloseButtonText="fechar"
         modalDoneButtonText="terminado"
       />
@@ -153,9 +158,13 @@ export default function App() {
       >
         Submit
       </PaperButton>
-      <PaperButton onPress={() => {
-        singleSelectRef.current.focus()
-      }}>Open</PaperButton>
+      <PaperButton
+        onPress={() => {
+          singleSelectRef.current.focus();
+        }}
+      >
+        Open
+      </PaperButton>
     </View>
   );
 }

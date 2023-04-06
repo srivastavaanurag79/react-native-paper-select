@@ -19,7 +19,10 @@ import type {
   PaperSelectProps,
   PaperSelectTextInputProps,
 } from '../interface/paperSelect.interface';
-import { useInternalTheme } from 'react-native-paper/lib/typescript/src/core/theming';
+import {
+  ThemeProvider,
+  useInternalTheme,
+} from 'react-native-paper/lib/typescript/src/core/theming';
 
 const PaperSelect = ({
   // Required props
@@ -229,7 +232,7 @@ const PaperSelect = ({
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <View style={[styles.container, containerStyle]}>
         <TextInput
           {...textInputProps}
@@ -248,7 +251,6 @@ const PaperSelect = ({
               icon="chevron-down"
             />
           }
-          theme={theme}
         />
         {errorText ? (
           <Text
@@ -325,7 +327,7 @@ const PaperSelect = ({
           </Dialog>
         </Portal>
       </View>
-    </>
+    </ThemeProvider>
   );
 };
 

@@ -30,7 +30,7 @@ const PaperSelect = ({
   value,
   onSelection,
   selectAllEnable = true,
-  selectAllText = 'Select All',
+  selectAllText = "Select All",
   containerStyle,
   dialogStyle,
   dialogTitle,
@@ -62,9 +62,7 @@ const PaperSelect = ({
 
   const [arrayHolder, setArrayHolder] = useState<Array<list>>([...arrayList]);
   const [list, setList] = useState<Array<list>>([...arrayList]);
-  const [selectedList, setSelectedList] = useState<Array<list>>([
-    ...selectedArrayList,
-  ]);
+  const [selectedList, setSelectedList] = useState<Array<list>>([...selectedArrayList]);
 
   const selfInputRef = useRef<any>(null);
   const selectInputRef = inputRef ?? selfInputRef;
@@ -74,17 +72,16 @@ const PaperSelect = ({
   const showDialog = () => setVisible(true);
 
   const _hideDialog = () => {
-    setSearchKey('');
-    var data: Array<list> = [...arrayHolder];
+    setSearchKey("");
+    let data: Array<list> = [...arrayHolder];
     // console.log(selectedList);
-    var selectedData: Array<list> = [...selectedList];
+    let selectedData: Array<list> = [...selectedList];
     // console.log(selectedData);
     let finalText: string = '';
     selectedData.forEach((val, index) => {
       data.forEach((el) => {
         if (val._id === el._id) {
-          finalText +=
-            index !== selectedData.length - 1 ? `${el.value}, ` : `${el.value}`;
+          finalText += index !== selectedData.length - 1 ? `${el.value}, ` : `${el.value}`;
         }
       });
     });
@@ -103,7 +100,7 @@ const PaperSelect = ({
 
   const _closeDialog = () => {
     setVisible(false);
-    setSearchKey('');
+    setSearchKey("");
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
     }
@@ -117,7 +114,7 @@ const PaperSelect = ({
   };
 
   const _onChecked = (item: any) => {
-    var selectedData = [...selectedList];
+    let selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
     const indexSelected = selectedData.findIndex((val) => val._id === item._id);
     if (indexSelected > -1) {
@@ -129,7 +126,7 @@ const PaperSelect = ({
   };
 
   const _onCheckedSingle = (item: any) => {
-    var selectedData = [...selectedList];
+    let selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
     const indexSelected = selectedData.findIndex((val) => val._id === item._id);
     if (indexSelected > -1) {
@@ -157,7 +154,7 @@ const PaperSelect = ({
 
   const _checkAll = () => {
     const data = [...list];
-    var selectedData = [...selectedList];
+    let selectedData = [...selectedList];
     if (selectedData.length === data.length) {
       selectedData = [];
     } else if (selectedData.length === 0 || selectedData.length > 0) {
@@ -272,9 +269,7 @@ const PaperSelect = ({
             visible={visible}
             dismissable={false}
           >
-            <Dialog.Title style={dialogTitleStyle}>
-              {dialogTitle ?? label}
-            </Dialog.Title>
+            <Dialog.Title style={dialogTitleStyle}>{dialogTitle ?? label}</Dialog.Title>
             <Dialog.Content>
               <Dialog.ScrollArea
                 style={{
@@ -283,27 +278,23 @@ const PaperSelect = ({
                   paddingHorizontal: 0,
                 }}
               >
-                {hideSearchBox ? (
-                  <Text style={{ margin: 0, height: 0 }} />
-                ) : (
-                  <Searchbar
-                    value={searchKey}
-                    placeholder={searchPlaceholder || 'Search'}
-                    onChangeText={(text: string) => _filterFunction(text)}
-                    iconColor={searchStyle?.iconColor || 'black'}
-                    style={{
-                      borderRadius: searchStyle?.borderRadius || 5,
-                      borderColor: searchStyle?.borderColor || '#e5e5e5',
-                      backgroundColor:
-                        searchStyle?.backgroundColor || '#e5e5e5',
-                      borderWidth: 0.5,
-                      marginBottom: 10,
-                      marginHorizontal: 8,
-                      color: searchStyle?.textColor || '#000',
-                    }}
-                  />
-                )}
-                {multiEnable === true && selectAllEnable === true && (
+                {hideSearchBox ? <Text style={{ margin: 0, height: 0 }} /> : <Searchbar
+                  value={searchKey}
+                  placeholder={searchPlaceholder || 'Search'}
+                  onChangeText={(text: string) => _filterFunction(text)}
+                  iconColor={searchStyle?.iconColor || 'black'}
+                  style={{
+                    borderRadius: searchStyle?.borderRadius || 5,
+                    borderColor: searchStyle?.borderColor || '#e5e5e5',
+                    backgroundColor:
+                      searchStyle?.backgroundColor || '#e5e5e5',
+                    borderWidth: 0.5,
+                    marginBottom: 10,
+                    marginHorizontal: 8,
+                    color: searchStyle?.textColor || '#000',
+                  }}
+                />}
+                {(multiEnable === true && selectAllEnable === true) && (
                   <TouchableOpacity
                     style={{ flexDirection: 'row', alignItems: 'center' }}
                     onPress={() => {
@@ -332,10 +323,7 @@ const PaperSelect = ({
               </Dialog.ScrollArea>
             </Dialog.Content>
             <Dialog.Actions style={{ marginTop: -20 }}>
-              <Button
-                labelStyle={dialogCloseButtonStyle}
-                onPress={_closeDialog}
-              >
+              <Button labelStyle={dialogCloseButtonStyle} onPress={_closeDialog}>
                 {dialogCloseButtonText}
               </Button>
               <Button labelStyle={dialogDoneButtonStyle} onPress={_hideDialog}>

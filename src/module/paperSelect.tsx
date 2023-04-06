@@ -51,7 +51,7 @@ const PaperSelect = ({
   textInputHeight,
   textInputStyle,
   hideSearchBox,
-  searchPlaceholder,
+  searchPlaceholder = "Search",
   dialogCloseButtonText = 'Close',
   dialogDoneButtonText = 'Done',
   dialogCloseButtonStyle,
@@ -77,7 +77,7 @@ const PaperSelect = ({
     // console.log(selectedList);
     let selectedData: Array<list> = [...selectedList];
     // console.log(selectedData);
-    let finalText: string = '';
+    let finalText: string = "";
     selectedData.forEach((val, index) => {
       data.forEach((el) => {
         if (val._id === el._id) {
@@ -280,14 +280,13 @@ const PaperSelect = ({
               >
                 {hideSearchBox ? <Text style={{ margin: 0, height: 0 }} /> : <Searchbar
                   value={searchKey}
-                  placeholder={searchPlaceholder || 'Search'}
+                  placeholder={searchPlaceholder}
                   onChangeText={(text: string) => _filterFunction(text)}
                   iconColor={searchStyle?.iconColor || 'black'}
                   style={{
                     borderRadius: searchStyle?.borderRadius || 5,
                     borderColor: searchStyle?.borderColor || '#e5e5e5',
-                    backgroundColor:
-                      searchStyle?.backgroundColor || '#e5e5e5',
+                    backgroundColor: searchStyle?.backgroundColor || '#e5e5e5',
                     borderWidth: 0.5,
                     marginBottom: 10,
                     marginHorizontal: 8,

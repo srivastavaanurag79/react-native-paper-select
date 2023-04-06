@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect, useRef } from 'react';
 
@@ -100,15 +99,19 @@ export default function App() {
         errorText={gender.error}
         multiEnable={false}
         dialogTitleStyle={{ color: 'black' }}
-        checkboxColor="blue"
-        checkboxLabelStyle={{ color: 'black', fontWeight: '700' }}
         textInputStyle={{ fontWeight: '700' }}
         hideSearchBox={true}
-        outlineColor="black"
         theme={{
           colors: {
             placeholder: 'black',
           },
+        }}
+        textInputProps={{
+          outlineColor: 'black',
+        }}
+        checkboxProps={{
+          checkboxColor: 'blue',
+          checkboxLabelStyle: { color: 'black', fontWeight: '700' },
         }}
       />
       <PaperSelect

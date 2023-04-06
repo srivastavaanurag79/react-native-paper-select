@@ -43,10 +43,10 @@
 
 ### Component properties
 
-| Name           | Type                      | Description                                        | Default value | Required |
-| -------------- | ------------------------- | -------------------------------------------------- | ------------- | -------- |
-| textInputProps | PaperSelectTextInputProps | Additional properties to supply to the text input. | undefined     | :x:      |
-| checkboxProps  | CheckboxProps             | Additional properties to supply to the checkboxes. | undefined     | :x:      |
+| Name           | Type                                                    | Description                                        | Default value | Required |
+| -------------- | ------------------------------------------------------- | -------------------------------------------------- | ------------- | -------- |
+| textInputProps | [PaperSelectTextInputProps](#PaperSelectTextInputProps) | Additional properties to supply to the text input. | undefined     | :x:      |
+| checkboxProps  | [CheckboxProps](#CheckboxProps)                         | Additional properties to supply to the checkboxes. | undefined     | :x:      |
 
 ## Types
 

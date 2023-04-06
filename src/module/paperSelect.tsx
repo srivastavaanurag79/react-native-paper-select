@@ -46,11 +46,12 @@ const PaperSelect = ({
   textInputColor,
   textInputHeight,
   textInputStyle,
-  dialogButtonLabelStyle,
   hideSearchBox,
   searchPlaceholder,
-  modalCloseButtonText,
-  modalDoneButtonText,
+  dialogCloseButtonText = "Close",
+  dialogDoneButtonText = "Done",
+  dialogCloseButtonStyle,
+  dialogDoneButtonStyle,
 }: paperSelect) => {
   const [searchKey, setSearchKey] = useState<string>('');
 
@@ -315,11 +316,11 @@ const PaperSelect = ({
               </Dialog.ScrollArea>
             </Dialog.Content>
             <Dialog.Actions style={{ marginTop: -20 }}>
-              <Button labelStyle={dialogButtonLabelStyle} onPress={_closeDialog}>
-                {modalCloseButtonText || "Close"}
+              <Button labelStyle={dialogCloseButtonStyle} onPress={_closeDialog}>
+                {dialogCloseButtonText}
               </Button>
-              <Button labelStyle={dialogButtonLabelStyle} onPress={_hideDialog}>
-                {modalDoneButtonText || "Done"}
+              <Button labelStyle={dialogDoneButtonStyle} onPress={_hideDialog}>
+                {dialogDoneButtonText}
               </Button>
             </Dialog.Actions>
           </Dialog>

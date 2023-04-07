@@ -130,16 +130,24 @@ export default function App() {
         errorText={colors.error}
         multiEnable={true}
         textInputMode="flat"
-        searchStyle={{ iconColor: 'red' }}
-        dialogButtonLabelStyle={{
+        dialogCloseButtonStyle={{
           color: 'red',
           backgroundColor: 'yellow',
           padding: 10,
           borderRadius: 5,
         }}
+        dialogDoneButtonStyle={{
+          color: 'blue',
+          backgroundColor: 'green',
+          padding: 10,
+          borderRadius: 5,
+        }}
         searchText="Procurar"
-        modalCloseButtonText="fechar"
-        modalDoneButtonText="terminado"
+        dialogCloseButtonText="fechar"
+        dialogDoneButtonText="terminado"
+        searchbarProps={{
+          iconColor: 'red',
+        }}
       />
       <PaperButton
         style={styles.button}

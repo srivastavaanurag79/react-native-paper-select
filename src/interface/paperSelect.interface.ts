@@ -2,7 +2,7 @@ import type { MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
 import type { SearchbarProps, TextInputProps } from 'react-native-paper';
 import type { ThemeProp } from 'react-native-paper/lib/typescript/src/types';
-import type { CheckboxProps } from './checkbox.interface';
+import type { PaperSelectCheckboxProps } from './checkbox.interface';
 
 export interface ListItem {
   _id: string;
@@ -26,6 +26,11 @@ export type PaperSelectTextInputProps = Pick<
   | 'right'
 >;
 
+export type PaperSelectSearchbarProps = Pick<
+  SearchbarProps,
+  'icon' | 'iconColor'
+>;
+
 export interface PaperSelectProps {
   // Required props
   label: string;
@@ -47,8 +52,8 @@ export interface PaperSelectProps {
   dialogTitle?: string;
   selectAllText?: string;
   searchText?: string;
-  modalCloseButtonText?: string;
-  modalDoneButtonText?: string;
+  dialogCloseButtonText?: string;
+  dialogDoneButtonText?: string;
   errorText?: string;
 
   // Style props
@@ -56,13 +61,13 @@ export interface PaperSelectProps {
   textInputStyle?: TextStyle;
   dialogStyle?: ViewStyle;
   dialogTitleStyle?: TextStyle;
-  searchStyle?: SearchbarProps['style'] & {
-    iconColor?: string;
-  };
-  dialogButtonLabelStyle?: TextStyle;
+  searchStyle?: SearchbarProps['style'];
+  dialogCloseButtonStyle?: TextStyle;
+  dialogDoneButtonStyle?: TextStyle;
   errorStyle?: TextStyle;
 
   // Component props
   textInputProps?: PaperSelectTextInputProps;
-  checkboxProps?: CheckboxProps;
+  checkboxProps?: PaperSelectCheckboxProps;
+  searchbarProps?: PaperSelectSearchbarProps;
 }

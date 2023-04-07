@@ -20,8 +20,6 @@ Enjoying react-native-paper-select? [Please leave a short review on Openbase](ht
 
 Check out the new [Documentation](https://anurag-srivastava.gitbook.io/react-native-paper-select).
 
-[Go to Customizable Properties](https://anurag-srivastava.gitbook.io/react-native-paper-select/guides/customizations)
-
 Check out the [Example](https://anurag-srivastava.gitbook.io/react-native-paper-select/example) code or you can check the example source code in [example module](https://github.com/srivastavaanurag79/react-native-paper-select/tree/master/example).
 
 [React Native Paper Select (NPM Link)](https://www.npmjs.com/package/react-native-paper-select)

@@ -46,7 +46,8 @@
 | Name           | Type                                                    | Description                                        | Default value | Required |
 | -------------- | ------------------------------------------------------- | -------------------------------------------------- | ------------- | -------- |
 | textInputProps | [PaperSelectTextInputProps](#PaperSelectTextInputProps) | Additional properties to supply to the text input. | undefined     | :x:      |
-| checkboxProps  | [CheckboxProps](#CheckboxProps)                         | Additional properties to supply to the checkboxes. | undefined     | :x:      |
+| checkboxProps  | [PaperSelectCheckboxProps](#PaperSelectCheckboxProps)   | Additional properties to supply to the checkboxes. | undefined     | :x:      |
+| checkboxProps  | [PaperSelectSearchbarProps](#PaperSelectSearchbarProps) | Additional properties to supply to the searchbar.  | undefined     | :x:      |
 
 ## Types
 
@@ -70,9 +71,17 @@ export interface PaperSelectTextInputProps {
 
 ### PaperSelectTextInputProps
 ```ts
-export interface CheckboxProps {
+export interface PaperSelectCheckboxProps {
   checkboxColor?: string;
   checkboxUncheckedColor?: string;
   checkboxLabelStyle?: TextStyle;
+}
+```
+
+### PaperSelectSearchbarProps
+```ts
+export interface PaperSelectSearchbarProps {
+  icon?: IconSource;
+  iconColor?: string;
 }
 ```

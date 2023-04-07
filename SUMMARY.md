@@ -9,8 +9,7 @@
 
 * [Basic Usage](guides/basic-usage.md)
 * [Advanced Usage](guides/advanced-usage.md)
-* [Customizations](guides/customizations.md)
-* [Callback](guides/callback.md)
+* [API](guides/api.md)
 
 ***
 

@@ -1,6 +1,6 @@
 import type { TextStyle } from 'react-native';
 
-export interface CheckboxProps {
+export interface PaperSelectCheckboxProps {
   checkboxColor?: string;
   checkboxUncheckedColor?: string;
   checkboxLabelStyle?: TextStyle;

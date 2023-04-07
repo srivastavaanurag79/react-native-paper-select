@@ -45,8 +45,8 @@ const PaperSelect = ({
   dialogTitle,
   selectAllText = 'Select all',
   searchText = 'Search',
-  modalCloseButtonText = 'Close',
-  modalDoneButtonText = 'Done',
+  dialogCloseButtonText = 'Close',
+  dialogDoneButtonText = 'Done',
   errorText,
 
   // Style props
@@ -55,12 +55,14 @@ const PaperSelect = ({
   dialogStyle,
   dialogTitleStyle,
   searchStyle,
-  dialogButtonLabelStyle,
+  dialogCloseButtonStyle,
+  dialogDoneButtonStyle,
   errorStyle,
 
   // Component props
   textInputProps: textInputPropOverrides,
-  checkboxProps,
+  checkboxProps: checkboxPropsOverrides,
+  searchbarProps: searchbarPropsOverrides,
 }: PaperSelectProps) => {
   const theme = useInternalTheme(themeOverrides);
 
@@ -202,7 +204,7 @@ const PaperSelect = ({
           }}
         >
           <CheckboxInput
-            {...checkboxProps}
+            {...checkboxPropsOverrides}
             isChecked={_exists(item)}
             label={item.value}
           />
@@ -222,7 +224,7 @@ const PaperSelect = ({
           }}
         >
           <CheckboxInput
-            {...checkboxProps}
+            {...checkboxPropsOverrides}
             isChecked={_exists(item)}
             label={item.value}
           />
@@ -281,10 +283,10 @@ const PaperSelect = ({
               <Dialog.ScrollArea style={styles.dialogScrollArea}>
                 {!hideSearchBox ? (
                   <Searchbar
+                    {...searchbarPropsOverrides}
                     value={searchKey}
                     placeholder={searchText}
                     onChangeText={(text: string) => _filterFunction(text)}
-                    iconColor={searchStyle?.iconColor}
                     style={[styles.searchbar, searchStyle]}
                   />
                 ) : null}
@@ -296,7 +298,7 @@ const PaperSelect = ({
                     }}
                   >
                     <CheckboxInput
-                      {...checkboxProps}
+                      {...checkboxPropsOverrides}
                       isChecked={_isCheckedAll()}
                       label={selectAllText}
                     />
@@ -316,13 +318,13 @@ const PaperSelect = ({
             </Dialog.Content>
             <Dialog.Actions>
               <Button
-                labelStyle={dialogButtonLabelStyle}
+                labelStyle={dialogCloseButtonStyle}
                 onPress={_closeDialog}
               >
-                {modalCloseButtonText}
+                {dialogCloseButtonText}
               </Button>
-              <Button labelStyle={dialogButtonLabelStyle} onPress={_hideDialog}>
-                {modalDoneButtonText}
+              <Button labelStyle={dialogDoneButtonStyle} onPress={_hideDialog}>
+                {dialogDoneButtonText}
               </Button>
             </Dialog.Actions>
           </Dialog>

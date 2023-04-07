@@ -22,6 +22,8 @@ export type PaperSelectTextInputProps = Pick<
   | 'activeUnderlineColor'
   | 'outlineColor'
   | 'activeOutlineColor'
+  | 'left'
+  | 'right'
 >;
 
 export interface PaperSelectProps {

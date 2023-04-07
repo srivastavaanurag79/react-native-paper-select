@@ -70,6 +70,14 @@ const PaperSelect = ({
       textInputPropOverrides?.activeUnderlineColor || 'black',
     outlineColor: textInputPropOverrides?.outlineColor || 'black',
     activeOutlineColor: textInputPropOverrides?.activeOutlineColor || 'black',
+    left: textInputPropOverrides?.left,
+    right: textInputPropOverrides?.right ?? (
+      <TextInput.Icon
+        style={styles.textInputIcon}
+        size={20}
+        icon="chevron-down"
+      />
+    ),
   };
 
   const [searchKey, setSearchKey] = useState<string>('');
@@ -244,13 +252,6 @@ const PaperSelect = ({
           onFocus={disabled ? undefined : _onFocus}
           showSoftInputOnFocus={false}
           value={value}
-          right={
-            <TextInput.Icon
-              style={styles.textInputIcon}
-              size={20}
-              icon="chevron-down"
-            />
-          }
         />
         {errorText ? (
           <Text

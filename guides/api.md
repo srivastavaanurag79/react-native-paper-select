@@ -69,7 +69,7 @@ export interface PaperSelectTextInputProps {
 }
 ```
 
-### PaperSelectTextInputProps
+### PaperSelectCheckboxProps
 ```ts
 export interface PaperSelectCheckboxProps {
   checkboxColor?: string;

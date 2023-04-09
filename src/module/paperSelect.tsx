@@ -12,6 +12,8 @@ import {
   Dialog,
   Portal,
   Searchbar,
+  ThemeProvider,
+  useTheme,
 } from 'react-native-paper';
 import CheckboxInput from '../components/checkBox';
 import type {
@@ -19,10 +21,7 @@ import type {
   PaperSelectProps,
   PaperSelectTextInputProps,
 } from '../interface/paperSelect.interface';
-import {
-  ThemeProvider,
-  useInternalTheme,
-} from 'react-native-paper/lib/typescript/src/core/theming';
+import type { InternalTheme } from 'react-native-paper/lib/typescript/src/types';
 
 const PaperSelect = ({
   // Required props
@@ -64,7 +63,7 @@ const PaperSelect = ({
   checkboxProps: checkboxPropsOverrides,
   searchbarProps: searchbarPropsOverrides,
 }: PaperSelectProps) => {
-  const theme = useInternalTheme(themeOverrides);
+  const theme = useTheme<InternalTheme>(themeOverrides);
 
   const textInputProps: PaperSelectTextInputProps = {
     underlineColor: textInputPropOverrides?.underlineColor || 'black',

@@ -21,14 +21,14 @@
 
 ### Localization properties
 
-| Name                  | Type   | Description                                                        | Default value    | Required |
-| --------------------- | ------ | ------------------------------------------------------------------ | ---------------- | -------- |
-| dialogTitle           | string | Title shown in the dialog                                          | `label` property | :x:      |
-| selectAllText         | string | The text shown in the "Select all" checkbox                        | "Select all"     | :x:      |
-| searchText            | string | The placeholder shown in the search box                            | "Search"         | :x:      |
-| dialogCloseButtonText | string | The text shown in the close button for the dialog                  | "Close"          | :x:      |
-| dialogDoneButtonText  | string | The text shown in the done button for the dialog                   | "Done"           | :x:      |
-| errorText             | string | The helper text shown below the text input if something went wrong | undefined        | :x:      |
+| Name                  | Type      | Description                                                        | Default value    | Required |
+| --------------------- | --------- | ------------------------------------------------------------------ | ---------------- | -------- |
+| dialogTitle           | ReactNode | Title shown in the dialog                                          | `label` property | :x:      |
+| selectAllText         | string    | The text shown in the "Select all" checkbox                        | "Select all"     | :x:      |
+| searchText            | string    | The placeholder shown in the search box                            | "Search"         | :x:      |
+| dialogCloseButtonText | string    | The text shown in the close button for the dialog                  | "Close"          | :x:      |
+| dialogDoneButtonText  | string    | The text shown in the done button for the dialog                   | "Done"           | :x:      |
+| errorText             | string    | The helper text shown below the text input if something went wrong | undefined        | :x:      |
 
 ### Style properties
 

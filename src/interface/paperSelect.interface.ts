@@ -1,4 +1,4 @@
-import type { MutableRefObject } from 'react';
+import type { ReactNode, MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
 import type { SearchbarProps, TextInputProps } from 'react-native-paper';
 import type { ThemeProp } from 'react-native-paper/lib/typescript/src/types';

@@ -49,7 +49,7 @@ export interface PaperSelectProps {
   inputRef?: MutableRefObject<any>;
 
   // Localization props
-  dialogTitle?: string;
+  dialogTitle?: ReactNode;
   selectAllText?: string;
   searchText?: string;
   dialogCloseButtonText?: string;

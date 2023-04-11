@@ -81,6 +81,7 @@
     "react-native": "*",
     "react-native-paper": "*",
     "react-native-vector-icons": "*",
+    "react-native-safe-area-context": "*",
     "typescript": "*"
   },
   "jest": {

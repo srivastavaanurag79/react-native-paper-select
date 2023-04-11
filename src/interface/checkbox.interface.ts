@@ -1,9 +1,7 @@
 import type { TextStyle } from 'react-native';
 
-export interface checkbox {
-  isChecked: boolean;
-  label: string;
+export interface PaperSelectCheckboxProps {
   checkboxColor?: string;
-  checkboxLabelStyle?: TextStyle;
   checkboxUncheckedColor?: string;
+  checkboxLabelStyle?: TextStyle;
 }

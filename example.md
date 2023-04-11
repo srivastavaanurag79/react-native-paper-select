@@ -6,7 +6,7 @@
 
 <figure><img src="demo1.png" alt=""><figcaption></figcaption></figure>
 
- 
+
 
 <figure><img src="demo4.png" alt=""><figcaption></figcaption></figure>
 
@@ -107,8 +107,8 @@ export default function App() {
         textInputMode="flat"
         searchStyle={{ iconColor: 'red' }}
         searchPlaceholder="Procurar"
-        modalCloseButtonText="fechar"
-        modalDoneButtonText="terminado"
+        dialogCloseButtonText="fechar"
+        dialogDoneButtonText="terminado"
       />
       <PaperButton
         style={styles.button}

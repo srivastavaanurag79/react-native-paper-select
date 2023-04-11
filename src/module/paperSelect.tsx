@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
 import React, { memo, useRef, useState } from 'react';
 import {
   View,
@@ -16,52 +12,84 @@ import {
   Dialog,
   Portal,
   Searchbar,
+  ThemeProvider,
+  useTheme,
 } from 'react-native-paper';
 import CheckboxInput from '../components/checkBox';
-import type { list, paperSelect } from '../interface/paperSelect.interface';
+import type {
+  ListItem,
+  PaperSelectProps,
+  PaperSelectTextInputProps,
+} from '../interface/paperSelect.interface';
+import type { InternalTheme } from 'react-native-paper/lib/typescript/src/types';
 
 const PaperSelect = ({
-  inputRef,
+  // Required props
   label,
   arrayList,
   selectedArrayList,
   multiEnable,
-  errorText,
   value,
   onSelection,
+
+  // Core props
+  disabled = false,
+  hideSearchBox = false,
   selectAllEnable = true,
-  selectAllText = "Select All",
-  containerStyle,
-  dialogStyle,
+  textInputMode = 'flat',
+  theme: themeOverrides,
+  inputRef,
+
+  // Localization props
   dialogTitle,
+  selectAllText = 'Select all',
+  searchText = 'Search',
+  dialogCloseButtonText = 'Close',
+  dialogDoneButtonText = 'Done',
+  errorText,
+
+  // Style props
+  containerStyle,
+  textInputStyle,
+  dialogStyle,
   dialogTitleStyle,
   searchStyle,
-  disabled = false,
-  checkboxColor,
-  checkboxLabelStyle,
-  checkboxUncheckedColor,
+  dialogCloseButtonStyle,
+  dialogDoneButtonStyle,
   errorStyle,
-  textInputMode,
-  underlineColor,
-  activeUnderlineColor,
-  activeOutlineColor,
-  outlineColor,
-  textInputBackgroundColor,
-  textInputColor,
-  textInputHeight,
-  textInputStyle,
-  dialogButtonLabelStyle,
-  hideSearchBox,
-  searchPlaceholder,
-  modalCloseButtonText,
-  modalDoneButtonText,
-  theme
-}: paperSelect) => {
+
+  // Component props
+  textInputProps: textInputPropOverrides,
+  checkboxProps: checkboxPropsOverrides,
+  searchbarProps: searchbarPropsOverrides,
+}: PaperSelectProps) => {
+  const theme = useTheme<InternalTheme>(themeOverrides);
+
+  const textInputProps: PaperSelectTextInputProps = {
+    underlineColor: textInputPropOverrides?.underlineColor || 'black',
+    activeUnderlineColor:
+      textInputPropOverrides?.activeUnderlineColor || 'black',
+    outlineColor: textInputPropOverrides?.outlineColor || 'black',
+    activeOutlineColor: textInputPropOverrides?.activeOutlineColor || 'black',
+    left: textInputPropOverrides?.left,
+    right: textInputPropOverrides?.right ?? (
+      <TextInput.Icon
+        style={styles.textInputIcon}
+        size={20}
+        icon="chevron-down"
+      />
+    ),
+  };
+
   const [searchKey, setSearchKey] = useState<string>('');
 
-  const [arrayHolder, setArrayHolder] = useState<Array<list>>([...arrayList]);
-  const [list, setList] = useState<Array<list>>([...arrayList]);
-  const [selectedList, setSelectedList] = useState<Array<list>>([...selectedArrayList]);
+  const [arrayHolder, setArrayHolder] = useState<Array<ListItem>>([
+    ...arrayList,
+  ]);
+  const [list, setList] = useState<Array<ListItem>>([...arrayList]);
+  const [selectedList, setSelectedList] = useState<Array<ListItem>>([
+    ...selectedArrayList,
+  ]);
 
   const selfInputRef = useRef<any>(null);
   const selectInputRef = inputRef ?? selfInputRef;
@@ -71,16 +99,17 @@ const PaperSelect = ({
   const showDialog = () => setVisible(true);
 
   const _hideDialog = () => {
-    setSearchKey("");
-    var data: Array<list> = [...arrayHolder];
+    setSearchKey('');
+    var data: Array<ListItem> = [...arrayHolder];
     // console.log(selectedList);
-    var selectedData: Array<list> = [...selectedList];
+    var selectedData: Array<ListItem> = [...selectedList];
     // console.log(selectedData);
-    let finalText: string = "";
+    let finalText: string = '';
     selectedData.forEach((val, index) => {
       data.forEach((el) => {
         if (val._id === el._id) {
-          finalText += (index !== selectedData.length - 1) ? `${el.value}, ` : `${el.value}`;
+          finalText +=
+            index !== selectedData.length - 1 ? `${el.value}, ` : `${el.value}`;
         }
       });
     });
@@ -89,7 +118,6 @@ const PaperSelect = ({
       text: finalText,
       selectedList: selectedData,
     });
-
 
     setVisible(false);
 
@@ -100,7 +128,7 @@ const PaperSelect = ({
 
   const _closeDialog = () => {
     setVisible(false);
-    setSearchKey("");
+    setSearchKey('');
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
     }
@@ -142,7 +170,7 @@ const PaperSelect = ({
 
   const _exists = (item: any) => {
     // console.log(selectedList);
-    let _temp = [...selectedList]
+    let _temp = [...selectedList];
     return _temp.find((val: any) => val._id === item._id) ? true : false;
   };
 
@@ -168,18 +196,16 @@ const PaperSelect = ({
     return list.map((item, key) => {
       return (
         <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center' }}
+          style={styles.touchableItem}
           key={key}
           onPress={() => {
             _onChecked(item);
           }}
         >
           <CheckboxInput
+            {...checkboxPropsOverrides}
             isChecked={_exists(item)}
             label={item.value}
-            checkboxLabelStyle={checkboxLabelStyle}
-            checkboxColor={checkboxColor}
-            checkboxUncheckedColor={checkboxUncheckedColor}
           />
         </TouchableOpacity>
       );
@@ -190,18 +216,16 @@ const PaperSelect = ({
     return list.map((item, key) => {
       return (
         <TouchableOpacity
-          style={{ flexDirection: 'row', alignItems: 'center' }}
+          style={styles.touchableItem}
           key={key}
           onPress={() => {
             _onCheckedSingle(item);
           }}
         >
           <CheckboxInput
+            {...checkboxPropsOverrides}
             isChecked={_exists(item)}
             label={item.value}
-            checkboxLabelStyle={checkboxLabelStyle}
-            checkboxColor={checkboxColor}
-            checkboxUncheckedColor={checkboxUncheckedColor}
           />
         </TouchableOpacity>
       );
@@ -217,43 +241,28 @@ const PaperSelect = ({
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <View style={[styles.container, containerStyle]}>
         <TextInput
+          {...textInputProps}
           ref={selectInputRef}
           disabled={disabled}
-          style={{
-            ...textInputStyle,
-            backgroundColor: textInputBackgroundColor || '#fff',
-            color: textInputColor || '#000',
-            height: textInputHeight,
-          }}
+          style={[styles.textInput, textInputStyle]}
           label={label}
-          underlineColor={underlineColor || 'black'}
-          activeUnderlineColor={activeUnderlineColor || 'black'}
-          activeOutlineColor={activeOutlineColor || 'black'}
-          outlineColor={outlineColor || 'black'}
-          mode={textInputMode || 'outlined'}
+          mode={textInputMode}
           onFocus={disabled ? undefined : _onFocus}
           showSoftInputOnFocus={false}
           value={value}
-          right={
-            <TextInput.Icon
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignSelf: 'center',
-                alignContent: 'center',
-              }}
-              size={20}
-              // name="chevron-down"
-              icon="chevron-down"
-            />
-          }
-          theme={theme}
         />
         {errorText ? (
-          <Text style={{ ...errorStyle, color: errorStyle?.color || 'red' }}>
+          <Text
+            style={[
+              {
+                color: theme.colors.error,
+              },
+              errorStyle,
+            ]}
+          >
             {errorText}
           </Text>
         ) : null}
@@ -262,55 +271,40 @@ const PaperSelect = ({
       <View>
         <Portal>
           <Dialog
-            style={{
-              backgroundColor: dialogStyle?.backgroundColor || 'white',
-              borderRadius: dialogStyle?.borderRadius || 5,
-            }}
+            style={[styles.dialog, dialogStyle]}
             visible={visible}
             dismissable={false}
           >
-            <Dialog.Title style={dialogTitleStyle}>{dialogTitle ?? label}</Dialog.Title>
+            <Dialog.Title style={dialogTitleStyle}>
+              {dialogTitle ?? label}
+            </Dialog.Title>
             <Dialog.Content>
-              <Dialog.ScrollArea
-                style={{
-                  height: 300,
-                  paddingVertical: 10,
-                  paddingHorizontal: 0,
-                }}
-              >
-                {hideSearchBox ? <Text style={{ margin: 0, height: 0 }} /> : <Searchbar
-                  value={searchKey}
-                  placeholder={searchPlaceholder || "Search"}
-                  onChangeText={(text: string) => _filterFunction(text)}
-                  iconColor={searchStyle?.iconColor || 'black'}
-                  style={{
-                    borderRadius: searchStyle?.borderRadius || 5,
-                    borderColor: searchStyle?.borderColor || '#e5e5e5',
-                    backgroundColor: searchStyle?.backgroundColor || '#e5e5e5',
-                    borderWidth: 0.5,
-                    marginBottom: 10,
-                    marginHorizontal: 8,
-                    color: searchStyle?.textColor || '#000',
-                  }}
-                />}
-                {(multiEnable === true && selectAllEnable === true) && (
+              <Dialog.ScrollArea style={styles.dialogScrollArea}>
+                {!hideSearchBox ? (
+                  <Searchbar
+                    {...searchbarPropsOverrides}
+                    value={searchKey}
+                    placeholder={searchText}
+                    onChangeText={(text: string) => _filterFunction(text)}
+                    style={[styles.searchbar, searchStyle]}
+                  />
+                ) : null}
+                {multiEnable === true && selectAllEnable === true ? (
                   <TouchableOpacity
-                    style={{ flexDirection: 'row', alignItems: 'center' }}
+                    style={styles.touchableItem}
                     onPress={() => {
                       _checkAll();
                     }}
                   >
                     <CheckboxInput
+                      {...checkboxPropsOverrides}
                       isChecked={_isCheckedAll()}
                       label={selectAllText}
-                      checkboxLabelStyle={checkboxLabelStyle}
-                      checkboxColor={checkboxColor}
-                      checkboxUncheckedColor={checkboxUncheckedColor}
                     />
                   </TouchableOpacity>
-                )}
+                ) : null}
                 <ScrollView
-                  style={{ width: '100%' }}
+                  style={styles.dialogScrollView}
                   persistentScrollbar={true}
                   showsVerticalScrollIndicator={true}
                   keyboardShouldPersistTaps="handled"
@@ -321,18 +315,21 @@ const PaperSelect = ({
                 </ScrollView>
               </Dialog.ScrollArea>
             </Dialog.Content>
-            <Dialog.Actions style={{ marginTop: -20 }}>
-              <Button labelStyle={dialogButtonLabelStyle} onPress={_closeDialog}>
-                {modalCloseButtonText || "Close"}
+            <Dialog.Actions>
+              <Button
+                labelStyle={dialogCloseButtonStyle}
+                onPress={_closeDialog}
+              >
+                {dialogCloseButtonText}
               </Button>
-              <Button labelStyle={dialogButtonLabelStyle} onPress={_hideDialog}>
-                {modalDoneButtonText || "Done"}
+              <Button labelStyle={dialogDoneButtonStyle} onPress={_hideDialog}>
+                {dialogDoneButtonText}
               </Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
       </View>
-    </>
+    </ThemeProvider>
   );
 };
 
@@ -340,6 +337,39 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginBottom: 10,
+  },
+  dialog: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
+  dialogScrollArea: {
+    paddingVertical: 10,
+    paddingHorizontal: 0,
+  },
+  dialogScrollView: {
+    width: '100%',
+  },
+  touchableItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textInput: {
+    backgroundColor: '#fff',
+    color: '#000',
+  },
+  textInputIcon: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    alignContent: 'center',
+  },
+  searchbar: {
+    borderColor: '#e5e5e5',
+    backgroundColor: '#e5e5e5',
+    borderWidth: 0.5,
+    marginBottom: 10,
+    marginHorizontal: 8,
+    color: '#000',
   },
 });
 

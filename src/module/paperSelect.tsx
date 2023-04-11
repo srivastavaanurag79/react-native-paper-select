@@ -304,8 +304,6 @@ const PaperSelect = ({
               ) : null}
               <ScrollView
                 style={styles.dialogScrollView}
-                persistentScrollbar={true}
-                showsVerticalScrollIndicator={true}
                 keyboardShouldPersistTaps="handled"
               >
                 {multiEnable === true

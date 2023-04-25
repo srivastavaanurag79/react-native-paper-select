@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import {
   TextInput,
@@ -80,6 +81,10 @@ const PaperSelect = ({
       />
     ),
   };
+
+  const { height } = Dimensions.get('window');
+
+  console.log(height);
 
   const [searchKey, setSearchKey] = useState<string>('');
 
@@ -278,43 +283,42 @@ const PaperSelect = ({
             <Dialog.Title style={dialogTitleStyle}>
               {dialogTitle ?? label}
             </Dialog.Title>
-            <Dialog.Content>
-              <Dialog.ScrollArea style={styles.dialogScrollArea}>
-                {!hideSearchBox ? (
-                  <Searchbar
-                    {...searchbarPropsOverrides}
-                    value={searchKey}
-                    placeholder={searchText}
-                    onChangeText={(text: string) => _filterFunction(text)}
-                    style={[styles.searchbar, searchStyle]}
-                  />
-                ) : null}
-                {multiEnable === true && selectAllEnable === true ? (
-                  <TouchableOpacity
-                    style={styles.touchableItem}
-                    onPress={() => {
-                      _checkAll();
-                    }}
-                  >
-                    <CheckboxInput
-                      {...checkboxPropsOverrides}
-                      isChecked={_isCheckedAll()}
-                      label={selectAllText}
-                    />
-                  </TouchableOpacity>
-                ) : null}
-                <ScrollView
-                  style={styles.dialogScrollView}
-                  persistentScrollbar={true}
-                  showsVerticalScrollIndicator={true}
-                  keyboardShouldPersistTaps="handled"
+            <Dialog.ScrollArea>
+              {!hideSearchBox ? (
+                <Searchbar
+                  {...searchbarPropsOverrides}
+                  value={searchKey}
+                  placeholder={searchText}
+                  onChangeText={(text: string) => _filterFunction(text)}
+                  style={[styles.searchbar, searchStyle]}
+                />
+              ) : null}
+              {multiEnable === true && selectAllEnable === true ? (
+                <TouchableOpacity
+                  style={styles.touchableItem}
+                  onPress={() => {
+                    _checkAll();
+                  }}
                 >
-                  {multiEnable === true
-                    ? _renderListForMulti()
-                    : _renderListForSingle()}
-                </ScrollView>
-              </Dialog.ScrollArea>
-            </Dialog.Content>
+                  <CheckboxInput
+                    {...checkboxPropsOverrides}
+                    isChecked={_isCheckedAll()}
+                    label={selectAllText}
+                  />
+                </TouchableOpacity>
+              ) : null}
+              <ScrollView
+                style={
+                  (styles.dialogScrollView,
+                  { maxHeight: height - (height * 40) / 100, marginBottom: 8 })
+                }
+                keyboardShouldPersistTaps="handled"
+              >
+                {multiEnable === true
+                  ? _renderListForMulti()
+                  : _renderListForSingle()}
+              </ScrollView>
+            </Dialog.ScrollArea>
             <Dialog.Actions>
               <Button
                 labelStyle={dialogCloseButtonStyle}
@@ -342,10 +346,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
   },
-  dialogScrollArea: {
-    paddingVertical: 10,
-    paddingHorizontal: 0,
-  },
   dialogScrollView: {
     width: '100%',
   },
@@ -370,6 +370,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 8,
     color: '#000',
+    marginTop: 12,
   },
 });
 

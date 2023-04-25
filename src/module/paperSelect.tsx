@@ -84,7 +84,7 @@ const PaperSelect = ({
 
   const { height } = Dimensions.get('window');
 
-  console.log(height);
+  // console.log(height);
 
   const [searchKey, setSearchKey] = useState<string>('');
 

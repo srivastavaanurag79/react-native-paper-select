@@ -52,9 +52,18 @@ export default function App() {
     let isMounted = true;
     let _getData = async () => {
       if (isMounted) {
+        let _tempList: Array<any> = [...gender.list];
+        for (let i = 0; i < 1000; i++) {
+          _tempList.push({
+            _id: Math.round(Math.random() * 1000) + 22 + 'TEST',
+            value: 'OTHERS' + i,
+          });
+        }
+        // console.log(_tempList);
         setGender({
           ...gender,
           value: 'OTHERS',
+          list: [..._tempList],
           selectedList: [{ _id: '3', value: 'OTHERS' }],
         });
 

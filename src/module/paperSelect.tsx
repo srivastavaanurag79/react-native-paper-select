@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import {
   TextInput,
@@ -80,6 +81,10 @@ const PaperSelect = ({
       />
     ),
   };
+
+  const { height } = Dimensions.get('window');
+
+  console.log(height);
 
   const [searchKey, setSearchKey] = useState<string>('');
 
@@ -303,7 +308,10 @@ const PaperSelect = ({
                 </TouchableOpacity>
               ) : null}
               <ScrollView
-                style={styles.dialogScrollView}
+                style={
+                  (styles.dialogScrollView,
+                  { maxHeight: height - (height * 40) / 100, marginBottom: 8 })
+                }
                 keyboardShouldPersistTaps="handled"
               >
                 {multiEnable === true
@@ -362,6 +370,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 8,
     color: '#000',
+    marginTop: 12,
   },
 });
 

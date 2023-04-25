@@ -1,6 +1,5 @@
 # React Native Paper Select 🔽
 
-[![Featured on Openbase](https://badges.openbase.com/js/featured/react-native-paper-select.svg?style=openbase&token=XVbYxZZ+O+XVG6Ne8bSk6hb8cQqTQDoN1CwahbofICs=)](https://openbase.com/js/react-native-paper-select?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
 [![kandi X-Ray](https://kandi.openweaver.com/badges/xray.svg)](https://kandi.openweaver.com/typescript/srivastavaanurag79/react-native-paper-select)
 [![Version](https://img.shields.io/npm/v/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
 [![Dependency Status](https://img.shields.io/npm/dt/react-native-paper-select.svg)](https://www.npmjs.com/package/react-native-paper-select)
@@ -15,8 +14,6 @@
 
 **Give us a GitHub star 🌟, if you found this package useful.**
 [![GitHub stars](https://img.shields.io/github/stars/srivastavaanurag79/react-native-paper-select.svg?style=social&label=Star&maxAge=2592000)](https://github.com/srivastavaanurag79/react-native-paper-select)
-
-Enjoying react-native-paper-select? [Please leave a short review on Openbase](https://openbase.com/js/react-native-paper-select#rate)
 
 Check out the new [Documentation](https://anurag-srivastava.gitbook.io/react-native-paper-select).
 

@@ -59,7 +59,7 @@ export interface PaperSelectProps {
   // Style props
   containerStyle?: ViewStyle;
   textInputStyle?: TextStyle;
-  textInpuOutlineStyle?: ViewStyle;
+  textInputOutlineStyle?: ViewStyle;
   dialogStyle?: ViewStyle;
   dialogTitleStyle?: TextStyle;
   searchStyle?: SearchbarProps['style'];

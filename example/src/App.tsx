@@ -122,6 +122,8 @@ export default function App() {
           checkboxColor: 'blue',
           checkboxLabelStyle: { color: 'black', fontWeight: '700' },
         }}
+        textInputOutlineStyle={{ borderColor: 'red', borderBottomWidth: 10 }}
+        textInputMode="outlined"
       />
       <PaperSelect
         label="Select Colors"

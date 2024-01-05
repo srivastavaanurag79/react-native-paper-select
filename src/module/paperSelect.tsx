@@ -52,6 +52,7 @@ const PaperSelect = ({
   // Style props
   containerStyle,
   textInputStyle,
+  textInputOutlineStyle,
   dialogStyle,
   dialogTitleStyle,
   searchStyle,
@@ -253,6 +254,7 @@ const PaperSelect = ({
           ref={selectInputRef}
           disabled={disabled}
           style={[styles.textInput, textInputStyle]}
+          outlineStyle={textInputOutlineStyle}
           label={label}
           mode={textInputMode}
           onFocus={disabled ? undefined : _onFocus}

@@ -66,6 +66,7 @@ export interface PaperSelectProps {
   dialogCloseButtonStyle?: TextStyle;
   dialogDoneButtonStyle?: TextStyle;
   errorStyle?: TextStyle;
+  textColor?: string;
 
   // Component props
   textInputProps?: PaperSelectTextInputProps;

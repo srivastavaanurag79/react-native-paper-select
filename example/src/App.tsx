@@ -108,11 +108,12 @@ export default function App() {
         errorText={gender.error}
         multiEnable={false}
         dialogTitleStyle={{ color: 'black' }}
-        textInputStyle={{ fontWeight: '700' }}
+        textInputStyle={{ fontWeight: '700', color: 'yellow' }}
         hideSearchBox={true}
         theme={{
           colors: {
-            placeholder: 'black',
+            text: 'blue', // Change this to the desired text color
+            placeholder: 'gray', // Change this to the desired placeholder color
           },
         }}
         textInputProps={{

@@ -59,6 +59,7 @@ const PaperSelect = ({
   dialogCloseButtonStyle,
   dialogDoneButtonStyle,
   errorStyle,
+  textColor,
 
   // Component props
   textInputProps: textInputPropOverrides,
@@ -260,6 +261,7 @@ const PaperSelect = ({
           onFocus={disabled ? undefined : _onFocus}
           showSoftInputOnFocus={false}
           value={value}
+          textColor={textColor}
         />
         {errorText ? (
           <Text

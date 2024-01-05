@@ -53,10 +53,10 @@ export default function App() {
     let _getData = async () => {
       if (isMounted) {
         let _tempList: Array<any> = [...gender.list];
-        for (let i = 0; i < 1000; i++) {
+        for (let i = 0; i < 10000; i++) {
           _tempList.push({
             _id: Math.round(Math.random() * 1000) + 22 + 'TEST',
-            value: 'OTHERS' + i,
+            value: 'OTHERS ' + i,
           });
         }
         // console.log(_tempList);

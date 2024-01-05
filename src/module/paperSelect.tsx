@@ -3,8 +3,8 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
   Dimensions,
+  FlatList,
 } from 'react-native';
 import {
   TextInput,
@@ -199,45 +199,60 @@ const PaperSelect = ({
     setSelectedList([...selectedData]);
   };
 
-  const _renderListForMulti = () => {
-    return list.map((item, key) => {
-      return (
-        <TouchableOpacity
-          style={styles.touchableItem}
-          key={key}
-          onPress={() => {
-            _onChecked(item);
-          }}
-        >
-          <CheckboxInput
-            {...checkboxPropsOverrides}
-            isChecked={_exists(item)}
-            label={item.value}
-          />
-        </TouchableOpacity>
-      );
-    });
-  };
+  // const _renderListForMulti = () => {
+  //   return list.map((item, key) => {
+  //     return (
+  //       <TouchableOpacity
+  //         style={styles.touchableItem}
+  //         key={key}
+  //         onPress={() => {
+  //           _onChecked(item);
+  //         }}
+  //       >
+  //         <CheckboxInput
+  //           {...checkboxPropsOverrides}
+  //           isChecked={_exists(item)}
+  //           label={item.value}
+  //         />
+  //       </TouchableOpacity>
+  //     );
+  //   });
+  // };
 
-  const _renderListForSingle = () => {
-    return list.map((item, key) => {
-      return (
-        <TouchableOpacity
-          style={styles.touchableItem}
-          key={key}
-          onPress={() => {
-            _onCheckedSingle(item);
-          }}
-        >
-          <CheckboxInput
-            {...checkboxPropsOverrides}
-            isChecked={_exists(item)}
-            label={item.value}
-          />
-        </TouchableOpacity>
-      );
-    });
-  };
+  const _renderItem = ({ item }: { item: any }) => (
+    <TouchableOpacity
+      style={styles.touchableItem}
+      onPress={() =>
+        multiEnable === true ? _onChecked(item) : _onCheckedSingle(item)
+      }
+    >
+      <CheckboxInput
+        {...checkboxPropsOverrides}
+        isChecked={_exists(item)}
+        label={item.value}
+      />
+    </TouchableOpacity>
+  );
+
+  // const _renderListForSingle = () => {
+  //   return list.map((item, key) => {
+  //     return (
+  //       <TouchableOpacity
+  //         style={styles.touchableItem}
+  //         key={key}
+  //         onPress={() => {
+  //           _onCheckedSingle(item);
+  //         }}
+  //       >
+  //         <CheckboxInput
+  //           {...checkboxPropsOverrides}
+  //           isChecked={_exists(item)}
+  //           label={item.value}
+  //         />
+  //       </TouchableOpacity>
+  //     );
+  //   });
+  // };
 
   const _filterFunction = (text: string) => {
     setSearchKey(text);
@@ -311,17 +326,27 @@ const PaperSelect = ({
                   />
                 </TouchableOpacity>
               ) : null}
-              <ScrollView
+              {/* <ScrollView
                 style={
                   (styles.dialogScrollView,
-                  { maxHeight: height - (height * 40) / 100, marginBottom: 8 })
+                    { maxHeight: height - (height * 40) / 100, marginBottom: 8 })
                 }
                 keyboardShouldPersistTaps="handled"
               >
                 {multiEnable === true
                   ? _renderListForMulti()
                   : _renderListForSingle()}
-              </ScrollView>
+              </ScrollView> */}
+              <FlatList
+                data={list}
+                renderItem={_renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                keyboardShouldPersistTaps="handled"
+                style={
+                  (styles.dialogScrollView,
+                  { maxHeight: height - (height * 40) / 100, marginBottom: 8 })
+                }
+              />
             </Dialog.ScrollArea>
             <Dialog.Actions>
               <Button

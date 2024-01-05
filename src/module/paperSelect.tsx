@@ -340,7 +340,7 @@ const PaperSelect = ({
               <FlatList
                 data={list}
                 renderItem={_renderItem}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item) => item._id.toString()}
                 keyboardShouldPersistTaps="handled"
                 style={
                   (styles.dialogScrollView,

@@ -55,7 +55,9 @@ export default function App() {
         let _tempList: Array<any> = [...gender.list];
         for (let i = 0; i < 10000; i++) {
           _tempList.push({
-            _id: Math.round(Math.random() * 1000) + 22 + 'TEST',
+            _id: `TEST ${
+              Math.round(Math.random() * 1000) + 22 + Math.random()
+            }`,
             value: 'OTHERS ' + i,
           });
         }

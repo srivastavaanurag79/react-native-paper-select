@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { Checkbox } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { Checkbox, Text } from 'react-native-paper';
 import type { PaperSelectCheckboxProps } from 'src/interface/checkbox.interface';
 
 interface CheckboxPropsFull extends PaperSelectCheckboxProps {

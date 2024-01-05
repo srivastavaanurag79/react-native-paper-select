@@ -2,7 +2,6 @@ import React, { memo, useRef, useState } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   TouchableOpacity,
   ScrollView,
   Dimensions,
@@ -15,6 +14,7 @@ import {
   Searchbar,
   ThemeProvider,
   useTheme,
+  Text,
 } from 'react-native-paper';
 import CheckboxInput from '../components/checkBox';
 import type {
@@ -285,7 +285,7 @@ const PaperSelect = ({
             <Dialog.Title style={dialogTitleStyle}>
               {dialogTitle ?? label}
             </Dialog.Title>
-            <Dialog.ScrollArea>
+            <Dialog.ScrollArea style={{ paddingHorizontal: 14 }}>
               {!hideSearchBox ? (
                 <Searchbar
                   {...searchbarPropsOverrides}
@@ -356,8 +356,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textInput: {
-    backgroundColor: '#fff',
-    color: '#000',
+    // backgroundColor: '#fff',
+    // color: '#000',
   },
   textInputIcon: {
     justifyContent: 'center',
@@ -366,9 +366,9 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   searchbar: {
-    borderColor: '#e5e5e5',
-    backgroundColor: '#e5e5e5',
-    borderWidth: 0.5,
+    borderColor: '#777777',
+    backgroundColor: '#F1F1F2',
+    borderWidth: 0.25,
     marginBottom: 10,
     marginHorizontal: 8,
     color: '#000',

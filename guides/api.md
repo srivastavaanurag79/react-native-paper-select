@@ -40,6 +40,8 @@
 | dialogTitleStyle | TextStyle | Dialog title style          | undefined     | :x:      |
 | searchStyle      | ViewStyle | Searchbar style in dialog   | undefined     | :x:      |
 | errorStyle       | TextStyle | error style                 | undefined     | :x:      |
+| textInputOutlineStyle       | ViewStyle | select box outline border. (works with react native paper v5) Pass style to override the default style of outlined wrapper. Overrides style when mode is set to outlined Example: borderRadius, borderColor                 | undefined     | :x:      |
+| textColor   | string | Text color of the input box            | undefined     | :x:      |
 
 ### Component properties
 

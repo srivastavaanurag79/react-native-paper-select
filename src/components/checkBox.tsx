@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Checkbox, Text } from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 import type { PaperSelectCheckboxProps } from 'src/interface/checkbox.interface';
 
 interface CheckboxPropsFull extends PaperSelectCheckboxProps {
@@ -14,14 +14,18 @@ const CheckboxInput = ({
   checkboxColor,
   checkboxLabelStyle,
   checkboxUncheckedColor,
+  checkboxMode,
 }: CheckboxPropsFull) => (
   <View style={styles.container}>
-    <Checkbox
+    <Checkbox.Item
       uncheckedColor={checkboxUncheckedColor || '#000007'}
       color={checkboxColor || 'blue'}
       status={isChecked === true ? 'checked' : 'unchecked'}
+      label={label.trim()}
+      labelStyle={checkboxLabelStyle}
+      mode={checkboxMode}
+      position={`leading`}
     />
-    <Text style={[styles.labelStyle, checkboxLabelStyle]}>{label.trim()}</Text>
   </View>
 );
 
@@ -31,10 +35,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginBottom: 1.5,
-  },
-  labelStyle: {
-    flexDirection: 'row',
-    flexShrink: 1,
   },
 });
 

@@ -4,4 +4,5 @@ export interface PaperSelectCheckboxProps {
   checkboxColor?: string;
   checkboxUncheckedColor?: string;
   checkboxLabelStyle?: TextStyle;
+  checkboxMode?: 'android' | 'ios';
 }

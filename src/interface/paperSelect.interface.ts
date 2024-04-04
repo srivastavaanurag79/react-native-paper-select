@@ -7,6 +7,7 @@ import type { PaperSelectCheckboxProps } from './checkbox.interface';
 export interface ListItem {
   _id: string;
   value: string;
+  disabled?: boolean;
 }
 
 export interface SelectedItem {

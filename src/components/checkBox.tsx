@@ -6,6 +6,8 @@ import type { PaperSelectCheckboxProps } from 'src/interface/checkbox.interface'
 interface CheckboxPropsFull extends PaperSelectCheckboxProps {
   isChecked: boolean;
   label: string;
+  onPress: () => void;
+  disabled?: boolean;
 }
 
 const CheckboxInput = ({
@@ -15,16 +17,20 @@ const CheckboxInput = ({
   checkboxLabelStyle,
   checkboxUncheckedColor,
   checkboxMode,
+  disabled,
+  onPress,
 }: CheckboxPropsFull) => (
   <View style={styles.container}>
     <Checkbox.Item
-      uncheckedColor={checkboxUncheckedColor || '#000007'}
+      uncheckedColor={checkboxUncheckedColor}
       color={checkboxColor || 'blue'}
       status={isChecked === true ? 'checked' : 'unchecked'}
       label={label.trim()}
       labelStyle={checkboxLabelStyle}
       mode={checkboxMode}
       position={`leading`}
+      disabled={disabled}
+      onPress={onPress}
     />
   </View>
 );
@@ -34,7 +40,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
-    marginBottom: 1.5,
   },
 });
 

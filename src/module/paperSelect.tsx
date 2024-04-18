@@ -1,4 +1,5 @@
-import React, { memo, useRef, useState } from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Dimensions, FlatList } from 'react-native';
 import {
   TextInput,
@@ -34,6 +35,9 @@ const PaperSelect = ({
   textInputMode = 'flat',
   theme: themeOverrides,
   inputRef,
+  limit = null,
+  limitError = `You can't select more than ${limit} items.`,
+  limitErrorStyle,
 
   // Localization props
   dialogTitle,
@@ -80,8 +84,6 @@ const PaperSelect = ({
 
   const { height } = Dimensions.get('window');
 
-  // console.log(height);
-
   const [searchKey, setSearchKey] = useState<string>('');
 
   const [arrayHolder, setArrayHolder] = useState<Array<ListItem>>([
@@ -92,10 +94,32 @@ const PaperSelect = ({
     ...selectedArrayList,
   ]);
 
+  const [maxLimit, setMaxLimit] = useState<number>(list.length);
+
+  const [hasDisabled, setHasDisabled] = useState<boolean>(false);
+
+  const [showLimitError, setShowLimitError] = useState<boolean>(false);
+
   const selfInputRef = useRef<any>(null);
   const selectInputRef = inputRef ?? selfInputRef;
 
   const [visible, setVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    let _getData = async () => {
+      if (isMounted && showLimitError) {
+        setTimeout(() => {
+          setShowLimitError(false);
+        }, 10000);
+      }
+    };
+
+    _getData();
+    return () => {
+      isMounted = false;
+    };
+  }, [showLimitError]);
 
   const showDialog = () => setVisible(true);
 
@@ -138,6 +162,8 @@ const PaperSelect = ({
   const _onFocus = () => {
     setArrayHolder([...arrayList]);
     setList([...arrayList]);
+    setMaxLimit([...arrayList].length);
+    setHasDisabled(_checkIfAnyItemDisabled([...arrayList]));
     setSelectedList([...selectedArrayList]);
     showDialog();
   };
@@ -149,7 +175,12 @@ const PaperSelect = ({
     if (indexSelected > -1) {
       selectedData.splice(indexSelected, 1);
     } else {
-      selectedData.push(item);
+      if (limit && selectedData.length === limit) {
+        setShowLimitError(true);
+      } else {
+        setShowLimitError(false);
+        selectedData.push(item);
+      }
     }
     setSelectedList([...selectedData]);
   };
@@ -213,6 +244,12 @@ const PaperSelect = ({
     setList(newData);
   };
 
+  const _checkIfAnyItemDisabled = (_list: Array<ListItem>) => {
+    const data = [..._list];
+    let result = data.find((x) => x.disabled);
+    return result ? true : false;
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <View style={[styles.container, containerStyle]}>
@@ -263,14 +300,7 @@ const PaperSelect = ({
                   style={[styles.searchbar, searchStyle]}
                 />
               ) : null}
-              {multiEnable === true && selectAllEnable === true ? (
-                <CheckboxInput
-                  {...checkboxPropsOverrides}
-                  isChecked={_isCheckedAll()}
-                  label={selectAllText}
-                  onPress={() => _checkAll()}
-                />
-              ) : null}
+
               {/* <ScrollView
                 style={
                   (styles.dialogScrollView,
@@ -283,15 +313,48 @@ const PaperSelect = ({
                   : _renderListForSingle()}
               </ScrollView> */}
               <FlatList
+                ListHeaderComponent={
+                  multiEnable === true && selectAllEnable === true ? (
+                    <CheckboxInput
+                      {...checkboxPropsOverrides}
+                      isChecked={_isCheckedAll()}
+                      label={selectAllText}
+                      onPress={() => {
+                        _checkAll();
+                      }}
+                      disabled={
+                        hasDisabled ||
+                        (limit && limit > 0 && limit !== maxLimit)
+                          ? true
+                          : false
+                      }
+                    />
+                  ) : null
+                }
                 data={list}
                 renderItem={_renderItem}
                 keyExtractor={(item) => item._id.toString()}
                 keyboardShouldPersistTaps="handled"
                 style={
                   (styles.dialogScrollView,
-                  { maxHeight: height - (height * 40) / 100, marginBottom: 8 })
+                  {
+                    maxHeight: height - (height * 45) / 100,
+                    marginBottom: 8,
+                  })
                 }
               />
+              {showLimitError ? (
+                <Text
+                  style={[
+                    {
+                      color: theme.colors.error,
+                    },
+                    limitErrorStyle,
+                  ]}
+                >
+                  {limitError}
+                </Text>
+              ) : null}
             </Dialog.ScrollArea>
             <Dialog.Actions>
               <Button

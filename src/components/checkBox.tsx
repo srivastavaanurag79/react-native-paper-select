@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Checkbox } from 'react-native-paper';
@@ -15,6 +16,7 @@ const CheckboxInput = ({
   label,
   checkboxColor,
   checkboxLabelStyle,
+  checkboxLabelVariant,
   checkboxUncheckedColor,
   checkboxMode,
   disabled,
@@ -23,23 +25,30 @@ const CheckboxInput = ({
   <View style={styles.container}>
     <Checkbox.Item
       uncheckedColor={checkboxUncheckedColor}
-      color={checkboxColor || 'blue'}
-      status={isChecked === true ? 'checked' : 'unchecked'}
+      color={checkboxColor}
+      status={
+        disabled
+          ? 'indeterminate'
+          : isChecked === true
+          ? 'checked'
+          : 'unchecked'
+      }
       label={label.trim()}
-      labelStyle={checkboxLabelStyle}
+      labelStyle={{ ...checkboxLabelStyle, textAlign: 'left' }}
+      labelVariant={checkboxLabelVariant}
       mode={checkboxMode}
       position={`leading`}
       disabled={disabled}
-      onPress={onPress}
+      onPress={disabled ? () => {} : onPress}
     />
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
     flex: 1,
+    justifyContent: 'center',
   },
 });
 

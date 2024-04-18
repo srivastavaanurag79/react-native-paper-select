@@ -18,6 +18,8 @@
 | textInputMode     | "flat" or "outlined"         | The mode of the text input                                                     | "flat"        | :x:                |
 | theme             | ThemeProp                    | React Native Paper theme class                                                 | Default theme | :x:                |
 | inputRef          | MutableRefObject<any>        | The ref which is applied to the text input.                                    | undefined     | :x:                |
+| limit          | number        | Limit the number of items one can select in multi-select, disables the select all if the limit is not equal to list length                                    | null     | :x:                |
+
 
 ### Localization properties
 
@@ -29,6 +31,7 @@
 | dialogCloseButtonText | string    | The text shown in the close button for the dialog                  | "Close"          | :x:      |
 | dialogDoneButtonText  | string    | The text shown in the done button for the dialog                   | "Done"           | :x:      |
 | errorText             | string    | The helper text shown below the text input if something went wrong | undefined        | :x:      |
+| limitError          | string        | error message to show if limit meets.                                    | You can't select more than ${limit} items.     | :x:                |
 
 ### Style properties
 
@@ -42,14 +45,15 @@
 | errorStyle       | TextStyle | error style                 | undefined     | :x:      |
 | textInputOutlineStyle       | ViewStyle | select box outline border. (works with react native paper v5) Pass style to override the default style of outlined wrapper. Overrides style when mode is set to outlined Example: borderRadius, borderColor                 | undefined     | :x:      |
 | textColor   | string | Text color of the input box            | undefined     | :x:      |
+| limitErrorStyle       | TextStyle | limit error text style                 | undefined     | :x:      |
 
 ### Component properties
 
 | Name           | Type                                                    | Description                                        | Default value | Required |
 | -------------- | ------------------------------------------------------- | -------------------------------------------------- | ------------- | -------- |
-| textInputProps | [PaperSelectTextInputProps](#PaperSelectTextInputProps) | Additional properties to supply to the text input. | undefined     | :x:      |
-| checkboxProps  | [PaperSelectCheckboxProps](#PaperSelectCheckboxProps)   | Additional properties to supply to the checkboxes. | undefined     | :x:      |
-| checkboxProps  | [PaperSelectSearchbarProps](#PaperSelectSearchbarProps) | Additional properties to supply to the searchbar.  | undefined     | :x:      |
+| textInputProps | [PaperSelectTextInputProps](https://callstack.github.io/react-native-paper/docs/components/TextInput/) | Additional properties to supply to the text input. | undefined     | :x:      |
+| checkboxProps  | [PaperSelectCheckboxProps](https://callstack.github.io/react-native-paper/docs/components/Checkbox/CheckboxItem)   | Additional properties to supply to the checkboxes. | undefined     | :x:      |
+| searchbarProps  | [PaperSelectSearchbarProps](https://callstack.github.io/react-native-paper/docs/components/Searchbar) | Additional properties to supply to the searchbar.  | undefined     | :x:      |
 
 ## Types
 

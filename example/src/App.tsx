@@ -21,7 +21,7 @@ export default function App() {
     list: [
       { _id: '1', value: 'MALE' },
       { _id: '2', value: 'FEMALE' },
-      { _id: '3', value: 'OTHERS' },
+      { _id: '3', value: 'OTHERS', disabled: true },
       {
         _id: '4',
         value:
@@ -43,6 +43,12 @@ export default function App() {
       { _id: '6', value: 'BLACK' },
       { _id: '7', value: 'WHITE' },
       { _id: '8', value: 'CYAN' },
+      { _id: '9', value: 'BLACK' },
+      { _id: '10', value: 'Test 1' },
+      { _id: '11', value: 'Test 2' },
+      { _id: '12', value: 'Test 3' },
+      { _id: '13', value: 'Test 4' },
+      { _id: '14', value: 'Test 5' },
     ],
     selectedList: [],
     error: '',
@@ -162,6 +168,7 @@ export default function App() {
         searchbarProps={{
           iconColor: 'red',
         }}
+        limit={2}
       />
       <PaperButton
         style={styles.button}

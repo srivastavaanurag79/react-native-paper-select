@@ -7,6 +7,7 @@ import type { PaperSelectCheckboxProps } from './checkbox.interface';
 export interface ListItem {
   _id: string;
   value: string;
+  disabled?: boolean;
 }
 
 export interface SelectedItem {
@@ -47,6 +48,9 @@ export interface PaperSelectProps {
   textInputMode?: TextInputProps['mode'];
   theme?: ThemeProp;
   inputRef?: MutableRefObject<any>;
+  limit?: number | null;
+  limitError?: string;
+  limitErrorStyle?: TextStyle;
 
   // Localization props
   dialogTitle?: ReactNode;

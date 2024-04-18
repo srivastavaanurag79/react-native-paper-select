@@ -1,11 +1,14 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Checkbox, Text } from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 import type { PaperSelectCheckboxProps } from 'src/interface/checkbox.interface';
 
 interface CheckboxPropsFull extends PaperSelectCheckboxProps {
   isChecked: boolean;
   label: string;
+  onPress: () => void;
+  disabled?: boolean;
 }
 
 const CheckboxInput = ({
@@ -13,28 +16,39 @@ const CheckboxInput = ({
   label,
   checkboxColor,
   checkboxLabelStyle,
+  checkboxLabelVariant,
   checkboxUncheckedColor,
+  checkboxMode,
+  disabled,
+  onPress,
 }: CheckboxPropsFull) => (
   <View style={styles.container}>
-    <Checkbox
-      uncheckedColor={checkboxUncheckedColor || '#000007'}
-      color={checkboxColor || 'blue'}
-      status={isChecked === true ? 'checked' : 'unchecked'}
+    <Checkbox.Item
+      uncheckedColor={checkboxUncheckedColor}
+      color={checkboxColor}
+      status={
+        disabled
+          ? 'indeterminate'
+          : isChecked === true
+          ? 'checked'
+          : 'unchecked'
+      }
+      label={label.trim()}
+      labelStyle={{ ...checkboxLabelStyle, textAlign: 'left' }}
+      labelVariant={checkboxLabelVariant}
+      mode={checkboxMode}
+      position={`leading`}
+      disabled={disabled}
+      onPress={disabled ? () => {} : onPress}
     />
-    <Text style={[styles.labelStyle, checkboxLabelStyle]}>{label.trim()}</Text>
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
     flex: 1,
-    marginBottom: 1.5,
-  },
-  labelStyle: {
-    flexDirection: 'row',
-    flexShrink: 1,
+    justifyContent: 'center',
   },
 });
 

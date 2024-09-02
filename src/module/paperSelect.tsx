@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Dimensions, FlatList } from 'react-native';
 import {
   TextInput,
@@ -17,7 +17,7 @@ import type {
   PaperSelectProps,
   PaperSelectTextInputProps,
 } from '../interface/paperSelect.interface';
-import type { InternalTheme } from 'react-native-paper/lib/typescript/src/types';
+import type { InternalTheme } from 'react-native-paper/lib/typescript/types';
 
 const PaperSelect = ({
   // Required props
@@ -66,19 +66,21 @@ const PaperSelect = ({
 }: PaperSelectProps) => {
   const theme = useTheme<InternalTheme>(themeOverrides);
 
+  const textInputIconProps = {
+    style: styles.textInputIcon,
+    size: 20,
+    icon: 'chevron-down',
+  };
+
   const textInputProps: PaperSelectTextInputProps = {
-    underlineColor: textInputPropOverrides?.underlineColor || 'black',
+    underlineColor: textInputPropOverrides?.underlineColor ?? 'black',
     activeUnderlineColor:
-      textInputPropOverrides?.activeUnderlineColor || 'black',
-    outlineColor: textInputPropOverrides?.outlineColor || 'black',
-    activeOutlineColor: textInputPropOverrides?.activeOutlineColor || 'black',
+      textInputPropOverrides?.activeUnderlineColor ?? 'black',
+    outlineColor: textInputPropOverrides?.outlineColor ?? 'black',
+    activeOutlineColor: textInputPropOverrides?.activeOutlineColor ?? 'black',
     left: textInputPropOverrides?.left,
     right: textInputPropOverrides?.right ?? (
-      <TextInput.Icon
-        style={styles.textInputIcon}
-        size={20}
-        icon="chevron-down"
-      />
+      <TextInput.Icon {...textInputIconProps} />
     ),
   };
 
@@ -105,6 +107,8 @@ const PaperSelect = ({
 
   const [visible, setVisible] = useState<boolean>(false);
 
+  const triggeredByOnCheckedSingle = useRef(false);
+
   useEffect(() => {
     let isMounted = true;
     let _getData = async () => {
@@ -123,12 +127,10 @@ const PaperSelect = ({
 
   const showDialog = () => setVisible(true);
 
-  const _hideDialog = () => {
+  const _hideDialog = useCallback(() => {
     setSearchKey('');
     var data: Array<ListItem> = [...arrayHolder];
-    // console.log(selectedList);
     var selectedData: Array<ListItem> = [...selectedList];
-    // console.log(selectedData);
     let finalText: string = '';
     selectedData.forEach((val, index) => {
       data.forEach((el) => {
@@ -149,7 +151,7 @@ const PaperSelect = ({
     if (selectInputRef && selectInputRef.current) {
       selectInputRef.current.blur();
     }
-  };
+  }, [arrayHolder, selectedList, onSelection, selectInputRef]);
 
   const _closeDialog = () => {
     setVisible(false);
@@ -186,6 +188,8 @@ const PaperSelect = ({
   };
 
   const _onCheckedSingle = (item: any) => {
+    triggeredByOnCheckedSingle.current = true;
+
     var selectedData = [...selectedList];
     // const index = data.findIndex(x => x._id === item._id);
     const indexSelected = selectedData.findIndex((val) => val._id === item._id);
@@ -199,6 +203,13 @@ const PaperSelect = ({
     // console.log(selectedData);
     setSelectedList([...selectedData]);
   };
+
+  useEffect(() => {
+    if (triggeredByOnCheckedSingle.current) {
+      triggeredByOnCheckedSingle.current = false;
+      _hideDialog();
+    }
+  }, [selectedList, _hideDialog]);
 
   const _exists = (item: any) => {
     // console.log(selectedList);
@@ -265,6 +276,7 @@ const PaperSelect = ({
           showSoftInputOnFocus={false}
           value={value}
           textColor={textColor}
+          error={errorText && errorText?.length > 0 ? true : false}
         />
         {errorText ? (
           <Text

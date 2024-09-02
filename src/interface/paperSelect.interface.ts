@@ -1,7 +1,7 @@
 import type { ReactNode, MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
 import type { SearchbarProps, TextInputProps } from 'react-native-paper';
-import type { ThemeProp } from 'react-native-paper/lib/typescript/src/types';
+import type { ThemeProp } from 'react-native-paper/lib/typescript/types';
 import type { PaperSelectCheckboxProps } from './checkbox.interface';
 
 export interface ListItem {

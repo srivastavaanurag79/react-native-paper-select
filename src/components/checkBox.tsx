@@ -9,6 +9,7 @@ interface CheckboxPropsFull extends PaperSelectCheckboxProps {
   label: string;
   onPress: () => void;
   disabled?: boolean;
+  testID?: string;
 }
 
 const CheckboxInput = ({
@@ -21,6 +22,7 @@ const CheckboxInput = ({
   checkboxMode,
   disabled,
   onPress,
+  testID,
 }: CheckboxPropsFull) => (
   <View style={styles.container}>
     <Checkbox.Item
@@ -40,6 +42,7 @@ const CheckboxInput = ({
       position={`leading`}
       disabled={disabled}
       onPress={disabled ? () => {} : onPress}
+      testID={testID}
     />
   </View>
 );

@@ -63,6 +63,13 @@ const PaperSelect = ({
   textInputProps: textInputPropOverrides,
   checkboxProps: checkboxPropsOverrides,
   searchbarProps: searchbarPropsOverrides,
+
+  // New testID props
+  testID,
+  dialogTestID,
+  searchbarTestID,
+  selectAllCheckboxTestID,
+  itemCheckboxTestIDPrefix = 'checkbox-', // Prefix for item checkboxes testID
 }: PaperSelectProps) => {
   const theme = useTheme<InternalTheme>(themeOverrides);
 
@@ -244,6 +251,7 @@ const PaperSelect = ({
         multiEnable === true ? _onChecked(item) : _onCheckedSingle(item);
       }}
       disabled={item.disabled}
+      testID={`${itemCheckboxTestIDPrefix}${item._id}`}
     />
   );
 
@@ -277,6 +285,7 @@ const PaperSelect = ({
           value={value}
           textColor={textColor}
           error={errorText && errorText?.length > 0 ? true : false}
+          testID={testID}
         />
         {errorText ? (
           <Text
@@ -298,6 +307,7 @@ const PaperSelect = ({
             style={[styles.dialog, dialogStyle]}
             visible={visible}
             dismissable={false}
+            testID={dialogTestID}
           >
             <Dialog.Title style={dialogTitleStyle}>
               {dialogTitle ?? label}
@@ -310,6 +320,7 @@ const PaperSelect = ({
                   placeholder={searchText}
                   onChangeText={(text: string) => _filterFunction(text)}
                   style={[styles.searchbar, searchStyle]}
+                  testID={searchbarTestID}
                 />
               ) : null}
 
@@ -340,6 +351,7 @@ const PaperSelect = ({
                           ? true
                           : false
                       }
+                      testID={selectAllCheckboxTestID}
                     />
                   ) : null
                 }

@@ -55,6 +55,17 @@
 | checkboxProps  | [PaperSelectCheckboxProps](https://callstack.github.io/react-native-paper/docs/components/Checkbox/CheckboxItem)   | Additional properties to supply to the checkboxes. | undefined     | :x:      |
 | searchbarProps  | [PaperSelectSearchbarProps](https://callstack.github.io/react-native-paper/docs/components/Searchbar) | Additional properties to supply to the searchbar.  | undefined     | :x:      |
 
+### Test properties
+
+| Name           | Type                                                    | Description                                        | Default value | Required |
+| -------------- | ------------------------------------------------------- | -------------------------------------------------- | ------------- | -------- |
+| testID | string  | test id for paper select | undefined     | :x:      |
+| dialogTestID  | string   | test id for dialog box | undefined     | :x:      |
+| searchbarTestID  | string | test id for search bar in dialog box  | undefined     | :x:      |
+| selectAllCheckboxTestID  | string | test id for select all in dialog box  | undefined     | :x:      |
+| itemCheckboxTestIDPrefix  | string | Additional properties to supply to the searchbar.  | checkbox-     | :x:      |
+
+
 ## Types
 
 ### ListItem

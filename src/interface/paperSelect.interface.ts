@@ -76,4 +76,11 @@ export interface PaperSelectProps {
   textInputProps?: PaperSelectTextInputProps;
   checkboxProps?: PaperSelectCheckboxProps;
   searchbarProps?: PaperSelectSearchbarProps;
+
+  // New testID props
+  testID?: string | undefined;
+  dialogTestID?: string | undefined;
+  searchbarTestID?: string | undefined;
+  selectAllCheckboxTestID?: string | undefined;
+  itemCheckboxTestIDPrefix?: string | undefined;
 }

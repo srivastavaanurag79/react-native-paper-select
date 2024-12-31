@@ -36,6 +36,7 @@ Check out the [Example](https://anurag-srivastava.gitbook.io/react-native-paper-
 ```bash
 react-native-paper
 react-native-vector-icons
+@shopify/flash-list
 ```
 
 ## Installation
@@ -44,12 +45,14 @@ If you are using <b>React Native Paper v5.x</b> please install the versions abov
 
 ```bash
 npm install react-native-paper-select
+npm i @shopify/flash-list
 ```
 
 or
 
 ```bash
 yarn add react-native-paper-select
+yarn add @shopify/flash-list
 ```
 
 ## Customization Options

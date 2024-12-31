@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Dimensions, FlatList } from 'react-native';
+import { View, StyleSheet, Dimensions, FlatList, Keyboard } from 'react-native';
 import {
   TextInput,
   Button,
@@ -169,6 +169,7 @@ const PaperSelect = ({
   };
 
   const _onFocus = () => {
+    Keyboard.dismiss();
     setArrayHolder([...arrayList]);
     setList([...arrayList]);
     setMaxLimit([...arrayList].length);

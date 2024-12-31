@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { Alert, StyleSheet, View } from 'react-native';
-import { Button as PaperButton, Headline } from 'react-native-paper';
+import { Button as PaperButton, Headline, TextInput } from 'react-native-paper';
 import { PaperSelect } from 'react-native-paper-select';
 
 export const selectValidator = (value: any) => {
@@ -16,6 +16,9 @@ export const selectValidator = (value: any) => {
 
 export default function App() {
   const singleSelectRef = useRef<any>();
+
+  const [text, setText] = React.useState('');
+
   const [gender, setGender] = useState<any>({
     value: '',
     list: [
@@ -99,6 +102,14 @@ export default function App() {
       >
         React Native Paper Select
       </Headline>
+
+      <View style={{ width: '100%', marginBottom: 10 }}>
+        <TextInput
+          label="Email"
+          value={text}
+          onChangeText={(val) => setText(val)}
+        />
+      </View>
       <PaperSelect
         inputRef={singleSelectRef}
         label="Select Gender"

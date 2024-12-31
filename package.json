@@ -1,6 +1,6 @@
 {
   "name": "react-native-paper-select",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Material Design Select Dropdown Component using React Native Paper",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

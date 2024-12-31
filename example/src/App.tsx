@@ -38,20 +38,14 @@ export default function App() {
   const [colors, setColors] = useState<any>({
     value: '',
     list: [
-      { _id: '1', value: 'BLUE' },
-      { _id: '2', value: 'RED' },
-      { _id: '3', value: 'GREEN' },
-      { _id: '4', value: 'YELLOW' },
-      { _id: '5', value: 'BROWN' },
-      { _id: '6', value: 'BLACK' },
-      { _id: '7', value: 'WHITE' },
-      { _id: '8', value: 'CYAN' },
-      { _id: '9', value: 'BLACK' },
-      { _id: '10', value: 'Test 1' },
-      { _id: '11', value: 'Test 2' },
-      { _id: '12', value: 'Test 3' },
-      { _id: '13', value: 'Test 4' },
-      { _id: '14', value: 'Test 5' },
+      { _id: 'BLUE', value: 'BLUE' },
+      { _id: 'RED', value: 'RED' },
+      { _id: 'GREEN', value: 'GREEN' },
+      { _id: 'YELLOW', value: 'YELLOW' },
+      { _id: 'BROWN', value: 'BROWN' },
+      { _id: 'WHITE', value: 'WHITE' },
+      { _id: 'CYAN', value: 'CYAN' },
+      { _id: 'BLACK', value: 'BLACK'},
     ],
     selectedList: [],
     error: '',
@@ -61,12 +55,10 @@ export default function App() {
     let isMounted = true;
     let _getData = async () => {
       if (isMounted) {
-        let _tempList: Array<any> = [...gender.list];
+        let _tempList: Array<any> = [];
         for (let i = 0; i < 10000; i++) {
           _tempList.push({
-            _id: `TEST ${
-              Math.round(Math.random() * 1000) + 22 + Math.random()
-            }`,
+            _id: `TEST_${i}_${Date.now()}_${Math.random()}`,
             value: 'OTHERS ' + i,
           });
         }
@@ -74,16 +66,17 @@ export default function App() {
         setGender({
           ...gender,
           value: 'OTHERS',
-          list: [..._tempList],
-          selectedList: [{ _id: '3', value: 'OTHERS' }],
+          // list: [..._tempList],
+          selectedList: [{ _id: '1', value: 'MALE' }],
         });
 
         setColors({
           ...colors,
           value: 'BLUE,RED',
+          list: [...colors.list, ..._tempList],
           selectedList: [
-            { _id: '1', value: 'BLUE' },
-            { _id: '2', value: 'RED' },
+            { _id: 'BLUE', value: 'BLUE' },
+            { _id: 'RED', value: 'RED' },
           ],
         });
       }

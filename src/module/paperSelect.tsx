@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Dimensions, FlatList, Keyboard } from 'react-native';
+import { View, StyleSheet, Dimensions, Keyboard } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
 import {
   TextInput,
   Button,
@@ -117,99 +118,92 @@ const PaperSelect = ({
   const triggeredByOnCheckedSingle = useRef(false);
 
   useEffect(() => {
-    let isMounted = true;
-    let _getData = async () => {
-      if (isMounted && showLimitError) {
-        setTimeout(() => {
-          setShowLimitError(false);
-        }, 10000);
-      }
-    };
+    if (showLimitError) {
+      const timeoutId = setTimeout(() => {
+        setShowLimitError(false);
+      }, 10000);
 
-    _getData();
-    return () => {
-      isMounted = false;
-    };
+      // Cleanup timeout on unmount or when showLimitError changes
+      return () => clearTimeout(timeoutId);
+    }
+
+    // Return an empty cleanup function if showLimitError is false
+    return () => {};
   }, [showLimitError]);
 
   const showDialog = () => setVisible(true);
 
   const _hideDialog = useCallback(() => {
     setSearchKey('');
-    var data: Array<ListItem> = [...arrayHolder];
-    var selectedData: Array<ListItem> = [...selectedList];
-    let finalText: string = '';
-    selectedData.forEach((val, index) => {
-      data.forEach((el) => {
-        if (val._id === el._id) {
-          finalText +=
-            index !== selectedData.length - 1 ? `${el.value}, ` : `${el.value}`;
-        }
-      });
-    });
+
+    const finalText = selectedList
+      .map((val) => {
+        const matchedItem = arrayHolder.find((el) => val._id === el._id);
+        return matchedItem ? matchedItem.value : null;
+      })
+      .filter(Boolean)
+      .join(', '); // Generate comma-separated values
 
     onSelection({
       text: finalText,
-      selectedList: selectedData,
+      selectedList: selectedList,
     });
 
     setVisible(false);
-
-    if (selectInputRef && selectInputRef.current) {
-      selectInputRef.current.blur();
-    }
+    selectInputRef?.current?.blur();
   }, [arrayHolder, selectedList, onSelection, selectInputRef]);
 
   const _closeDialog = () => {
     setVisible(false);
     setSearchKey('');
-    if (selectInputRef && selectInputRef.current) {
-      selectInputRef.current.blur();
-    }
+    selectInputRef?.current?.blur();
   };
 
   const _onFocus = () => {
     Keyboard.dismiss();
-    setArrayHolder([...arrayList]);
-    setList([...arrayList]);
-    setMaxLimit([...arrayList].length);
-    setHasDisabled(_checkIfAnyItemDisabled([...arrayList]));
-    setSelectedList([...selectedArrayList]);
+    setArrayHolder(arrayList);
+    setList(arrayList);
+    setMaxLimit(arrayList.length);
+    setHasDisabled(_checkIfAnyItemDisabled(arrayList));
+    setSelectedList(selectedArrayList);
     showDialog();
   };
 
   const _onChecked = (item: any) => {
-    var selectedData = [...selectedList];
-    // const index = data.findIndex(x => x._id === item._id);
+    let selectedData = [...selectedList]; // Ensure no direct mutation of the state
+
     const indexSelected = selectedData.findIndex((val) => val._id === item._id);
+    // console.log(indexSelected);
+
     if (indexSelected > -1) {
-      selectedData.splice(indexSelected, 1);
+      // If item is already selected, remove it
+      selectedData = selectedData.filter((val) => val._id !== item._id);
+      // console.log(selectedData);
     } else {
+      // If item is not selected, add it
       if (limit && selectedData.length === limit) {
         setShowLimitError(true);
       } else {
         setShowLimitError(false);
-        selectedData.push(item);
+        selectedData = [...selectedData, item];
       }
     }
-    setSelectedList([...selectedData]);
+
+    // Update the state with the modified array
+    setSelectedList(selectedData);
   };
 
   const _onCheckedSingle = (item: any) => {
     triggeredByOnCheckedSingle.current = true;
 
-    var selectedData = [...selectedList];
-    // const index = data.findIndex(x => x._id === item._id);
-    const indexSelected = selectedData.findIndex((val) => val._id === item._id);
-    if (indexSelected > -1) {
-      // selectedData.splice(indexSelected, 1);
-      selectedData = [];
-    } else {
-      selectedData = [];
-      selectedData.push(item);
-    }
-    // console.log(selectedData);
-    setSelectedList([...selectedData]);
+    // Directly manipulate the selectedList array without creating unnecessary copies
+    setSelectedList((prevSelectedList) => {
+      // Check if the item is already in the list
+      if (prevSelectedList.some((val) => val._id === item._id)) {
+        return []; // If it's already selected, clear the list
+      }
+      return [item]; // Otherwise, select the new item
+    });
   };
 
   useEffect(() => {
@@ -220,27 +214,16 @@ const PaperSelect = ({
   }, [selectedList, _hideDialog]);
 
   const _exists = (item: any) => {
-    // console.log(selectedList);
-    let _temp = [...selectedList];
-    return _temp.find((val: any) => val._id === item._id) ? true : false;
+    return selectedList.some((val: any) => val._id === item._id);
   };
 
   const _isCheckedAll = () => {
-    const data = [...list];
-    const selectedData = [...selectedList];
-    return selectedData.length !== 0 && selectedData.length === data.length;
+    return selectedList.length > 0 && selectedList.length === list.length;
   };
 
   const _checkAll = () => {
-    const data = [...list];
-    var selectedData = [...selectedList];
-    if (selectedData.length === data.length) {
-      selectedData = [];
-    } else if (selectedData.length === 0 || selectedData.length > 0) {
-      selectedData = data.slice(0);
-    }
-
-    setSelectedList([...selectedData]);
+    // If all items are selected, unselect them, otherwise select all
+    setSelectedList(selectedList.length === list.length ? [] : [...list]);
   };
 
   const _renderItem = ({ item }: { item: ListItem }) => (
@@ -258,16 +241,15 @@ const PaperSelect = ({
 
   const _filterFunction = (text: string) => {
     setSearchKey(text);
+    const lowercasedText = text.toLowerCase();
     const newData = arrayHolder.filter((item) =>
-      item.value.toLowerCase().includes(text.toLowerCase())
+      item.value.toLowerCase().includes(lowercasedText)
     );
     setList(newData);
   };
 
   const _checkIfAnyItemDisabled = (_list: Array<ListItem>) => {
-    const data = [..._list];
-    let result = data.find((x) => x.disabled);
-    return result ? true : false;
+    return _list.some((x) => x.disabled);
   };
 
   return (
@@ -313,7 +295,12 @@ const PaperSelect = ({
             <Dialog.Title style={dialogTitleStyle}>
               {dialogTitle ?? label}
             </Dialog.Title>
-            <Dialog.ScrollArea style={{ paddingHorizontal: 14 }}>
+            <Dialog.ScrollArea
+              style={{
+                paddingHorizontal: 14,
+                height: height - (height * 40) / 100,
+              }}
+            >
               {!hideSearchBox ? (
                 <Searchbar
                   {...searchbarPropsOverrides}
@@ -324,19 +311,7 @@ const PaperSelect = ({
                   testID={searchbarTestID}
                 />
               ) : null}
-
-              {/* <ScrollView
-                style={
-                  (styles.dialogScrollView,
-                    { maxHeight: height - (height * 40) / 100, marginBottom: 8 })
-                }
-                keyboardShouldPersistTaps="handled"
-              >
-                {multiEnable === true
-                  ? _renderListForMulti()
-                  : _renderListForSingle()}
-              </ScrollView> */}
-              <FlatList
+              <FlashList
                 ListHeaderComponent={
                   multiEnable === true && selectAllEnable === true ? (
                     <CheckboxInput
@@ -358,15 +333,12 @@ const PaperSelect = ({
                 }
                 data={list}
                 renderItem={_renderItem}
-                keyExtractor={(item) => item._id.toString()}
-                keyboardShouldPersistTaps="handled"
-                style={
-                  (styles.dialogScrollView,
-                  {
-                    maxHeight: height - (height * 45) / 100,
-                    marginBottom: 8,
-                  })
+                keyExtractor={(item, index) =>
+                  item._id.toString() || index.toString()
                 }
+                extraData={selectedList}
+                keyboardShouldPersistTaps="handled"
+                estimatedItemSize={(height - (height * 45) / 100) / 10}
               />
               {showLimitError ? (
                 <Text

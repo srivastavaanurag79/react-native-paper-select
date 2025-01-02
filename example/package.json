@@ -11,7 +11,7 @@
   "dependencies": {
     "@shopify/flash-list": "^1.1.0",
     "react": "16.13.1",
-    "react-native": "0.63.5",
+    "react-native": "0.76.5",
     "react-native-paper": "^4.9.2",
     "react-native-vector-icons": "^8.1.0"
   },

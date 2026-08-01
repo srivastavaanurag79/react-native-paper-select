@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Dimensions, Keyboard } from 'react-native';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { View, StyleSheet, Keyboard, useWindowDimensions } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import {
   TextInput,
@@ -37,7 +37,7 @@ const PaperSelect = ({
   theme: themeOverrides,
   inputRef,
   limit = null,
-  limitError = `You can't select more than ${limit} items.`,
+  limitError,
   limitErrorStyle,
 
   // Localization props
@@ -71,141 +71,171 @@ const PaperSelect = ({
   dialogTestID,
   searchbarTestID,
   selectAllCheckboxTestID,
-  itemCheckboxTestIDPrefix = 'checkbox-', // Prefix for item checkboxes testID
+  itemCheckboxTestIDPrefix = 'checkbox-',
 }: PaperSelectProps) => {
   const theme = useTheme<InternalTheme>(themeOverrides);
+  const { height } = useWindowDimensions();
 
-  const textInputIconProps = {
-    style: styles.textInputIcon,
-    size: 20,
-    icon: 'chevron-down',
-  };
+  // Memoized text input props
+  const textInputIconProps = useMemo(
+    () => ({
+      style: styles.textInputIcon,
+      size: 20,
+      icon: 'chevron-down' as const,
+    }),
+    []
+  );
 
-  const textInputProps: PaperSelectTextInputProps = {
-    underlineColor: textInputPropOverrides?.underlineColor ?? 'black',
-    activeUnderlineColor:
-      textInputPropOverrides?.activeUnderlineColor ?? 'black',
-    outlineColor: textInputPropOverrides?.outlineColor ?? 'black',
-    activeOutlineColor: textInputPropOverrides?.activeOutlineColor ?? 'black',
-    left: textInputPropOverrides?.left,
-    right: textInputPropOverrides?.right ?? (
-      <TextInput.Icon {...textInputIconProps} />
-    ),
-  };
+  const textInputProps = useMemo<PaperSelectTextInputProps>(
+    () => ({
+      underlineColor: textInputPropOverrides?.underlineColor ?? 'black',
+      activeUnderlineColor: textInputPropOverrides?.activeUnderlineColor ?? 'black',
+      outlineColor: textInputPropOverrides?.outlineColor ?? 'black',
+      activeOutlineColor: textInputPropOverrides?.activeOutlineColor ?? 'black',
+      left: textInputPropOverrides?.left,
+      right:
+        textInputPropOverrides?.right ?? <TextInput.Icon {...textInputIconProps} />,
+    }),
+    [textInputPropOverrides, textInputIconProps]
+  );
 
-  const { height } = Dimensions.get('window');
-
-  const [searchKey, setSearchKey] = useState<string>('');
-
-  const [arrayHolder, setArrayHolder] = useState<Array<ListItem>>([
-    ...arrayList,
-  ]);
-  const [list, setList] = useState<Array<ListItem>>([...arrayList]);
-  const [selectedList, setSelectedList] = useState<Array<ListItem>>([
-    ...selectedArrayList,
-  ]);
-
-  const [maxLimit, setMaxLimit] = useState<number>(list.length);
-
-  const [hasDisabled, setHasDisabled] = useState<boolean>(false);
-
-  const [showLimitError, setShowLimitError] = useState<boolean>(false);
+  // State
+  const [searchKey, setSearchKey] = useState('');
+  const [debouncedSearchKey, setDebouncedSearchKey] = useState('');
+  const [selectedList, setSelectedList] = useState<ListItem[]>([...selectedArrayList]);
+  const [showLimitError, setShowLimitError] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const selfInputRef = useRef<any>(null);
   const selectInputRef = inputRef ?? selfInputRef;
-
-  const [visible, setVisible] = useState<boolean>(false);
-
   const triggeredByOnCheckedSingle = useRef(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    if (showLimitError) {
-      const timeoutId = setTimeout(() => {
-        setShowLimitError(false);
-      }, 10000);
+  // Derived values
+  const filteredList = useMemo(() => {
+    if (!debouncedSearchKey) return arrayList;
+    const lowercased = debouncedSearchKey.toLowerCase();
+    return arrayList.filter((item) => item.value.toLowerCase().includes(lowercased));
+  }, [arrayList, debouncedSearchKey]);
 
-      // Cleanup timeout on unmount or when showLimitError changes
-      return () => clearTimeout(timeoutId);
-    }
+  const selectedIdSet = useMemo(
+    () => new Set(selectedList.map((val) => val._id)),
+    [selectedList]
+  );
 
-    // Return an empty cleanup function if showLimitError is false
-    return () => {};
-  }, [showLimitError]);
+  const hasDisabled = useMemo(() => arrayList.some((x) => x.disabled), [arrayList]);
 
-  const showDialog = () => setVisible(true);
+  const isCheckedAll = useMemo(
+    () => selectedList.length > 0 && selectedList.length === filteredList.length,
+    [selectedList, filteredList]
+  );
 
+  const selectAllDisabled =
+    hasDisabled || (limit != null && limit > 0 && limit !== arrayList.length);
+
+  const displayLimitError =
+    limitError ?? `You can't select more than ${limit} items.`;
+
+  const errorTextStyle = useMemo(() => ({ color: theme.colors.error }), [theme.colors.error]);
+
+  // Callbacks
   const _hideDialog = useCallback(() => {
     setSearchKey('');
+    setDebouncedSearchKey('');
 
     const finalText = selectedList
       .map((val) => {
-        const matchedItem = arrayHolder.find((el) => val._id === el._id);
+        const matchedItem = arrayList.find((el) => val._id === el._id);
         return matchedItem ? matchedItem.value : null;
       })
       .filter(Boolean)
-      .join(', '); // Generate comma-separated values
+      .join(', ');
 
     onSelection({
       text: finalText,
-      selectedList: selectedList,
+      selectedList,
     });
 
     setVisible(false);
     selectInputRef?.current?.blur();
-  }, [arrayHolder, selectedList, onSelection, selectInputRef]);
+  }, [arrayList, selectedList, onSelection, selectInputRef]);
 
-  const _closeDialog = () => {
+  const _closeDialog = useCallback(() => {
     setVisible(false);
     setSearchKey('');
+    setDebouncedSearchKey('');
     selectInputRef?.current?.blur();
-  };
+  }, [selectInputRef]);
 
-  const _onFocus = () => {
+  const _onFocus = useCallback(() => {
     Keyboard.dismiss();
-    setArrayHolder(arrayList);
-    setList(arrayList);
-    setMaxLimit(arrayList.length);
-    setHasDisabled(_checkIfAnyItemDisabled(arrayList));
+    setSearchKey('');
+    setDebouncedSearchKey('');
     setSelectedList(selectedArrayList);
-    showDialog();
-  };
+    setVisible(true);
+  }, [selectedArrayList]);
 
-  const _onChecked = (item: any) => {
-    let selectedData = [...selectedList]; // Ensure no direct mutation of the state
-
-    const indexSelected = selectedData.findIndex((val) => val._id === item._id);
-    // console.log(indexSelected);
-
-    if (indexSelected > -1) {
-      // If item is already selected, remove it
-      selectedData = selectedData.filter((val) => val._id !== item._id);
-      // console.log(selectedData);
-    } else {
-      // If item is not selected, add it
-      if (limit && selectedData.length === limit) {
-        setShowLimitError(true);
-      } else {
+  const _onChecked = useCallback(
+    (item: ListItem) => {
+      setSelectedList((prev) => {
+        const index = prev.findIndex((val) => val._id === item._id);
+        if (index > -1) {
+          return prev.filter((val) => val._id !== item._id);
+        }
+        if (limit && prev.length >= limit) {
+          setShowLimitError(true);
+          return prev;
+        }
         setShowLimitError(false);
-        selectedData = [...selectedData, item];
-      }
-    }
+        return [...prev, item];
+      });
+    },
+    [limit]
+  );
 
-    // Update the state with the modified array
-    setSelectedList(selectedData);
-  };
-
-  const _onCheckedSingle = (item: any) => {
+  const _onCheckedSingle = useCallback((item: ListItem) => {
     triggeredByOnCheckedSingle.current = true;
-
-    // Directly manipulate the selectedList array without creating unnecessary copies
-    setSelectedList((prevSelectedList) => {
-      // Check if the item is already in the list
-      if (prevSelectedList.some((val) => val._id === item._id)) {
-        return []; // If it's already selected, clear the list
+    setSelectedList((prev) => {
+      if (prev.some((val) => val._id === item._id)) {
+        return [];
       }
-      return [item]; // Otherwise, select the new item
+      return [item];
     });
-  };
+  }, []);
+
+  const _checkAll = useCallback(() => {
+    setSelectedList((prev) => (prev.length === filteredList.length ? [] : [...filteredList]));
+  }, [filteredList]);
+
+  const _handleItemPress = useCallback(
+    (item: ListItem) => {
+      if (multiEnable) {
+        _onChecked(item);
+      } else {
+        _onCheckedSingle(item);
+      }
+    },
+    [multiEnable, _onChecked, _onCheckedSingle]
+  );
+
+  const _onSearchChange = useCallback((text: string) => {
+    setSearchKey(text);
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
+      setDebouncedSearchKey(text);
+    }, 300);
+  }, []);
+
+  // Effects
+  useEffect(() => {
+    if (showLimitError) {
+      const timeoutId = setTimeout(() => setShowLimitError(false), 10000);
+      return () => clearTimeout(timeoutId);
+    }
+    return undefined;
+  }, [showLimitError]);
 
   useEffect(() => {
     if (triggeredByOnCheckedSingle.current) {
@@ -214,61 +244,45 @@ const PaperSelect = ({
     }
   }, [selectedList, _hideDialog]);
 
-  const _exists = (item: any) => {
-    return selectedList.some((val: any) => val._id === item._id);
-  };
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, []);
 
-  const _isCheckedAll = () => {
-    return selectedList.length > 0 && selectedList.length === list.length;
-  };
+  // Render
+  const _renderItem = useCallback(
+    ({ item }: { item: ListItem }) => {
+      const isSelected = selectedIdSet.has(item._id);
 
-  const _checkAll = () => {
-    // If all items are selected, unselect them, otherwise select all
-    setSelectedList(selectedList.length === list.length ? [] : [...list]);
-  };
+      if (customRenderItem) {
+        return (
+          <>
+            {customRenderItem({
+              item,
+              isSelected,
+              onPress: () => _handleItemPress(item),
+              disabled: item.disabled,
+            })}
+          </>
+        );
+      }
 
-  const _renderItem = ({ item }: { item: ListItem }) => {
-    if (customRenderItem) {
       return (
-        <>
-          {customRenderItem({
-            item,
-            isSelected: _exists(item),
-            onPress: () => {
-              multiEnable === true ? _onChecked(item) : _onCheckedSingle(item);
-            },
-            disabled: item.disabled,
-          })}
-        </>
+        <CheckboxInput
+          {...checkboxPropsOverrides}
+          isChecked={isSelected}
+          label={item.value}
+          onPress={() => _handleItemPress(item)}
+          disabled={item.disabled}
+          testID={``}
+        />
       );
-    }
-
-    return (
-      <CheckboxInput
-        {...checkboxPropsOverrides}
-        isChecked={_exists(item)}
-        label={item.value}
-        onPress={() => {
-          multiEnable === true ? _onChecked(item) : _onCheckedSingle(item);
-        }}
-        disabled={item.disabled}
-        testID={`${itemCheckboxTestIDPrefix}${item._id}`}
-      />
-    );
-  };
-
-  const _filterFunction = (text: string) => {
-    setSearchKey(text);
-    const lowercasedText = text.toLowerCase();
-    const newData = arrayHolder.filter((item) =>
-      item.value.toLowerCase().includes(lowercasedText)
-    );
-    setList(newData);
-  };
-
-  const _checkIfAnyItemDisabled = (_list: Array<ListItem>) => {
-    return _list.some((x) => x.disabled);
-  };
+    },
+    [customRenderItem, selectedIdSet, _handleItemPress, checkboxPropsOverrides, itemCheckboxTestIDPrefix]
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -277,7 +291,7 @@ const PaperSelect = ({
           {...textInputProps}
           ref={selectInputRef}
           disabled={disabled}
-          style={[styles.textInput, textInputStyle]}
+          style={textInputStyle}
           outlineStyle={textInputOutlineStyle}
           label={label}
           mode={textInputMode}
@@ -285,20 +299,11 @@ const PaperSelect = ({
           showSoftInputOnFocus={false}
           value={value}
           textColor={textColor}
-          error={errorText && errorText?.length > 0 ? true : false}
+          error={!!errorText}
           testID={testID}
         />
         {errorText ? (
-          <Text
-            style={[
-              {
-                color: theme.colors.error,
-              },
-              errorStyle,
-            ]}
-          >
-            {errorText}
-          </Text>
+          <Text style={[errorTextStyle, errorStyle]}>{errorText}</Text>
         ) : null}
       </View>
 
@@ -313,18 +318,13 @@ const PaperSelect = ({
             <Dialog.Title style={dialogTitleStyle}>
               {dialogTitle ?? label}
             </Dialog.Title>
-            <Dialog.ScrollArea
-              style={{
-                paddingHorizontal: 14,
-                height: height - (height * 40) / 100,
-              }}
-            >
+            <Dialog.ScrollArea style={[styles.dialogScrollArea, { height: height - (height * 40) / 100 }]}>
               {!hideSearchBox ? (
                 <Searchbar
                   {...searchbarPropsOverrides}
                   value={searchKey}
                   placeholder={searchText}
-                  onChangeText={(text: string) => _filterFunction(text)}
+                  onChangeText={_onSearchChange}
                   style={[styles.searchbar, searchStyle]}
                   testID={searchbarTestID}
                 />
@@ -334,48 +334,29 @@ const PaperSelect = ({
                   multiEnable === true && selectAllEnable === true ? (
                     <CheckboxInput
                       {...checkboxPropsOverrides}
-                      isChecked={_isCheckedAll()}
+                      isChecked={isCheckedAll}
                       label={selectAllText}
-                      onPress={() => {
-                        _checkAll();
-                      }}
-                      disabled={
-                        hasDisabled ||
-                        (limit && limit > 0 && limit !== maxLimit)
-                          ? true
-                          : false
-                      }
+                      onPress={_checkAll}
+                      disabled={selectAllDisabled}
                       testID={selectAllCheckboxTestID}
                     />
                   ) : null
                 }
-                data={list}
+                data={filteredList}
                 renderItem={_renderItem}
-                keyExtractor={(item, index) =>
-                  item._id.toString() || index.toString()
-                }
+                keyExtractor={(item, index) => item._id.toString() || index.toString()}
                 extraData={selectedList}
                 keyboardShouldPersistTaps="handled"
                 estimatedItemSize={(height - (height * 45) / 100) / 10}
               />
               {showLimitError ? (
-                <Text
-                  style={[
-                    {
-                      color: theme.colors.error,
-                    },
-                    limitErrorStyle,
-                  ]}
-                >
-                  {limitError}
+                <Text style={[errorTextStyle, limitErrorStyle]}>
+                  {displayLimitError}
                 </Text>
               ) : null}
             </Dialog.ScrollArea>
             <Dialog.Actions>
-              <Button
-                labelStyle={dialogCloseButtonStyle}
-                onPress={_closeDialog}
-              >
+              <Button labelStyle={dialogCloseButtonStyle} onPress={_closeDialog}>
                 {dialogCloseButtonText}
               </Button>
               <Button labelStyle={dialogDoneButtonStyle} onPress={_hideDialog}>
@@ -397,12 +378,8 @@ const styles = StyleSheet.create({
   dialog: {
     borderRadius: 5,
   },
-  dialogScrollView: {
-    width: '100%',
-  },
-  textInput: {
-    // backgroundColor: '#fff',
-    // color: '#000',
+  dialogScrollArea: {
+    paddingHorizontal: 14,
   },
   textInputIcon: {
     justifyContent: 'center',

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import type { PaperSelectCheckboxProps } from 'src/interface/checkbox.interface';
@@ -23,23 +23,33 @@ const CheckboxInput = ({
   disabled,
   onPress,
   testID,
-}: CheckboxPropsFull) => (
-  <View style={styles.container}>
-    <Checkbox.Item
-      uncheckedColor={checkboxUncheckedColor}
-      color={checkboxColor}
-      status={isChecked ? 'checked' : 'unchecked'}
-      label={label.trim()}
-      labelStyle={{ ...checkboxLabelStyle, textAlign: 'left' }}
-      labelVariant={checkboxLabelVariant}
-      mode={checkboxMode}
-      position="leading"
-      disabled={disabled}
-      onPress={disabled ? () => {} : onPress}
-      testID={testID}
-    />
-  </View>
-);
+}: CheckboxPropsFull) => {
+  const labelStyle = useMemo(
+    () => ({
+      ...checkboxLabelStyle,
+      textAlign: 'left' as const,
+    }),
+    [checkboxLabelStyle]
+  );
+
+  return (
+    <View style={styles.container}>
+      <Checkbox.Item
+        uncheckedColor={checkboxUncheckedColor}
+        color={checkboxColor}
+        status={isChecked ? 'checked' : 'unchecked'}
+        label={label.trim()}
+        labelStyle={labelStyle}
+        labelVariant={checkboxLabelVariant}
+        mode={checkboxMode}
+        position="leading"
+        disabled={disabled}
+        onPress={disabled ? () => {} : onPress}
+        testID={testID}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

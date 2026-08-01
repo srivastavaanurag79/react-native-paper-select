@@ -1,9 +1,9 @@
 import React, { memo, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Checkbox } from 'react-native-paper';
-import type { PaperSelectCheckboxProps } from '../interface/checkbox.interface';
+import { RadioButton } from 'react-native-paper';
+import type { PaperSelectRadioButtonProps } from '../interface/paperSelect.interface';
 
-interface CheckboxPropsFull extends PaperSelectCheckboxProps {
+interface RadioButtonPropsFull extends PaperSelectRadioButtonProps {
   isChecked: boolean;
   label: string;
   onPress: () => void;
@@ -11,36 +11,35 @@ interface CheckboxPropsFull extends PaperSelectCheckboxProps {
   testID?: string;
 }
 
-const CheckboxInput = ({
+const RadioInput = ({
   isChecked,
   label,
-  checkboxColor,
-  checkboxLabelStyle,
-  checkboxLabelVariant,
-  checkboxUncheckedColor,
-  checkboxMode,
+  radioButtonColor,
+  radioButtonUncheckedColor,
+  radioButtonLabelStyle,
+  radioButtonLabelVariant,
   disabled,
   onPress,
   testID,
-}: CheckboxPropsFull) => {
+}: RadioButtonPropsFull) => {
   const labelStyle = useMemo(
     () => ({
-      ...checkboxLabelStyle,
+      ...radioButtonLabelStyle,
       textAlign: 'left' as const,
     }),
-    [checkboxLabelStyle]
+    [radioButtonLabelStyle]
   );
 
   return (
     <View style={styles.container}>
-      <Checkbox.Item
-        uncheckedColor={checkboxUncheckedColor}
-        color={checkboxColor}
+      <RadioButton.Item
+        value={label}
+        uncheckedColor={radioButtonUncheckedColor}
+        color={radioButtonColor}
         status={isChecked ? 'checked' : 'unchecked'}
         label={label}
         labelStyle={labelStyle}
-        labelVariant={checkboxLabelVariant}
-        mode={checkboxMode}
+        labelVariant={radioButtonLabelVariant}
         position="leading"
         disabled={disabled}
         onPress={disabled ? () => {} : onPress}
@@ -58,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(CheckboxInput);
+export default memo(RadioInput);

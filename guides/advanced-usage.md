@@ -169,3 +169,168 @@ import { IconButton } from 'react-native-paper';
   )}
 />
 ```
+
+## Presentation Styles
+
+PaperSelect supports three presentation styles for the selection UI:
+
+### Dialog (Default)
+The default presentation uses a modal dialog. No additional configuration needed.
+
+```tsx
+<PaperSelect
+  label="Select Country"
+  value={country.value}
+  onSelection={handleSelection}
+  arrayList={country.list}
+  selectedArrayList={country.selectedList}
+  multiEnable={false}
+  // presentationStyle defaults to 'dialog'
+/>
+```
+
+### Bottom Sheet
+A slide-up bottom sheet that takes up 70% of the screen height. Ideal for mobile UX with gesture support (drag to dismiss).
+
+```tsx
+<PaperSelect
+  label="Select Country"
+  value={country.value}
+  onSelection={handleSelection}
+  arrayList={country.list}
+  selectedArrayList={country.selectedList}
+  multiEnable={false}
+  presentationStyle="bottomSheet"
+  bottomSheetBackgroundColor="#fff"
+  bottomSheetHandleColor="#ccc"
+/>
+```
+
+### Menu (Dropdown)
+A centered dropdown modal. Compact and clean, works well for both single and multi-select.
+
+```tsx
+<PaperSelect
+  label="Select Country"
+  value={country.value}
+  onSelection={handleSelection}
+  arrayList={country.list}
+  selectedArrayList={country.selectedList}
+  multiEnable={false}
+  presentationStyle="menu"
+/>
+```
+
+## Sectional List (Grouped Items)
+
+Display items grouped under section headers. Each section header has a checkbox (in multi-select mode) that selects/deselects all items in that section.
+
+```tsx
+import type { Section } from 'react-native-paper-select';
+
+const countrySections: Section[] = [
+  {
+    title: 'Asia',
+    data: [
+      { _id: 'asia-1', value: 'India' },
+      { _id: 'asia-2', value: 'China' },
+      { _id: 'asia-3', value: 'Japan' },
+    ],
+  },
+  {
+    title: 'Europe',
+    data: [
+      { _id: 'eu-1', value: 'UK' },
+      { _id: 'eu-2', value: 'France' },
+      { _id: 'eu-3', value: 'Germany' },
+    ],
+  },
+];
+
+<PaperSelect
+  label="Select Country"
+  value={country.value}
+  onSelection={handleSelection}
+  arrayList={[]}
+  selectedArrayList={country.selectedList}
+  multiEnable={true}
+  sections={countrySections}
+  sectionHeaderStyle={{ color: '#1565C0', fontWeight: '700' }}
+  sectionHeaderContainerStyle={{ backgroundColor: '#E3F2FD' }}
+/>
+```
+
+When `sections` is provided, `arrayList` is derived by flattening all section data. The "Select all" checkbox at the top selects all items across all sections. Each section header checkbox selects/deselects only items within that section.
+
+## Chips Display
+
+Show selected items as removable chips inside the input field instead of comma-separated text. This provides a better UX for multi-select with many items.
+
+```tsx
+<PaperSelect
+  label="Select Tags"
+  value={tags.value}
+  onSelection={handleSelection}
+  arrayList={tags.list}
+  selectedArrayList={tags.selectedList}
+  multiEnable={true}
+  showChips={true}
+  chipStyle={{ backgroundColor: '#E8EAF6' }}
+  chipTextStyle={{ color: '#283593' }}
+/>
+```
+
+Chips can be combined with any presentation style:
+
+```tsx
+<PaperSelect
+  label="Select Skills"
+  value={skills.value}
+  onSelection={handleSelection}
+  arrayList={skills.list}
+  selectedArrayList={skills.selectedList}
+  multiEnable={true}
+  presentationStyle="bottomSheet"
+  showChips={true}
+/>
+```
+
+## Single Select Radio Variant
+
+Use radio buttons instead of checkboxes for single select. Provides a clearer visual indication that only one item can be selected.
+
+```tsx
+<PaperSelect
+  label="Select Priority"
+  value={priority.value}
+  onSelection={handleSelection}
+  arrayList={priority.list}
+  selectedArrayList={priority.selectedList}
+  multiEnable={false}
+  singleSelectVariant="radio"
+  radioButtonProps={{
+    radioButtonColor: '#4CAF50',
+    radioButtonLabelStyle: { color: '#333', fontWeight: '600' },
+  }}
+/>
+```
+
+## Combining Features
+
+All new features can be combined:
+
+```tsx
+<PaperSelect
+  label="Select Skills"
+  value={skills.value}
+  onSelection={handleSelection}
+  arrayList={skills.list}
+  selectedArrayList={skills.selectedList}
+  multiEnable={true}
+  presentationStyle="bottomSheet"
+  showChips={true}
+  chipStyle={{ backgroundColor: '#E8F5E9' }}
+  chipTextStyle={{ color: '#2E7D32' }}
+  bottomSheetBackgroundColor="#fafafa"
+/>
+```

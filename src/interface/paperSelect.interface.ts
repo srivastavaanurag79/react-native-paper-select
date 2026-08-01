@@ -1,13 +1,25 @@
 import type { ReactNode, MutableRefObject } from 'react';
 import type { ViewStyle, TextStyle } from 'react-native';
-import type { SearchbarProps, TextInputProps } from 'react-native-paper';
+import type {
+  SearchbarProps,
+  TextInputProps,
+  ChipProps,
+} from 'react-native-paper';
 import type { ThemeProp } from 'react-native-paper/lib/typescript/types';
-import type { PaperSelectCheckboxProps } from './checkbox.interface';
+import type {
+  PaperSelectCheckboxProps,
+  TypographyVariant,
+} from './checkbox.interface';
 
 export interface ListItem {
   _id: string;
   value: string;
   disabled?: boolean;
+}
+
+export interface Section {
+  title: string;
+  data: ListItem[];
 }
 
 export interface SelectedItem {
@@ -39,6 +51,13 @@ export type PaperSelectSearchbarProps = Pick<
   'icon' | 'iconColor'
 >;
 
+export interface PaperSelectRadioButtonProps {
+  radioButtonColor?: string;
+  radioButtonUncheckedColor?: string;
+  radioButtonLabelStyle?: TextStyle;
+  radioButtonLabelVariant?: TypographyVariant;
+}
+
 export interface PaperSelectProps {
   // Required props
   label: string;
@@ -58,6 +77,23 @@ export interface PaperSelectProps {
   limit?: number | null;
   limitError?: string;
   limitErrorStyle?: TextStyle;
+
+  // NEW: Presentation
+  presentationStyle?: 'dialog' | 'bottomSheet' | 'menu';
+
+  // NEW: Sections
+  sections?: Section[];
+  sectionHeaderStyle?: TextStyle;
+  sectionHeaderContainerStyle?: ViewStyle;
+
+  // NEW: Chips
+  showChips?: boolean;
+  chipStyle?: ChipProps['style'];
+  chipTextStyle?: TextStyle;
+
+  // NEW: Single select variant
+  singleSelectVariant?: 'checkbox' | 'radio';
+  radioButtonProps?: PaperSelectRadioButtonProps;
 
   // Localization props
   dialogTitle?: ReactNode;
@@ -79,16 +115,22 @@ export interface PaperSelectProps {
   errorStyle?: TextStyle;
   textColor?: string;
 
+  // NEW: Bottom sheet styles
+  bottomSheetStyle?: ViewStyle;
+  bottomSheetBackgroundColor?: string;
+  bottomSheetHandleColor?: string;
+  bottomSheetTitleStyle?: TextStyle;
+
   // Component props
   textInputProps?: PaperSelectTextInputProps;
   checkboxProps?: PaperSelectCheckboxProps;
   searchbarProps?: PaperSelectSearchbarProps;
   renderItem?: (props: PaperSelectRenderItemProps) => ReactNode;
 
-  // New testID props
-  testID?: string | undefined;
-  dialogTestID?: string | undefined;
-  searchbarTestID?: string | undefined;
-  selectAllCheckboxTestID?: string | undefined;
-  itemCheckboxTestIDPrefix?: string | undefined;
+  // testID props
+  testID?: string;
+  dialogTestID?: string;
+  searchbarTestID?: string;
+  selectAllCheckboxTestID?: string;
+  itemCheckboxTestIDPrefix?: string;
 }

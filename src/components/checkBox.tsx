@@ -28,18 +28,12 @@ const CheckboxInput = ({
     <Checkbox.Item
       uncheckedColor={checkboxUncheckedColor}
       color={checkboxColor}
-      status={
-        disabled
-          ? 'indeterminate'
-          : isChecked === true
-          ? 'checked'
-          : 'unchecked'
-      }
+      status={isChecked ? 'checked' : 'unchecked'}
       label={label.trim()}
       labelStyle={{ ...checkboxLabelStyle, textAlign: 'left' }}
       labelVariant={checkboxLabelVariant}
       mode={checkboxMode}
-      position={`leading`}
+      position="leading"
       disabled={disabled}
       onPress={disabled ? () => {} : onPress}
       testID={testID}

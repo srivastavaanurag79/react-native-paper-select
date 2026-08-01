@@ -98,3 +98,74 @@ Currently we support 2 different properties for overriding additional component 
     }}
   />
 ```
+
+## Custom Item Renderer
+
+You can completely replace the default checkbox rendering with your own custom component using the `renderItem` prop. This is useful when you want to use radio buttons, custom icons, or any other visual representation for your list items.
+
+The `renderItem` function receives an object with:
+- `item`: The current ListItem being rendered
+- `isSelected`: Boolean indicating if the item is currently selected
+- `onPress`: Function to call when the item is pressed
+- `disabled`: Boolean indicating if the item is disabled
+
+### Example: Using Radio Buttons
+
+```tsx
+import { RadioButton } from 'react-native-paper';
+
+<PaperSelect
+  label="Select Gender"
+  value={gender.value}
+  onSelection={(value: any) => {
+    setGender({
+      ...gender,
+      value: value.text,
+      selectedList: value.selectedList
+    });
+  }}
+  arrayList={[...gender.list]}
+  selectedArrayList={[...gender.selectedList]}
+  multiEnable={false}
+  renderItem={({ item, isSelected, onPress, disabled }) => (
+    <RadioButton.Item
+      label={item.value}
+      status={isSelected ? 'checked' : 'unchecked'}
+      onPress={onPress}
+      disabled={disabled}
+    />
+  )}
+/>
+```
+
+### Example: Custom Icons
+
+```tsx
+import { IconButton } from 'react-native-paper';
+
+<PaperSelect
+  label="Select Items"
+  value={items.value}
+  onSelection={(value: any) => {
+    setItems({
+      ...items,
+      value: value.text,
+      selectedList: value.selectedList
+    });
+  }}
+  arrayList={[...items.list]}
+  selectedArrayList={[...items.selectedList]}
+  multiEnable={true}
+  renderItem={({ item, isSelected, onPress, disabled }) => (
+    <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+      <IconButton
+        icon={isSelected ? 'checkbox-marked' : 'checkbox-blank-outline'}
+        onPress={onPress}
+        disabled={disabled}
+        iconColor={isSelected ? 'blue' : 'gray'}
+      />
+      <Text>{item.value}</Text>
+    </View>
+  )}
+/>
+```

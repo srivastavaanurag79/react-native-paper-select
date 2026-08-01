@@ -15,6 +15,13 @@ export interface SelectedItem {
   selectedList: Array<ListItem>;
 }
 
+export interface PaperSelectRenderItemProps {
+  item: ListItem;
+  isSelected: boolean;
+  onPress: () => void;
+  disabled?: boolean;
+}
+
 export type SelectionCallback = (item: SelectedItem) => void;
 
 export type PaperSelectTextInputProps = Pick<
@@ -76,6 +83,7 @@ export interface PaperSelectProps {
   textInputProps?: PaperSelectTextInputProps;
   checkboxProps?: PaperSelectCheckboxProps;
   searchbarProps?: PaperSelectSearchbarProps;
+  renderItem?: (props: PaperSelectRenderItemProps) => ReactNode;
 
   // New testID props
   testID?: string | undefined;

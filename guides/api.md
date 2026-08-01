@@ -54,6 +54,7 @@
 | textInputProps | [PaperSelectTextInputProps](https://callstack.github.io/react-native-paper/docs/components/TextInput/) | Additional properties to supply to the text input. | undefined     | :x:      |
 | checkboxProps  | [PaperSelectCheckboxProps](https://callstack.github.io/react-native-paper/docs/components/Checkbox/CheckboxItem)   | Additional properties to supply to the checkboxes. | undefined     | :x:      |
 | searchbarProps  | [PaperSelectSearchbarProps](https://callstack.github.io/react-native-paper/docs/components/Searchbar) | Additional properties to supply to the searchbar.  | undefined     | :x:      |
+| renderItem  | (props: [PaperSelectRenderItemProps](#PaperSelectRenderItemProps)) => ReactNode | Custom render function for dropdown items. Receives item, isSelected, onPress, and disabled. Use to render radio buttons, custom icons, or any custom component instead of default checkboxes. | undefined     | :x:      |
 
 ### Test properties
 
@@ -100,5 +101,15 @@ export interface PaperSelectCheckboxProps {
 export interface PaperSelectSearchbarProps {
   icon?: IconSource;
   iconColor?: string;
+}
+```
+
+### PaperSelectRenderItemProps
+```ts
+export interface PaperSelectRenderItemProps {
+  item: ListItem;
+  isSelected: boolean;
+  onPress: () => void;
+  disabled?: boolean;
 }
 ```

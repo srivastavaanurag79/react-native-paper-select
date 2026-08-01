@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { Alert, StyleSheet, View } from 'react-native';
-import { Button as PaperButton, Headline, TextInput } from 'react-native-paper';
+import { Button as PaperButton, Headline, TextInput, RadioButton } from 'react-native-paper';
 import { PaperSelect } from 'react-native-paper-select';
 
 export const selectValidator = (value: any) => {
@@ -46,6 +46,19 @@ export default function App() {
       { _id: 'WHITE', value: 'WHITE' },
       { _id: 'CYAN', value: 'CYAN' },
       { _id: 'BLACK', value: 'BLACK'},
+    ],
+    selectedList: [],
+    error: '',
+  });
+
+  const [fruits, setFruits] = useState<any>({
+    value: '',
+    list: [
+      { _id: '1', value: 'Apple' },
+      { _id: '2', value: 'Banana' },
+      { _id: '3', value: 'Mango' },
+      { _id: '4', value: 'Orange' },
+      { _id: '5', value: 'Grapes' },
     ],
     selectedList: [],
     error: '',
@@ -101,6 +114,7 @@ export default function App() {
           label="Email"
           value={text}
           onChangeText={(val) => setText(val)}
+          autoCompleteType="email"
         />
       </View>
       <PaperSelect
@@ -174,6 +188,32 @@ export default function App() {
         }}
         limit={2}
       />
+      <PaperSelect
+        label="Select Fruit (Custom Renderer)"
+        value={fruits.value}
+        onSelection={(value) => {
+          setFruits({
+            ...fruits,
+            value: value.text,
+            selectedList: value.selectedList,
+            error: '',
+          });
+        }}
+        arrayList={[...fruits.list]}
+        selectedArrayList={[...fruits.selectedList]}
+        errorText={fruits.error}
+        multiEnable={false}
+        textInputMode="flat"
+        renderItem={({ item, isSelected, onPress, disabled }) => (
+          <RadioButton.Item
+            label={item.value}
+            value={item._id}
+            status={isSelected ? 'checked' : 'unchecked'}
+            onPress={onPress}
+            disabled={disabled}
+          />
+        )}
+      />
       <PaperButton
         style={styles.button}
         labelStyle={styles.text}
@@ -181,14 +221,16 @@ export default function App() {
         onPress={() => {
           const genderError = selectValidator(gender.value);
           const colorError = selectValidator(colors.value);
-          if (genderError || colorError) {
+          const fruitError = selectValidator(fruits.value);
+          if (genderError || colorError || fruitError) {
             setColors({ ...colors, error: colorError });
             setGender({ ...gender, error: genderError });
+            setFruits({ ...fruits, error: fruitError });
             return;
           }
           Alert.alert(
             'Selected Values',
-            'Gender: ' + gender.value + ' and Colors: ' + colors.value
+            'Gender: ' + gender.value + ', Colors: ' + colors.value + ', Fruits: ' + fruits.value
           );
         }}
       >

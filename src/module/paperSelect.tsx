@@ -64,6 +64,7 @@ const PaperSelect = ({
   textInputProps: textInputPropOverrides,
   checkboxProps: checkboxPropsOverrides,
   searchbarProps: searchbarPropsOverrides,
+  renderItem: customRenderItem,
 
   // New testID props
   testID,
@@ -226,18 +227,35 @@ const PaperSelect = ({
     setSelectedList(selectedList.length === list.length ? [] : [...list]);
   };
 
-  const _renderItem = ({ item }: { item: ListItem }) => (
-    <CheckboxInput
-      {...checkboxPropsOverrides}
-      isChecked={_exists(item)}
-      label={item.value}
-      onPress={() => {
-        multiEnable === true ? _onChecked(item) : _onCheckedSingle(item);
-      }}
-      disabled={item.disabled}
-      testID={`${itemCheckboxTestIDPrefix}${item._id}`}
-    />
-  );
+  const _renderItem = ({ item }: { item: ListItem }) => {
+    if (customRenderItem) {
+      return (
+        <>
+          {customRenderItem({
+            item,
+            isSelected: _exists(item),
+            onPress: () => {
+              multiEnable === true ? _onChecked(item) : _onCheckedSingle(item);
+            },
+            disabled: item.disabled,
+          })}
+        </>
+      );
+    }
+
+    return (
+      <CheckboxInput
+        {...checkboxPropsOverrides}
+        isChecked={_exists(item)}
+        label={item.value}
+        onPress={() => {
+          multiEnable === true ? _onChecked(item) : _onCheckedSingle(item);
+        }}
+        disabled={item.disabled}
+        testID={`${itemCheckboxTestIDPrefix}${item._id}`}
+      />
+    );
+  };
 
   const _filterFunction = (text: string) => {
     setSearchKey(text);
